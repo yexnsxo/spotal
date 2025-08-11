@@ -45,6 +45,18 @@
   src: url('components/fonts/Pretendard-Thin.woff');
 }
 
+@theme {
+  --color-white: #fffefc;
+  --color-primary: #ffba42;
+  --color-primary-200: #fddda7;
+  --color-grey-100: #efefef;
+  --color-grey-200: #adadad;
+  --color-grey-300: #828282;
+  --color-grey-500: #6a7282;
+  --color-grey-700: #364153;
+  --color-black: #000000;
+}
+
 @layer base {
   html {
     font-family: 'Pretendard-Regualr';
