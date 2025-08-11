@@ -1,1 +1,57 @@
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'Pretendard-Regualr';
+  src: url('components/fonts/Pretendard-Regular.woff');
+}
+
+@font-face {
+  font-family: 'Bold';
+  src: url('components/fonts/Pretendard-Bold.woff');
+}
+
+@font-face {
+  font-family: 'ExtraBold';
+  src: url('components/fonts/Pretendard-ExtraBold.woff');
+}
+
+@font-face {
+  font-family: 'ExtraLight';
+  src: url('components/fonts/Pretendard-ExtraLight.woff');
+}
+
+@font-face {
+  font-family: 'ExtraLight';
+  src: url('components/fonts/Pretendard-ExtraLight.woff');
+}
+
+@font-face {
+  font-family: 'Light';
+  src: url('components/fonts/Pretendard-Light.woff');
+}
+
+@font-face {
+  font-family: 'Medium';
+  src: url('components/fonts/Pretendard-Medium.woff');
+}
+
+@font-face {
+  font-family: 'SemiBold';
+  src: url('components/fonts/Pretendard-SemiBold.woff');
+}
+
+@font-face {
+  font-family: 'Thin';
+  src: url('components/fonts/Pretendard-Thin.woff');
+}
+
+@layer base {
+  html {
+    font-family: 'Pretendard-Regualr';
+  }
+}
+
+/* 기본 폰트 설정 */
+/* body {
+  font-family: 'Pretendard-Regualr';
+} */
