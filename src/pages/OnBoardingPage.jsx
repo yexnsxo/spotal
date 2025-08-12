@@ -4,9 +4,11 @@ import OnBoarding1 from '../assets/OnBoarding1.svg'
 import OnBoarding2 from '../assets/OnBoarding2.svg'
 import OnBoarding3 from '../assets/OnBoarding3.svg'
 import FooterBtn from '@/components/onboarding/FooterBtn.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const OnBoardingPage = () => {
   const [step, setStep] = useState(0)
+  const navigate = useNavigate()
 
   const steps = [
     { question: '골목에서 좋아하던 가게가 <br/> 사라진 걸 깨달은 적 있나요?', image: OnBoarding1 },
@@ -28,9 +30,17 @@ const OnBoardingPage = () => {
     }
   }
 
+  const prevStep = () => {
+    if (step > 0) {
+      setStep((s) => s - 1)
+    } else {
+      navigate(-1)
+    }
+  }
+
   return (
     <>
-      <ProgressBar step={step} totalSteps={steps.length} />
+      <ProgressBar step={step} totalSteps={steps.length} onBack={prevStep} />
       <div className='flex flex-col justify-center items-center justify-items-center'>
         <p
           className='font-[SemiBold] text-grey-700 mt-[7.345vh] text-[20px] text-center'
