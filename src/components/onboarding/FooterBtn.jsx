@@ -11,7 +11,7 @@ const FooterBtn = ({ text, onClick, className = '' }) => {
     }, 120)
   }
   return (
-    <div className='flex justify-between mt-[12.56vh]'>
+    <div>
       <button
         type='button'
         onClick={handleClick}
