@@ -5,7 +5,20 @@ import AuthBtn from '@/components/auth/AuthBtn.jsx'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
-  const postLoginRequest = () => {}
+  const postLoginRequest = () => {
+    // axios
+    //   .post(`${baseURL}/entries/`, {
+    //   })
+    //   .then((response) => {
+    //     console.log(response)
+    //     alert('로그인에 성공하셨습니다.')
+    //     navigate('/')
+    //   })
+    //   .catch((error) => {
+    //     console.log(error)
+    //     alert('로그인에 실패하셨습니다.')
+    //   })
+  }
 
   return (
     <div className='flex flex-col justify-center items-center justify-items-center'>
