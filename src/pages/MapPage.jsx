@@ -5,14 +5,6 @@ import InfoContainer from '@/components/map/InfoContainer'
 const MapPage = () => {
   return (
     <div>
-      <InfoContainer
-        placeName='역전회관'
-        status='폐업함'
-        address='서울 마포구 염리동 173-21'
-        summary='55년이 넘는 세월 동안 연탄불에 구운 납작 불고기로 사랑받았던 용산의 명소.'
-        tags={['정성스러움', '소박함', '따뜻함']}
-        onRecommendClick={() => alert('추천 받기 클릭!')}
-      />
       <MapContainer title={''} />
     </div>
   )
