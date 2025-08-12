@@ -1,5 +1,6 @@
 import React from 'react'
 import { Map, MapMarker } from 'react-kakao-maps-sdk'
+import Marker from './Marker'
 
 const KakaoMap = ({ center, isMarker }) => {
   return (
@@ -11,7 +12,7 @@ const KakaoMap = ({ center, isMarker }) => {
         height: '100vh',
       }}
     >
-      {isMarker && <MapMarker position={center}></MapMarker>}
+      {isMarker && <Marker center={center} />}
     </Map>
   )
 }
