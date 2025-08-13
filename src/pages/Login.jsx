@@ -30,7 +30,7 @@ const Login = () => {
           <AuthBtn text={'로그인하기'} onClick={postLoginRequest} bg={'bg-primary'} />
           <p className='font-[Medium] font-[16px] text-primary mt-[1.184vh]'>
             아직 계정이 없으신가요?
-            <Link to='/signup' className='underline ml-[5px]'>
+            <Link to='/Signup' className='underline ml-[5px]'>
               회원가입하기
             </Link>
           </p>
