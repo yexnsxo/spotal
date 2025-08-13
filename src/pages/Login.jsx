@@ -27,7 +27,7 @@ const Login = () => {
         <AuthBox label={'이메일'} />
         <AuthBox label={'비밀번호'} />
         <div className='mt-[4.74vh] flex flex-col justify-center items-center justify-items-center'>
-          <AuthBtn text={'로그인하기'} onClick={postLoginRequest} />
+          <AuthBtn text={'로그인하기'} onClick={postLoginRequest} bg={'bg-primary'} />
           <p className='font-[Medium] font-[16px] text-primary mt-[1.184vh]'>
             아직 계정이 없으신가요?
             <Link to='/signup' className='underline ml-[5px]'>
