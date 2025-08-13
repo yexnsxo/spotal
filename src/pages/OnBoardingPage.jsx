@@ -27,6 +27,8 @@ const OnBoardingPage = () => {
   const nextStep = () => {
     if (step < steps.length - 1) {
       setStep((prev) => prev + 1)
+    } else {
+      navigate('/Signup')
     }
   }
 
@@ -39,7 +41,7 @@ const OnBoardingPage = () => {
   }
 
   const goToLogin = () => {
-    navigate('/login')
+    navigate('/Login')
   }
 
   return (
