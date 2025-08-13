@@ -1,6 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const InfoContainer = ({ placeName, status, address, summary, tags = [], onRecommendClick }) => {
+const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
+  const navigate = useNavigate()
+
+  const goToRecommended = () => {
+    navigate('/recommended', {
+      state: { placeData: { placeName, status, address, summary, tags } },
+    })
+  }
+
   return (
     <div className='absolute bottom-[80px] left-1/2 -translate-x-1/2 w-[85%] max-w-[500px] bg-white rounded-[20px] shadow-lg p-6 z-[1000]'>
       <button className='block bg-[#ADADAD] w-[134px] h-[5px] rounded-[10px] mx-auto mb-6'></button>
@@ -40,7 +49,7 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [], onRecom
       </div>
 
       <button
-        onClick={onRecommendClick}
+        onClick={goToRecommended}
         className='w-full py-2.5 rounded-[10px] bg-[#EFEFEF] text-[#ADADAD] text-[3.8vw] cursor-pointer select-none transition-colors duration-300 hover:bg-gray-200'
       >
         유사 가게 추천 받기
