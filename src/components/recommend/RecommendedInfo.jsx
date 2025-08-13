@@ -1,18 +1,14 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import Close from '@/assets/Close.svg'
 
-const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
-  const navigate = useNavigate()
-
-  const goToRecommended = () => {
-    navigate('/recommended', {
-      state: { placeData: { placeName, status, address, summary, tags } },
-    })
-  }
-
+const RecommendedInfo = ({ placeName, status, address, summary, tags = [], onClose }) => {
   return (
-    <div className='absolute bottom-[80px] left-1/2 -translate-x-1/2 w-[85%] max-w-[500px] bg-white rounded-[20px] shadow-lg p-6 z-[1000]'>
-      <button className='block bg-[#ADADAD] w-[134px] h-[5px] rounded-[10px] mx-auto mb-6'></button>
+    <div className='fixed translate-y-[15%] left-1/2 -translate-x-1/2 w-[85%] max-w-[500px] bg-white rounded-[20px] shadow-lg p-6 z-[2000]'>
+      <div className='flex justify-end mr-2 mb-2'>
+        <img src={Close} onClick={onClose} className=''></img>
+      </div>
+
+      <img src='' className='bg-grey-100 w-[80vw] h-[15vh] rounded-[10px] mb-2'></img>
 
       <div className='flex justify-between items-center mb-2 bg-primary-300 pt-3 pb-3 pl-5 pr-5 rounded-[10px]'>
         <h2 className='m-0 font-bold text-[5vw]'>{placeName}</h2>
@@ -47,15 +43,8 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
           ))}
         </div>
       </div>
-
-      <button
-        onClick={goToRecommended}
-        className='w-full py-2.5 rounded-[10px] bg-[#EFEFEF] text-[#ADADAD] text-[3.8vw] cursor-pointer select-none transition-colors duration-300 hover:bg-gray-200'
-      >
-        유사 가게 추천 받기
-      </button>
     </div>
   )
 }
 
-export default InfoContainer
+export default RecommendedInfo
