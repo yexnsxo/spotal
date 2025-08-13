@@ -1,11 +1,12 @@
 import React from 'react'
 
-const AuthBtn = ({ onClick, text, bg }) => {
+const AuthBtn = ({ onClick, text, disabled }) => {
   return (
     <div>
       <button
-        className={`w-[88.2vw] h-[6.04vh] min-[51px] rounded-[10px] ${bg} text-white text-[1.25rem] font-[SemiBold] cursor-pointer`}
+        className={`w-[88.2vw] h-[6.04vh] min-[51px] rounded-[10px] bg-primary text-white text-[1.25rem] font-[SemiBold] cursor-pointer disabled:bg-primary-200 disabled:cursor-not-allowed`}
         onClick={onClick}
+        disabled={disabled}
         type='submit'
       >
         {text}
