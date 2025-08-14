@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import KakaoMap from './KakaoMap'
 
-const MapContainer = ({ title }) => {
+const MapContainer = ({ keyword }) => {
   const [center, setCenter] = useState({ lat: 33.450701, lng: 126.570667 })
-  const [isMarker, setIsMarker] = useState(false)
+  const [markers, setMarkers] = useState([])
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -15,8 +15,6 @@ const MapContainer = ({ title }) => {
       (pos) => {
         const lat = pos.coords.latitude
         const lng = pos.coords.longitude
-        setCenter({ lat, lng })
-        setIsMarker(true)
       },
       (err) => {
         console.error('위치 정보를 가져올 수 없습니다:', err)
@@ -33,9 +31,31 @@ const MapContainer = ({ title }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (!keyword) return
+
+    const ps = new kakao.maps.services.Places()
+    ps.keywordSearch(keyword, (data, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const searchMarkers = data.map((place) => ({
+          lat: parseFloat(place.y),
+          lng: parseFloat(place.x),
+          title: place.place_name,
+        }))
+
+        setCenter({
+          lat: parseFloat(data[0].y),
+          lng: parseFloat(data[0].x),
+        })
+
+        setMarkers(searchMarkers)
+      }
+    })
+  }, [keyword])
+
   return (
     <div>
-      <KakaoMap center={center} isMarker={isMarker} />
+      <KakaoMap center={center} markers={markers} />
     </div>
   )
 }
