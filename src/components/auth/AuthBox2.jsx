@@ -13,7 +13,7 @@ const AuthBox2 = ({ label, bg, onClick, value, onChange, name }) => {
           name={name}
         />
         <button
-          className={`w-[16.49vw] max-w-[63px] h-[2.844vh] min-h-[24px] ${bg} rounded-[7px] font-[SemiBold] text-[0.625rem]`}
+          className={`w-[16.49vw] max-w-[63px] h-[2.844vh] min-h-[24px] ${bg} rounded-[7px] font-[SemiBold] text-[0.625rem] cursor-pointer`}
           onClick={onClick}
           type='button'
           disabled={!value.trim()} // 값 없으면 중복확인 막음

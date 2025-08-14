@@ -20,10 +20,10 @@ const Signup = () => {
 
   // 중복 확인 버튼 클릭 시 버튼 색 변경
   const emailBtnBg = emailChecked
-    ? 'bg-[#FFF8EC] text-primary border border-[1px] border-primary'
+    ? 'bg-primary-300 text-primary border border-[1px] border-primary'
     : 'bg-grey-100 text-grey-700'
   const nicknameBtnBg = nicknameChecked
-    ? 'bg-[#FFF8EC] text-primary border border-[1px] border-primary'
+    ? 'bg-primary-300 text-primary border border-[1px] border-primary'
     : 'bg-grey-100 text-grey-700'
 
   const canSubmit = isFilled && emailChecked && nicknameChecked
