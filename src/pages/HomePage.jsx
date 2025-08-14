@@ -1,9 +1,19 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.svg'
 import Search from '../assets/Search.svg'
 import Arrow from '../assets/ArrowUp.svg'
 
 const HomePage = () => {
+  const navigate = useNavigate()
+
+  const goToMap = () => {
+    navigate('/map', {
+      state: { searchKeyword: keyword },
+    })
+  }
+
+  const [keyword, setKeyword] = useState('')
   const [isToggle, setIsToggle] = useState(false)
 
   const handleToggle = () => {
@@ -19,10 +29,15 @@ const HomePage = () => {
       <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-[85%] max-w-[500px]'>
         <input
           type='text'
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
           placeholder='가게 이름, 위치를 검색해보세요!'
           className='ml-3 text-[4vw] outline-0'
         ></input>
-        <button className='flex justify-center items-center min-w-[40px] w-[9vw] min-h-[37px] h-[4vh] rounded-[12px] bg-primary'>
+        <button
+          onClick={goToMap}
+          className='flex justify-center items-center min-w-[40px] w-[9vw] min-h-[37px] h-[4vh] rounded-[12px] bg-primary'
+        >
           <img src={Search}></img>
         </button>
       </div>
