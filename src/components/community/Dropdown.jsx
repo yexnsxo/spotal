@@ -26,7 +26,7 @@ const Dropdown = ({ label }) => {
   label === '감정' ? (options = emotionList) : label === '동네' ? (options = areaList) : ''
 
   return (
-    <div ref={rootRef}>
+    <div ref={rootRef} className='relative'>
       <button
         type='button'
         onClick={() => {
@@ -39,7 +39,7 @@ const Dropdown = ({ label }) => {
       </button>
 
       {open && (
-        <div className='flex flex-col bg-grey-100 rounded-[10px] mt-[1px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden'>
+        <div className='flex flex-col bg-grey-100 rounded-[10px] w-[18.72vw] mt-[1px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full left-0 z-50'>
           {options.map((opt) => (
             <button
               className='hover:bg-primary-300 p-[5px]'
