@@ -2,7 +2,7 @@ import React from 'react'
 import { Map, MapMarker } from 'react-kakao-maps-sdk'
 import Marker from './Marker'
 
-const KakaoMap = ({ center, isMarker }) => {
+const KakaoMap = ({ center, markers }) => {
   return (
     <Map
       center={center}
@@ -12,7 +12,9 @@ const KakaoMap = ({ center, isMarker }) => {
         height: '100vh',
       }}
     >
-      {isMarker && <Marker center={center} />}
+      {markers.map((marker) => (
+        <Marker position={{ lat: marker.lat, lng: marker.lng }} placeName={marker.title}></Marker>
+      ))}
     </Map>
   )
 }

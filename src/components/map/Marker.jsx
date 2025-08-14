@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { MapMarker } from 'react-kakao-maps-sdk'
 import InfoContainer from './InfoContainer'
 
-const Marker = ({ center }) => {
+const Marker = ({ position, placeName }) => {
   const [isInfoVisible, setIsInfoVisible] = useState(false)
 
   const handleMarkerClick = () => {
@@ -15,11 +15,11 @@ const Marker = ({ center }) => {
 
   return (
     <div>
-      <MapMarker position={center} onClick={handleMarkerClick} />
+      <MapMarker position={position} onClick={handleMarkerClick} />
 
       {isInfoVisible && (
         <InfoContainer
-          placeName='역전회관'
+          placeName={placeName}
           status='폐업함'
           address='서울 마포구 염리동 173-21'
           summary='55년이 넘는 세월 동안 연탄불에 구운 납작 불고기로 사랑받았던 용산의 명소.'
