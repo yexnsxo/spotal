@@ -15,7 +15,7 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
       <button className='block bg-[#ADADAD] w-[134px] h-[5px] rounded-[10px] mx-auto mb-6'></button>
 
       <div className='flex justify-between items-center mb-2 bg-primary-300 pt-3 pb-3 pl-5 pr-5 rounded-[10px]'>
-        <h2 className='m-0 font-bold text-[5vw]'>{placeName}</h2>
+        <h2 className='m-0 font-bold text-[5vw] max-w-[46vw]'>{placeName}</h2>
         <span
           className={`text-[3.5vw] px-3 py-1 rounded-full border font-semibold select-none ${
             status === '폐업함'
