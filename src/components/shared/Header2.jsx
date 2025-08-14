@@ -1,0 +1,29 @@
+import React from 'react'
+import Return from '../../assets/return.svg'
+import { Link, useNavigate } from 'react-router-dom'
+
+const Header2 = ({ label1, label2 }) => {
+  const navigate = useNavigate()
+
+  return (
+    <div>
+      <div className='flex items-center relative w-[100vw] h-[7.11vh] border-b-[1px] border-b-grey-100 shadow-[0_2px_2px_#EFEFEF]'>
+        <img
+          src={Return}
+          alt='return'
+          className='absolute left-[10.384vw] top-1/2 -translate-y-1/2 cursor-pointer'
+          onClick={() => navigate(-1)}
+        />
+        <p className='mx-auto font-[ExtraBold] text-[18px]'>{label1}</p>
+        <Link
+          to='/mypage'
+          className='absolute right-[8.076vw] top-1/2 -translate-y-1/2 font-[SemiBold] text-[18px] text-primary cursor-pointer'
+        >
+          {label2}
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+export default Header2
