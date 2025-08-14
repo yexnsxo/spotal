@@ -1,7 +1,7 @@
 import React from 'react'
-import My from '../../assets/My.svg?react'
-import Home from '../../assets/Home.svg?react'
-import Community from '../../assets/Community.svg?react'
+import My from '@/assets/My.svg?react'
+import Home from '@/assets/Home.svg?react'
+import Community from '@/assets/Community.svg?react'
 
 const Footer = ({ menu }) => {
   return (
