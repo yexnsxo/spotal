@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Tag from './Tag.jsx'
+import ImageSlider from './ImageSlider.jsx'
 
 const Post = ({ text }) => {
   const [expanded, setExpanded] = useState(false)
@@ -12,10 +13,7 @@ const Post = ({ text }) => {
         <img className='w-[5.13vw] h-[5.13vw] rounded-full bg-grey-100 border-none' />
         <p className='font-[Medium] text-[0.75rem]'>사용자 1</p>
       </div>
-      <img
-        className='w-[68.974vw] !h-[29.146vh] bg-grey-100 rounded-[10px] mt-[1.6vh]'
-        alt='골목 과거 사진'
-      />
+      <ImageSlider list={['url1', 'url2', 'url3', 'url4']} />
       <div className='flex mt-[1.9vh] text-[0.75rem]'>
         <p className='whitespace-pre-line'>{displayedText}</p>
         {text.length > 25 && (
