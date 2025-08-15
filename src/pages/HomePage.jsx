@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.svg'
 import Search from '../assets/Search.svg'
 import Arrow from '../assets/ArrowUp.svg'
+import Footer from '@/components/shared/Footer'
 
 const HomePage = () => {
   const navigate = useNavigate()
@@ -56,6 +57,7 @@ const HomePage = () => {
         <h1 className='text-[5.1vw] font-bold text-grey-700'>감정으로 기억 꺼내기</h1>
         <p className='mt-[10px] text-[4.2vw] text-[#828282]'>분위기, 느낌으로 기억하시나요?</p>
       </div>
+      <Footer selectedMenu={'home'}></Footer>
     </div>
   )
 }
