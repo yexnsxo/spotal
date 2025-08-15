@@ -14,6 +14,10 @@ const HomePage = () => {
     })
   }
 
+  const goToMemory = () => {
+    navigate('/memory')
+  }
+
   const [keyword, setKeyword] = useState('')
   const [isToggle, setIsToggle] = useState(false)
 
@@ -47,6 +51,7 @@ const HomePage = () => {
         <p className='mt-[30px] text-[4vw] text-grey-200'>화살표를 눌러 기억을 꺼내보세요</p>
       </div>
       <div
+        onClick={goToMemory}
         className={`
           fixed bottom-0 mb-[120px] flex flex-col items-center justify-center z-[30]
           h-[15vh] w-[85%] bg-[#FEF1DA] border border-primary rounded-[7px]
