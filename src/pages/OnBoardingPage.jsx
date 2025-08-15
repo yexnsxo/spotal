@@ -47,7 +47,7 @@ const OnBoardingPage = () => {
   return (
     <>
       <ProgressBar step={step} totalSteps={steps.length} onBack={prevStep} />
-      <div className='flex flex-col justify-center items-center justify-items-center'>
+      <div className='flex flex-col justify-center items-center justify-items-center bg-white'>
         <p
           className='font-[SemiBold] text-grey-700 mt-[7.345vh] text-[20px] text-center'
           dangerouslySetInnerHTML={{ __html: steps[step].question }}
@@ -61,7 +61,7 @@ const OnBoardingPage = () => {
           />
         </div>
       </div>
-      <div className='absolute bottom-[11.14vh] flex justify-between w-full px-[6.67vw]'>
+      <div className='absolute bottom-[11.14vh] flex justify-between w-full px-[6.67vw] bg-white'>
         <FooterBtn onClick={goToLogin} text={'건너뛰기'} />
         <FooterBtn onClick={nextStep} text={step < steps.length - 1 ? '다음' : '시작하기'} />
       </div>

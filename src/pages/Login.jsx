@@ -30,7 +30,7 @@ const Login = () => {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center justify-items-center'>
+    <div className='flex flex-col justify-center items-center justify-items-center bg-white'>
       <img className='mt-[18.36vh]' src={Logo} />
       <form className='flex flex-col gap-[1.184vh] mt-[5.094vh]'>
         <AuthBox
