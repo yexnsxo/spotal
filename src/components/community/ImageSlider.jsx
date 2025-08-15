@@ -7,13 +7,14 @@ function ImageSlider({ list }) {
   const [current, setCurrent] = useState(0)
   const settings = {
     dots: true,
+    arrows: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     appendDots: (dots) => (
       <div className='flex'>
-        <ul className='absolute bottom-[30px] left-1/2 -translate-x-1/2 !m-0 !p-0 !flex !gap-[6px] [&>li]:!m-0 [&>li]:!w-auto [&>li]:!h-auto [&>li>button]:!p-0'>
+        <ul className='absolute bottom-[35px] left-1/2 -translate-x-1/2 !m-0 !p-0 !flex !gap-[8px] [&>li]:!m-0 [&>li]:!w-auto [&>li]:!h-auto [&>li>button]:!p-0'>
           {dots}
         </ul>
       </div>
@@ -30,14 +31,15 @@ function ImageSlider({ list }) {
     beforeChange: (oldIndex, newIndex) => setCurrent(newIndex),
   }
   return (
-    <div className='slider-container relative w-[68.974vw]'>
+    <div className='slider-container relative w-[68.974vw] mt-[1.6vh] rounded-[10px] overflow-hidden'>
       <Slider {...settings}>
         {list.map((e, i) => (
           <img
-            className='h-[29.146vh] bg-grey-100 rounded-[10px] mt-[1.6vh]'
+            key={`${list}-${i}`}
+            className='block w-full h-[29.146vh] bg-grey-100 object-cover'
             alt='골목 과거 사진'
-            key={i}
             src={e}
+            loading='lazy'
           />
         ))}
       </Slider>
