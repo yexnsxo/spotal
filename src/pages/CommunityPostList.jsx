@@ -25,9 +25,11 @@ const CommunityPostList = () => {
         </div>
         <div className='flex flex-col gap-[3.91vh]'>
           <Post
+            list={['url1', 'url2', 'url3', 'url4']}
             text={'겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요'}
           />
           <Post
+            list={['url1', 'url2', 'url3', 'url4']}
             text={'겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요'}
           />
         </div>
