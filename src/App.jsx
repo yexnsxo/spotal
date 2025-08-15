@@ -1,12 +1,14 @@
-import "./App.css";
-import { Outlet } from "react-router-dom";
+import './App.css'
+import { Outlet } from 'react-router-dom'
+import MapPage from './pages/MapPage'
+import HomePage from './pages/HomePage'
 
 function App() {
   return (
     <>
-      <Outlet />
+      <HomePage />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

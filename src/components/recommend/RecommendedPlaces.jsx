@@ -17,7 +17,7 @@ const RecommendedPlaces = ({ placeName, status, address, summary, tags = [] }) =
   return (
     <>
       <div
-        className='max-w-[500px] bg-white rounded-[10px] shadow-lg p-6 pb-4 z-[1000] cursor-pointer'
+        className='max-w-[500px] bg-white rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] p-6 pb-4 cursor-pointer'
         onClick={handleOpenInfo}
       >
         <img src='' className='bg-grey-100 w-[80vw] h-[15vh] rounded-[10px] mb-2'></img>
