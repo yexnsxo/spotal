@@ -6,10 +6,11 @@ const TagBtn = ({ label }) => {
     <div>
       <button
         value={label}
-        className={`rounded-[5px] py-[2px] px-[6.5px] text-[0.75rem] ${isSelected ? 'bg-primary-200' : 'bg-grey-100'}`}
+        type='button'
+        className={`rounded-[5px] w-[20.256vw] h-[3.673vh] py-[2px] px-[6.5px] text-[0.875rem] ${isSelected ? 'bg-grey-100' : 'bg-primary-200'}`}
         onClick={() => setIsSelected((i) => !i)}
       >
-        {label}
+        # {label}
       </button>
     </div>
   )
