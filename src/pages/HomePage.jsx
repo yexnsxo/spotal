@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.svg'
 import Search from '../assets/Search.svg'
@@ -6,6 +6,9 @@ import Arrow from '../assets/ArrowUp.svg'
 import Footer from '@/components/shared/Footer'
 
 const HomePage = () => {
+  const [keyword, setKeyword] = useState('')
+  const [isToggle, setIsToggle] = useState(false)
+  const [results, setResults] = useState([])
   const navigate = useNavigate()
 
   const goToMap = () => {
@@ -18,9 +21,6 @@ const HomePage = () => {
     navigate('/memory')
   }
 
-  const [keyword, setKeyword] = useState('')
-  const [isToggle, setIsToggle] = useState(false)
-
   const handleToggle = () => {
     if (!isToggle) {
       setIsToggle(true)
@@ -28,6 +28,28 @@ const HomePage = () => {
       setIsToggle(false)
     }
   }
+
+  useEffect(() => {
+    if (!keyword.trim()) {
+      setResults([])
+      return
+    }
+
+    const ps = new kakao.maps.services.Places()
+
+    const delayDebounce = setTimeout(() => {
+      ps.keywordSearch(keyword, (data, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          setResults(data)
+        } else {
+          setResults([])
+        }
+      })
+    }, 300)
+
+    return () => clearTimeout(delayDebounce)
+  }, [keyword])
+
   return (
     <div className='flex flex-col justify-center items-center justify-items-center'>
       <img className='mt-[18.36vh]' src={Logo} />
@@ -46,6 +68,26 @@ const HomePage = () => {
           <img src={Search}></img>
         </button>
       </div>
+      {results.length > 0 && (
+        <div className='absolute justify-start border-2 border-primary rounded-[20px] top-[33vh] p-3 pt-2 pb-1 bg-white shadow-md w-[85%] max-h-[55vh] max-w-[500px] z-20 overflow-y-scroll scrollbar-hide'>
+          <ul>
+            {results.map((place) => (
+              <li
+                key={place.id}
+                className='cursor-pointer border-b-2 border-primary last:border-0 p-2 hover:bg-gray-100'
+                onClick={() => {
+                  setKeyword(place.place_name)
+                  setResults([])
+                  goToMap()
+                }}
+              >
+                <p className='font-medium text-[4vw]'>{place.place_name}</p>
+                <p className='text-[3.5vw] text-gray-500'>{place.address_name}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className='mb-[120px] fixed bottom-0 flex flex-col items-center justify-center'>
         <img src={Arrow} onClick={handleToggle}></img>
         <p className='mt-[30px] text-[4vw] text-grey-200'>화살표를 눌러 기억을 꺼내보세요</p>
