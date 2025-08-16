@@ -9,9 +9,10 @@ const WritePage = () => {
 
   const [location, setLocation] = useState('')
   const [emotion, setEmotion] = useState('')
-  const [fileName, setFileName] = useState('')
+  const [file, setFile] = useState('')
   const labelClass = 'font-[Medium] text-[1rem]'
   const divClass = 'flex flex-col gap-[1.54vh]'
+
   return (
     <div>
       <Header label={'글 작성하기'} />
@@ -27,7 +28,7 @@ const WritePage = () => {
                   rounded-[9px] bg-grey-100 border border-grey-200
                   text-sm cursor-pointer'
               >
-                {fileName || '이미지 파일 추가'}
+                {file || '이미지 파일 추가'}
               </label>
               <input
                 id='image'
@@ -36,7 +37,7 @@ const WritePage = () => {
                 className='sr-only'
                 onChange={(e) => {
                   const f = e.target.files?.[0]
-                  setFileName(f ? f.name : '')
+                  setFile(f ? f.name : '')
                 }}
               />
             </div>
