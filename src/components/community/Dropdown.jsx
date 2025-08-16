@@ -4,7 +4,16 @@ import DropdownSign from '@/assets/DropdownSign.svg'
 const Dropdown = ({ label }) => {
   const [open, setOpen] = useState(false)
   const emotionList = ['전체', '정겨움', '편안함', '조용함', '활기참', '소박함', '세심함']
-  const areaList = ['전체', '이태원', '한남동', '후암동', '효창동', '용문동', '청파동', '해방촌']
+  const locationList = [
+    '전체',
+    '이태원',
+    '한남동',
+    '후암동',
+    '효창동',
+    '용문동',
+    '청파동',
+    '해방촌',
+  ]
   const [displayLabel, setDisplayLabel] = useState(label)
   const [filtered, setFiltered] = useState(false)
   const [selected, setSelected] = useState('전체')
@@ -24,7 +33,7 @@ const Dropdown = ({ label }) => {
   }, [open])
 
   let options = []
-  label === '감정' ? (options = emotionList) : label === '동네' ? (options = areaList) : ''
+  label === '감정' ? (options = emotionList) : label === '동네' ? (options = locationList) : ''
 
   return (
     <div ref={rootRef} className='relative'>
