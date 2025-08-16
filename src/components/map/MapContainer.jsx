@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import KakaoMap from './KakaoMap'
+import usePlaceSearch from '@/hooks/usePlaceSearch'
 
-const MapContainer = ({ keyword }) => {
-  const [center, setCenter] = useState({ lat: 33.450701, lng: 126.570667 })
-  const [markers, setMarkers] = useState([])
+const MapContainer = ({ center = '', markers }) => {
+  const defaultCenter = { lat: 37.53609444, lng: 126.9675222 }
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -31,31 +31,9 @@ const MapContainer = ({ keyword }) => {
     }
   }, [])
 
-  useEffect(() => {
-    if (!keyword) return
-
-    const ps = new kakao.maps.services.Places()
-    ps.keywordSearch(keyword, (data, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const searchMarkers = data.map((place) => ({
-          lat: parseFloat(place.y),
-          lng: parseFloat(place.x),
-          title: place.place_name,
-        }))
-
-        setCenter({
-          lat: parseFloat(data[0].y),
-          lng: parseFloat(data[0].x),
-        })
-
-        setMarkers(searchMarkers)
-      }
-    })
-  }, [keyword])
-
   return (
     <div>
-      <KakaoMap center={center} markers={markers} />
+      <KakaoMap center={defaultCenter} markers={markers} />
     </div>
   )
 }
