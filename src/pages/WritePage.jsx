@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import Header from '@/components/shared/Header.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import Dropdown2 from '@/components/community/Dropdown2.jsx'
+import { emotionList, locationList } from '@/components/community/Dropdown.jsx'
 
 const WritePage = () => {
-  const locationList = ['후암동', '이태원', '한남동', '효창동', '용문동', '청파동', '해방촌']
-  const emotionList = ['정겨움', '편안함', '조용함', '활기참', '소박함', '세심함']
-
   const [location, setLocation] = useState('')
   const [emotion, setEmotion] = useState('')
   const [file, setFile] = useState('')
