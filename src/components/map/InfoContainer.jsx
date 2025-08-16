@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import Button from '../shared/Button'
 
 const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
   const navigate = useNavigate()
@@ -48,12 +49,7 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
         </div>
       </div>
 
-      <button
-        onClick={goToRecommended}
-        className='w-full py-2.5 rounded-[10px] bg-[#EFEFEF] text-[#ADADAD] text-[3.8vw] cursor-pointer select-none transition-colors duration-300 hover:bg-gray-200'
-      >
-        유사 가게 추천 받기
-      </button>
+      <Button onClick={goToRecommended} type={'submit'} label={'유사 가게 추천 받기'}></Button>
     </div>
   )
 }
