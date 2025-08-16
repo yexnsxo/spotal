@@ -15,7 +15,7 @@ const WritePage = () => {
     <div>
       <Header label={'글 작성하기'} />
       <div className='bg-white flex justify-center'>
-        <div className='w-[81.025vw] h-[63.507vh] mt-[13.98vh] bg-primary-300 rounded-[10px]'>
+        <div className='w-[81.025vw] mt-[13.98vh] bg-primary-300 rounded-[10px]'>
           <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>이미지 추가</label>
@@ -64,6 +64,12 @@ const WritePage = () => {
                 onChange={setEmotion}
               />
             </div>
+            <button
+              type='submit'
+              className='w-full py-2.5 rounded-[10px] bg-grey-100 text-grey-200 text-[3.8vw] cursor-pointer select-none transition-colors duration-300 hover:bg-primary hover:text-white'
+            >
+              작성 완료
+            </button>
           </form>
         </div>
       </div>
