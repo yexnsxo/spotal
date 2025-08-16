@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
 import Header from '@/components/shared/Header.jsx'
 import Footer from '@/components/shared/Footer.jsx'
+import Dropdown2 from '@/components/community/Dropdown2.jsx'
 
 const WritePage = () => {
+  const locationList = ['후암동', '이태원', '한남동', '효창동', '용문동', '청파동', '해방촌']
+  const emotionList = ['정겨움', '편안함', '조용함', '활기참', '소박함', '세심함']
+
+  const [location, setLocation] = useState('')
+  const [emotion, setEmotion] = useState('')
   const [fileName, setFileName] = useState('')
   const labelClass = 'font-[Medium] text-[1rem]'
   const divClass = 'flex flex-col gap-[1.54vh]'
@@ -43,16 +49,20 @@ const WritePage = () => {
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>장소 태그 추가</label>
-              <input
-                className='w-[71.794vw] h-[5.213vh] bg-[#ffffff] focus:outline-none rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.5rem] px-[0.4rem]'
+              <Dropdown2
                 placeholder='원하는 장소 태그를 선택하세요'
+                options={locationList}
+                value={location}
+                onChange={setLocation}
               />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>감정 태그 추가</label>
-              <input
-                className='w-[71.794vw] h-[5.213vh] bg-[#ffffff] focus:outline-none rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.5rem] px-[0.4rem]'
+              <Dropdown2
                 placeholder='원하는 감정 태그를 선택하세요'
+                options={emotionList}
+                value={emotion}
+                onChange={setEmotion}
               />
             </div>
           </form>

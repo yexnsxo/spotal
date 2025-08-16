@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import TagBtn from './TagBtn.jsx'
 
-const Dropdown2 = ({ placeholder, options = [], value, onChange, className = '' }) => {
+const Dropdown2 = ({ placeholder, options = [], value, onChange }) => {
   const [open, setOpen] = useState(false)
+  const [selected, setSelected] = useState([])
   const rootRef = useRef(null)
 
-  // 바깥 클릭 시 닫기
+  useEffect(() => {
+    onChange?.(selected.join(', '))
+  }, [selected, onChange])
+
   useEffect(() => {
     if (!open) return
     const onDown = (e) => {
@@ -15,9 +19,22 @@ const Dropdown2 = ({ placeholder, options = [], value, onChange, className = '' 
     return () => document.removeEventListener('mousedown', onDown, { capture: false })
   }, [open])
 
+  const MAX = 3
+  const atLimit = selected.length >= MAX
+
+  const handleClick = (option) => {
+    const already = selected.includes(option)
+    if (already) {
+      setSelected(selected.filter((v) => v !== option))
+    } else {
+      if (atLimit) return
+      setSelected([...selected, option])
+    }
+  }
+
   return (
     <div>
-      <div ref={rootRef} className={`relative ${className}`}>
+      <div ref={rootRef} className='relative'>
         <input
           type='text'
           value={value}
@@ -29,13 +46,13 @@ const Dropdown2 = ({ placeholder, options = [], value, onChange, className = '' 
           readOnly
         />
         {open && (
-          <div
-            className='absolute top-full left-0 mt-[4px] z-40 py-[2.37vh] px-[1.794vw] gap-y-[2.843vh] gap-x-[3.59vw] grid grid-cols-3 gap-[] rounded-[9px] bg-white
-                    shadow-[0_4px_4px_rgba(0,0,0,0.25)]'
-          >
-            {options.map((opt) => (
-              <TagBtn key={opt} label={`${opt}`} />
-            ))}
+          <div className='absolute top-full left-0 mt-[4px] z-40 grid grid-cols-3 gap-x-[3.59vw] gap-y-[2.843vh] rounded-[9px] px-[1.794vw] py-[2.37vh] bg-white shadow-[0_4px_4px_rgba(0,0,0,0.2)]'>
+            {options.map((opt) => {
+              const isSel = selected.includes(opt)
+              return (
+                <TagBtn key={opt} label={opt} isSelected={isSel} onClick={() => handleClick(opt)} />
+              )
+            })}
           </div>
         )}
       </div>
