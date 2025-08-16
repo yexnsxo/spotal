@@ -6,12 +6,16 @@ import Arrow from '../assets/ArrowUp.svg'
 import Footer from '@/components/shared/Footer'
 import SearchResults from '@/components/search/SearchResults'
 import usePlaceSearch from '@/hooks/usePlaceSearch'
+import SearchNoResults from '@/components/search/SearchNoResults'
+import SearchNoYongsan from '@/components/search/SearchNoYongsan'
 
 const HomePage = () => {
   const [keyword, setKeyword] = useState('')
   const [isToggle, setIsToggle] = useState(false)
+  const [isNoResult, setNoResult] = useState(false)
+  const [isNoYongsan, setNoYongsan] = useState(false)
   const navigate = useNavigate()
-  const markers = usePlaceSearch(keyword)
+  const { markers, status } = usePlaceSearch(keyword)
 
   const goToMap = (keyword) => {
     if (!keyword.trim()) {
@@ -19,10 +23,16 @@ const HomePage = () => {
       return
     }
 
-    if (markers.length > 0) {
+    if (status === 'success') {
       navigate('/map', { state: { markers: markers } })
-    } else {
-      alert('검색 결과가 없습니다!')
+    }
+    if (status === 'noResults') {
+      setNoResult(true)
+      setKeyword('')
+    }
+    if (status === 'noYongsan') {
+      setNoYongsan(true)
+      setKeyword('')
     }
   }
 
@@ -32,9 +42,16 @@ const HomePage = () => {
 
   const handleToggle = () => setIsToggle((prev) => !prev)
 
+  const handleCloseInfo = () => {
+    setNoResult(false)
+    setNoYongsan(false)
+  }
+
   return (
     <div className='flex flex-col justify-center items-center justify-items-center'>
       <img className='mt-[18.36vh]' src={Logo} alt='로고' />
+      {isNoResult && <SearchNoResults onClose={handleCloseInfo} />}
+      {isNoYongsan && <SearchNoYongsan onClose={handleCloseInfo} />}
       <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-[85%] max-w-[500px]'>
         <input
           type='text'

@@ -11,7 +11,7 @@ const RecommendedInfo = ({ placeName, status, address, summary, tags = [], onClo
       <img src='' className='bg-grey-100 w-[80vw] h-[15vh] rounded-[10px] mb-2'></img>
 
       <div className='flex justify-between items-center mb-2 bg-primary-300 pt-3 pb-3 pl-5 pr-5 rounded-[10px]'>
-        <h2 className='m-0 font-bold text-[5vw]'>{placeName}</h2>
+        <h2 className='m-0 font-bold text-[5vw] max-w-[44vw]'>{placeName}</h2>
         <span
           className={`text-[3.5vw] px-3 py-1 rounded-full border font-semibold select-none ${
             status === '폐업함'
