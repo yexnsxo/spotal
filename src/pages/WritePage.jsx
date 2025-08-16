@@ -3,6 +3,7 @@ import Header from '@/components/shared/Header.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import Dropdown2 from '@/components/community/Dropdown2.jsx'
 import { emotionList, locationList } from '@/components/community/Dropdown.jsx'
+import Button from '@/components/shared/Button.jsx'
 
 const WritePage = () => {
   const [location, setLocation] = useState('')
@@ -64,12 +65,7 @@ const WritePage = () => {
                 onChange={setEmotion}
               />
             </div>
-            <button
-              type='submit'
-              className='w-full py-2.5 rounded-[10px] bg-grey-100 text-grey-200 text-[3.8vw] cursor-pointer select-none transition-colors duration-300 hover:bg-primary hover:text-white'
-            >
-              작성 완료
-            </button>
+            <Button type={'submit'} label={'작성 완료'} />
           </form>
         </div>
       </div>
