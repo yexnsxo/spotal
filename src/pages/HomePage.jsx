@@ -1,19 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.svg'
 import Search from '../assets/Search.svg'
 import Arrow from '../assets/ArrowUp.svg'
 import Footer from '@/components/shared/Footer'
+import SearchResults from '@/components/search/SearchResults'
 
 const HomePage = () => {
   const [keyword, setKeyword] = useState('')
   const [isToggle, setIsToggle] = useState(false)
   const [results, setResults] = useState([])
   const navigate = useNavigate()
+  const psRef = useRef(null)
+  const debounceRef = useRef(null)
 
-  const goToMap = () => {
+  const goToMap = (searchTerm = keyword) => {
     navigate('/map', {
-      state: { searchKeyword: keyword },
+      state: { searchKeyword: searchTerm },
     })
   }
 
@@ -21,38 +24,29 @@ const HomePage = () => {
     navigate('/memory')
   }
 
-  const handleToggle = () => {
-    if (!isToggle) {
-      setIsToggle(true)
-    } else {
-      setIsToggle(false)
-    }
-  }
+  const handleToggle = () => setIsToggle((prev) => !prev)
 
   useEffect(() => {
-    if (!keyword.trim()) {
-      setResults([])
-      return
-    }
+    if (!psRef.current) psRef.current = new kakao.maps.services.Places()
+  }, [])
 
-    const ps = new kakao.maps.services.Places()
+  useEffect(() => {
+    if (!keyword.trim()) return setResults([])
 
-    const delayDebounce = setTimeout(() => {
-      ps.keywordSearch(keyword, (data, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          setResults(data)
-        } else {
-          setResults([])
-        }
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+
+    debounceRef.current = setTimeout(() => {
+      psRef.current.keywordSearch(keyword, (data, status) => {
+        setResults(status === kakao.maps.services.Status.OK ? data : [])
       })
     }, 300)
 
-    return () => clearTimeout(delayDebounce)
+    return () => clearTimeout(debounceRef.current)
   }, [keyword])
 
   return (
     <div className='flex flex-col justify-center items-center justify-items-center'>
-      <img className='mt-[18.36vh]' src={Logo} />
+      <img className='mt-[18.36vh]' src={Logo} alt='로고' />
       <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-[85%] max-w-[500px]'>
         <input
           type='text'
@@ -60,34 +54,16 @@ const HomePage = () => {
           onChange={(e) => setKeyword(e.target.value)}
           placeholder='가게 이름, 위치를 검색해보세요!'
           className='ml-3 text-[4vw] outline-0'
+          aria-label='검색창'
         ></input>
         <button
-          onClick={goToMap}
+          onClick={() => goToMap(keyword)}
           className='flex justify-center items-center min-w-[40px] w-[9vw] min-h-[37px] h-[4vh] rounded-[12px] bg-primary'
         >
-          <img src={Search}></img>
+          <img src={Search} alt='검색 버튼'></img>
         </button>
       </div>
-      {results.length > 0 && (
-        <div className='absolute justify-start border-2 border-primary rounded-[20px] top-[33vh] p-3 pt-2 pb-1 bg-white shadow-md w-[85%] max-h-[55vh] max-w-[500px] z-20 overflow-y-scroll scrollbar-hide'>
-          <ul>
-            {results.map((place) => (
-              <li
-                key={place.id}
-                className='cursor-pointer border-b-2 border-primary last:border-0 p-2 hover:bg-gray-100'
-                onClick={() => {
-                  setKeyword(place.place_name)
-                  setResults([])
-                  goToMap()
-                }}
-              >
-                <p className='font-medium text-[4vw]'>{place.place_name}</p>
-                <p className='text-[3.5vw] text-gray-500'>{place.address_name}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {results.length > 0 && <SearchResults results={results} goToMap={goToMap} />}
       <div className='mb-[120px] fixed bottom-0 flex flex-col items-center justify-center'>
         <img src={Arrow} onClick={handleToggle}></img>
         <p className='mt-[30px] text-[4vw] text-grey-200'>화살표를 눌러 기억을 꺼내보세요</p>
