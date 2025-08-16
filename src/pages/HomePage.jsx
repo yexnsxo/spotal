@@ -5,19 +5,25 @@ import Search from '../assets/Search.svg'
 import Arrow from '../assets/ArrowUp.svg'
 import Footer from '@/components/shared/Footer'
 import SearchResults from '@/components/search/SearchResults'
+import usePlaceSearch from '@/hooks/usePlaceSearch'
 
 const HomePage = () => {
   const [keyword, setKeyword] = useState('')
   const [isToggle, setIsToggle] = useState(false)
-  const [results, setResults] = useState([])
   const navigate = useNavigate()
-  const psRef = useRef(null)
-  const debounceRef = useRef(null)
+  const markers = usePlaceSearch(keyword)
 
-  const goToMap = (searchTerm = keyword) => {
-    navigate('/map', {
-      state: { searchKeyword: searchTerm },
-    })
+  const goToMap = (keyword) => {
+    if (!keyword.trim()) {
+      alert('검색어를 입력해주세요!')
+      return
+    }
+
+    if (markers.length > 0) {
+      navigate('/map', { state: { markers: markers } })
+    } else {
+      alert('검색 결과가 없습니다!')
+    }
   }
 
   const goToMemory = () => {
@@ -25,24 +31,6 @@ const HomePage = () => {
   }
 
   const handleToggle = () => setIsToggle((prev) => !prev)
-
-  useEffect(() => {
-    if (!psRef.current) psRef.current = new kakao.maps.services.Places()
-  }, [])
-
-  useEffect(() => {
-    if (!keyword.trim()) return setResults([])
-
-    if (debounceRef.current) clearTimeout(debounceRef.current)
-
-    debounceRef.current = setTimeout(() => {
-      psRef.current.keywordSearch(keyword, (data, status) => {
-        setResults(status === kakao.maps.services.Status.OK ? data : [])
-      })
-    }, 300)
-
-    return () => clearTimeout(debounceRef.current)
-  }, [keyword])
 
   return (
     <div className='flex flex-col justify-center items-center justify-items-center'>
@@ -63,7 +51,7 @@ const HomePage = () => {
           <img src={Search} alt='검색 버튼'></img>
         </button>
       </div>
-      {results.length > 0 && <SearchResults results={results} goToMap={goToMap} />}
+      <SearchResults keyword={keyword} goToMap={goToMap} />
       <div className='mb-[120px] fixed bottom-0 flex flex-col items-center justify-center'>
         <img src={Arrow} onClick={handleToggle}></img>
         <p className='mt-[30px] text-[4vw] text-grey-200'>화살표를 눌러 기억을 꺼내보세요</p>

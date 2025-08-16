@@ -5,13 +5,12 @@ import Footer from '@/components/shared/Footer'
 
 const MapPage = () => {
   const location = useLocation()
-  const { searchKeyword } = location.state || {}
+  const { markers } = location.state || {}
 
-  console.log('받은 검색어:', searchKeyword)
   return (
     <div>
       <Header label={'검색 결과'}></Header>
-      <MapContainer keyword={searchKeyword} />
+      <MapContainer markers={markers} />
       <Footer></Footer>
     </div>
   )

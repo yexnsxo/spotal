@@ -6,7 +6,7 @@ const KakaoMap = ({ center, markers }) => {
   return (
     <Map
       center={center}
-      level={3}
+      level={5}
       style={{
         width: '100vw',
         height: '100vh',
