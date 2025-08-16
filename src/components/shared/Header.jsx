@@ -10,7 +10,7 @@ const Header = ({ label }) => {
         src={Return}
         alt='return'
         onClick={() => navigate(-1)}
-        className='absolute left-8 top-1/2 -translate-y-1/2'
+        className='absolute left-8 top-1/2 -translate-y-1/2 cursor-pointer'
       />
       <p className='mx-auto font-[ExtraBold] text-[18px]'>{label}</p>
     </div>
