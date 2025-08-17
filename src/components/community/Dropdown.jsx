@@ -54,7 +54,7 @@ const Dropdown = ({ label }) => {
         <div className='flex flex-col bg-grey-100 rounded-[10px] w-[18.72vw] mt-[1px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full left-0 z-40'>
           {options.map((opt) => (
             <button
-              className={`hover:bg-primary-300 p-[5px] ${
+              className={`hover:bg-primary-300 p-[5px] active:bg-primary-300 ${
                 selected === opt ? 'bg-primary-300' : 'bg-grey-100'
               }`}
               key={opt}
@@ -66,7 +66,7 @@ const Dropdown = ({ label }) => {
                   setDisplayLabel(opt)
                   setFiltered(true)
                 }
-                setOpen(false)
+                // setOpen(false)
                 setSelected(opt)
               }}
             >

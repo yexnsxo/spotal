@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Tag from './Tag.jsx'
 import ImageSlider from './ImageSlider.jsx'
+import PostMenu from './PostMenu.jsx'
 
 const Post = ({ text, list }) => {
   const [expanded, setExpanded] = useState(false)
@@ -9,9 +10,12 @@ const Post = ({ text, list }) => {
 
   return (
     <div className='flex flex-col relative px-[3.846vw] w-[76.67vw] rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] bg-white'>
-      <div className='flex gap-[0.5rem] items-center ml-[0.5vw] mt-[1.6vh]'>
-        <img className='w-[5.13vw] h-[5.13vw] rounded-full bg-grey-100 border-none' />
-        <p className='font-[Medium] text-[0.75rem]'>사용자 1</p>
+      <div className='flex justify-between items-center ml-[0.5vw] mr-[2vw] mt-[1.6vh]'>
+        <div className='flex gap-[0.5rem] items-center'>
+          <img className='w-[5.13vw] h-[5.13vw] rounded-full bg-grey-100 border-none' />
+          <p className='font-[Medium] text-[0.75rem]'>사용자 1</p>
+        </div>
+        <PostMenu />
       </div>
       <ImageSlider list={list} />
       <div className='flex mt-[1.9vh] text-[0.75rem]'>
