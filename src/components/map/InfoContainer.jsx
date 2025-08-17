@@ -21,7 +21,9 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
           className={`text-[3.5vw] px-3 py-1 rounded-full border font-semibold select-none ${
             status === '폐업함'
               ? 'bg-[#FDF2F8] text-[#BE195D] border-[#BE195D]'
-              : 'bg-green-600 text-white border-green-600'
+              : status === '이전함'
+                ? 'bg-[#EFFDF4] text-[#17A34A] border-[#17A34A]'
+                : 'bg-[#DBE9FE] text-[#2463EB] border-[#2463EB]'
           }`}
         >
           {status}
