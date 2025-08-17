@@ -2,7 +2,7 @@ import React from 'react'
 import Return from '../../assets/return.svg'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Header2 = ({ label1, label2 }) => {
+const Header2 = ({ label1, label2, link }) => {
   const navigate = useNavigate()
 
   return (
@@ -16,7 +16,7 @@ const Header2 = ({ label1, label2 }) => {
         />
         <p className='mx-auto font-[ExtraBold] text-[18px]'>{label1}</p>
         <Link
-          to='/mypage'
+          to={link}
           className='absolute right-[8.076vw] top-1/2 -translate-y-1/2 font-[SemiBold] text-[18px] text-primary cursor-pointer'
         >
           {label2}
