@@ -29,10 +29,12 @@ const PostMenu = () => {
       </button>
       {open && (
         <div className='flex flex-col bg-white rounded-[10px] w-[18.72vw] mt-[1px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full right-[-10px] z-40 shadow-[0_4px_4px_rgba(0,0,0,0.1)]'>
-          <button className='py-[0.5rem] hover:bg-primary-300 cursor-pointer border-b-[1px] border-gray-100'>
+          <button className='py-[0.5rem] hover:bg-primary-300 cursor-pointer border-b-[1px] border-gray-100 active:bg-primary-300'>
             수정하기
           </button>
-          <button className='py-[0.5rem] hover:bg-primary-300 cursor-pointer'>삭제하기</button>
+          <button className='py-[0.5rem] hover:bg-primary-300 cursor-pointer active:bg-primary-300'>
+            삭제하기
+          </button>
         </div>
       )}
     </div>
