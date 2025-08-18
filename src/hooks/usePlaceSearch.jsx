@@ -18,11 +18,21 @@ const usePlaceSearch = (keyword) => {
           params: { q: keyword },
         })
         console.log(res.data)
+
+        const emotionNames = res.data.store?.emotions
+          ? res.data.store.emotions.map((e) => e.name)
+          : []
+
         return [
           {
             lat: res.data.latitude,
             lng: res.data.longitude,
             title: res.data.store.name,
+            address: res.data.store.address,
+            status: res.data.store.status,
+            summary_card: res.data.summary_card,
+            photos: res.data.photos,
+            emotions: emotionNames,
           },
         ]
       } catch (err) {
