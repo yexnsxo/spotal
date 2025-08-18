@@ -24,7 +24,7 @@ const ImageUploader = ({ files, onChange, name }) => {
         ref={imgRef}
         className='flex gap-[7px] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
       >
-        <label className='flex shrink-0 snap-start flex-col justify-center items-center w-[58px] h-[58px] bg-white border-[0.9px] border-grey-200 rounded-[9px]'>
+        <label className='flex shrink-0 snap-start flex-col justify-center items-center w-[14.87vw] h-[14.87vw] bg-white border-[0.9px] border-grey-200 rounded-[9px]'>
           <span>
             <img src={Camera} />
           </span>
