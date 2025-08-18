@@ -22,8 +22,17 @@ const KakaoMap = ({ center, markers }) => {
     }
   }
 
+  const handleMapClick = () => {
+    setIsOpenMarker(false)
+  }
+
   return (
-    <Map center={boundCenter} level={5} style={{ width: '100vw', height: '100vh' }}>
+    <Map
+      onClick={handleMapClick}
+      center={boundCenter}
+      level={5}
+      style={{ width: '100vw', height: '100vh' }}
+    >
       {markers.map((marker) => (
         <Marker
           key={marker.title}
