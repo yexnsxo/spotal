@@ -38,6 +38,10 @@ const KakaoMap = ({ center, markers }) => {
           key={marker.title}
           position={{ lat: marker.lat, lng: marker.lng }}
           placeName={marker.title}
+          address={marker.address}
+          state={marker.status}
+          summary={marker.summary_card}
+          emotion={marker.emotions}
           onClick={handleMarkerClick}
         />
       ))}
@@ -46,9 +50,9 @@ const KakaoMap = ({ center, markers }) => {
         <InfoContainer
           placeName={selectedMarker.placeName}
           status={selectedMarker.state}
-          address='서울 마포구 염리동 173-21'
-          summary='55년이 넘는 세월 동안 연탄불에 구운 납작 불고기로 사랑받았던 용산의 명소.'
-          tags={['정성스러움', '소박함', '따뜻함']}
+          address={selectedMarker.address}
+          summary={selectedMarker.summary}
+          tags={selectedMarker.emotion}
         />
       )}
     </Map>
