@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import DropdownSign from '@/assets/DropdownSign.svg'
+import { useOutsideClick } from '@/hooks/useOutsideClick.jsx'
 
 export const emotionList = ['전체', '정겨움', '편안함', '조용함', '활기참', '소박함', '세심함']
 export const locationList = [
@@ -21,18 +22,7 @@ const Dropdown = ({ label }) => {
   const [selected, setSelected] = useState('전체')
 
   const rootRef = useRef(null)
-
-  useEffect(() => {
-    if (!open) return
-    const onMouseDown = (e) => {
-      if (!rootRef.current?.contains(e.target)) {
-        setOpen(false)
-      }
-    }
-
-    document.addEventListener('mousedown', onMouseDown, { capture: false })
-    return () => document.removeEventListener('mousedown', onMouseDown, { capture: false })
-  }, [open])
+  useOutsideClick(rootRef, () => setOpen(false), open)
 
   let options = []
   label === '감정' ? (options = emotionList) : label === '동네' ? (options = locationList) : ''

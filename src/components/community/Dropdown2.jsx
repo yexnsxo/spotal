@@ -1,19 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import TagBtn from './TagBtn.jsx'
+import { useOutsideClick } from '@/hooks/useOutsideClick.jsx'
 
 const Dropdown2 = ({ placeholder, options = [], value, onChange }) => {
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState([])
-  const rootRef = useRef(null)
 
-  useEffect(() => {
-    if (!open) return
-    const onDown = (e) => {
-      if (!rootRef.current?.contains(e.target)) setOpen(false)
-    }
-    document.addEventListener('mousedown', onDown, { capture: false })
-    return () => document.removeEventListener('mousedown', onDown, { capture: false })
-  }, [open])
+  const rootRef = useRef(null)
+  useOutsideClick(rootRef, () => setOpen(false), open)
 
   const handleClick = (option) => {
     if (selected.includes(option)) {
