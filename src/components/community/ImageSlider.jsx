@@ -3,7 +3,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 
-function ImageSlider({ list }) {
+function ImageSlider({ list, w, h }) {
   const [current, setCurrent] = useState(0)
   const settings = {
     dots: true,
@@ -31,16 +31,24 @@ function ImageSlider({ list }) {
     beforeChange: (oldIndex, newIndex) => setCurrent(newIndex),
   }
   return (
-    <div className='slider-container relative w-[68.974vw] mt-[1.6vh] rounded-[10px] overflow-hidden'>
+    <div
+      className='relative mt-[1.6vh] rounded-[10px] overflow-hidden'
+      style={{ width: w, height: h }}
+    >
       <Slider {...settings}>
-        {list.map((e, i) => (
-          <img
+        {list.map((url, i) => (
+          <div
             key={`${list}-${i}`}
-            className='block w-full h-[29.146vh] bg-grey-100 object-cover'
-            alt='골목 과거 사진'
-            src={e}
-            loading='lazy'
-          />
+            className='h-full outline-none [--tw-tap-highlight-color:transparent]'
+          >
+            <img
+              className='block w-full h-full object-cover bg-grey-100'
+              style={{ width: w, height: h }}
+              alt='골목 과거 사진'
+              src={url}
+              loading='lazy'
+            />
+          </div>
         ))}
       </Slider>
     </div>
