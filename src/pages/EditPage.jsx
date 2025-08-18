@@ -8,7 +8,6 @@ import ImageUploader from '@/components/community/ImageUploader.jsx'
 import { useFormFilled } from '@/hooks/useFormFilled'
 
 const EditPage = () => {
-  const [files, setFiles] = useState([])
   const labelClass = 'font-[Medium] text-[1rem]'
   const divClass = 'flex flex-col gap-[1.54vh]'
 
@@ -29,7 +28,7 @@ const EditPage = () => {
               <label className={`${labelClass}`}>이미지 추가</label>
               <ImageUploader
                 files={values.image}
-                onChange={(nextFiles) => handleChange('image', nextFiles)}
+                onChange={(files) => handleChange('image', files)}
                 name='image'
               />
             </div>
@@ -37,7 +36,7 @@ const EditPage = () => {
               <label className={`${labelClass}`}>내용 수정</label>
               {/* 나중에 연동 후 백엔드에서 받아온 값 올릴 예정 */}
               <textarea
-                className='w-[71.794vw] h-[9.834vh] bg-[#ffffff] focus:outline-none rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.5rem] px-[0.4rem]'
+                className='w-[71.794vw] h-[9.834vh] bg-[#ffffff] focus:outline-none focus:border-primary rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[1.64vw]'
                 placeholder='작성할 내용을 입력하세요'
                 name='text'
                 value={values.text}

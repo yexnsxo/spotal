@@ -5,12 +5,18 @@ import Dropdown2 from '@/components/community/Dropdown2.jsx'
 import { emotionList, locationList } from '@/components/community/Dropdown.jsx'
 import Button from '@/components/shared/Button.jsx'
 import ImageUploader from '@/components/community/ImageUploader.jsx'
+import { useFormFilled } from '@/hooks/useFormFilled'
 
 const WritePage = () => {
-  const [location, setLocation] = useState('')
-  const [emotion, setEmotion] = useState('')
   const labelClass = 'font-[Medium] text-[1rem]'
   const divClass = 'flex flex-col gap-[1.54vh]'
+
+  const { values, handleChange, isFilled } = useFormFilled({
+    image: [],
+    text: '',
+    location: [],
+    emotion: [],
+  })
 
   return (
     <div>
@@ -20,12 +26,16 @@ const WritePage = () => {
           <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>이미지 추가</label>
-              <ImageUploader />
+              <ImageUploader
+                files={values.image}
+                onChange={(files) => handleChange('image', files)}
+                name='image'
+              />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>내용 추가</label>
               <textarea
-                className='w-[71.794vw] h-[9.834vh] bg-[#ffffff] focus:outline-none rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.5rem] px-[0.4rem]'
+                className='w-[71.794vw] h-[9.834vh] focus:border-primary bg-[#ffffff] focus:outline-none rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[1.64vw]'
                 placeholder='작성할 내용을 입력하세요'
               ></textarea>
             </div>
@@ -34,8 +44,9 @@ const WritePage = () => {
               <Dropdown2
                 placeholder='원하는 장소 태그를 선택하세요'
                 options={locationList.slice(1)}
-                value={location}
-                onChange={setLocation}
+                name='location'
+                value={values.location}
+                onChange={handleChange}
               />
             </div>
             <div className={`${divClass}`}>
@@ -43,11 +54,12 @@ const WritePage = () => {
               <Dropdown2
                 placeholder='원하는 감정 태그를 선택하세요'
                 options={emotionList.slice(1)}
-                value={emotion}
-                onChange={setEmotion}
+                name='emotion'
+                value={values.emotion}
+                onChange={handleChange}
               />
             </div>
-            <Button type={'submit'} label={'작성 완료'} />
+            <Button type={'submit'} label={'작성 완료'} disabled={!isFilled} />
           </form>
         </div>
       </div>

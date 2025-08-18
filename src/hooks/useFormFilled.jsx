@@ -20,8 +20,7 @@ export function useFormFilled(initialValues) {
   useEffect(() => {
     const filled = Object.values(values).every((val) => {
       if (typeof val === 'string') return val.trim() !== ''
-      if (Array.isArray(val)) return val.length > 0
-      return Boolean(val)
+      else if (Array.isArray(val)) return val.length > 0
     })
     setIsFilled(filled)
   }, [values])
