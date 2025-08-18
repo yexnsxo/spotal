@@ -1,12 +1,13 @@
 import React from 'react'
 
-const Button = ({ type, label, onClick = () => {} }) => {
+const Button = ({ type, label, onClick = () => {}, disabled = false }) => {
   return (
     <div>
       <button
         type={type}
-        className='w-full py-2.5 rounded-[10px] bg-grey-100 text-grey-200 text-[3.8vw] cursor-pointer select-none transition-colors duration-300 hover:bg-primary hover:text-white'
+        className={`w-full py-2.5 rounded-[10px] text-[3.8vw] cursor-pointer select-none transition-colors duration-300 hover:bg-primary hover:text-white ${disabled ? 'bg-grey-100 text-grey-200' : 'bg-primary text-white'}`}
         onClick={onClick}
+        disabled={disabled}
       >
         {label}
       </button>

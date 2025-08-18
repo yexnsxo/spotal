@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AuthBox2 = ({ label, bg, onClick, value, onChange }) => {
+const AuthBox2 = ({ label, bg, onClick, value, onChange, name }) => {
   return (
     <div className='flex flex-col gap-[0.473vh]'>
       <p className='font-[SemiBold] text-grey-700 text-[17px]'>{label}</p>
@@ -10,6 +10,7 @@ const AuthBox2 = ({ label, bg, onClick, value, onChange }) => {
           type='text'
           value={value}
           onChange={onChange}
+          name={name}
         />
         <button
           className={`w-[16.49vw] max-w-[63px] h-[2.844vh] min-h-[24px] ${bg} rounded-[7px] font-[SemiBold] text-[0.625rem]`}
