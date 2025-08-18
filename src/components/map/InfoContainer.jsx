@@ -7,7 +7,7 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
 
   const goToRecommended = () => {
     navigate('/recommended', {
-      state: { placeData: { placeName, status, address, summary, tags } },
+      state: { placeData: { placeName, status, address, summary, tags }, years: true },
     })
   }
 
