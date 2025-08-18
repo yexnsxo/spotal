@@ -13,6 +13,7 @@ export const locationList = [
   '청파동',
   '해방촌',
 ]
+export const yearList = ['전체', '2024년', '2023년', '2022년', '2021년', '2020년']
 
 const Dropdown = ({ label }) => {
   const [open, setOpen] = useState(false)
@@ -25,7 +26,13 @@ const Dropdown = ({ label }) => {
   useOutsideClick(rootRef, () => setOpen(false), open)
 
   let options = []
-  label === '감정' ? (options = emotionList) : label === '동네' ? (options = locationList) : ''
+  if (label === '감정') {
+    options = emotionList
+  } else if (label === '동네') {
+    options = locationList
+  } else if (label === '년도') {
+    options = yearList
+  }
 
   return (
     <div ref={rootRef} className='relative'>
