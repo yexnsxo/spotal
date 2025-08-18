@@ -8,7 +8,6 @@ import ImageUploader from '@/components/community/ImageUploader.jsx'
 import { useFormFilled } from '@/hooks/useFormFilled'
 
 const EditPage = () => {
-  const [files, setFiles] = useState([])
   const labelClass = 'font-[Medium] text-[1rem]'
   const divClass = 'flex flex-col gap-[1.54vh]'
 
@@ -29,7 +28,7 @@ const EditPage = () => {
               <label className={`${labelClass}`}>이미지 추가</label>
               <ImageUploader
                 files={values.image}
-                onChange={(nextFiles) => handleChange('image', nextFiles)}
+                onChange={(files) => handleChange('image', files)}
                 name='image'
               />
             </div>
