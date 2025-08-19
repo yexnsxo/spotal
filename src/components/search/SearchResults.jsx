@@ -26,7 +26,7 @@ const SearchResults = ({ keyword, goToMap }) => {
   if (results.length === 0) return null
 
   return (
-    <div className='absolute top-[33vh] w-[85%] max-w-[500px] p-3 pt-2 pb-1 border-2 border-primary rounded-[20px] bg-white shadow-md z-20 overflow-y-auto max-h-[55vh] scrollbar-hide'>
+    <div className='absolute top-[33vh] w-[85%] max-w-[500px] p-3 pt-2 pb-1 border-2 border-primary rounded-[20px] bg-white shadow-md z-100 overflow-y-auto max-h-[55vh] scrollbar-hide'>
       <ul>
         {results.map((place) => (
           <li
