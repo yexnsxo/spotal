@@ -40,14 +40,10 @@ const Signup = () => {
         nickname: values.nickname,
       })
       .then((response) => {
-        console.log(response)
         alert('회원가입에 성공하셨습니다.')
         navigate('/login')
       })
       .catch((error) => {
-        console.log('status:', error.response?.status)
-        console.log('data:', error.response?.data) // <- 여기!
-        console.log('sent:', { ...values })
         alert('회원가입에 실패하셨습니다.')
       })
   }
@@ -59,12 +55,10 @@ const Signup = () => {
         email: values.email,
       })
       .then((response) => {
-        console.log(response)
         alert('사용 가능한 이메일입니다.')
         setEmailChecked(true)
       })
       .catch((error) => {
-        console.log(error)
         alert('사용 불가능한 이메일입니다.')
       })
   }
@@ -74,12 +68,10 @@ const Signup = () => {
         nickname: values.nickname,
       })
       .then((response) => {
-        console.log(response)
         alert('사용 가능한 닉네임입니다.')
         setNicknameChecked(true)
       })
       .catch((error) => {
-        console.log(error)
         alert('사용 불가능한 닉네임입니다.')
       })
   }
