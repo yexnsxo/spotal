@@ -9,6 +9,9 @@ import EditPage from './pages/EditPage.jsx'
 import CommunityMyPostList from './pages/CommunityMyPostList'
 import CommunityPostList from './pages/CommunityPostList'
 import HomePage from './pages/HomePage.jsx'
+import MapPage from './pages/MapPage'
+import RecommendedPage from './pages/RecommendedPage'
+import MemorySearchPage from './pages/MemorySearchPage'
 
 const router = createBrowserRouter([
   {
@@ -50,6 +53,18 @@ const router = createBrowserRouter([
   {
     path: '/home',
     element: <HomePage />,
+  },
+  {
+    path: '/map',
+    element: <MapPage />,
+  },
+  {
+    path: '/recommended',
+    element: <RecommendedPage />,
+  },
+  {
+    path: '/memory',
+    element: <MemorySearchPage />,
   },
 ])
 
