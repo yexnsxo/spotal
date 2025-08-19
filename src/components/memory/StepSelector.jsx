@@ -11,22 +11,22 @@ const StepSelector = ({ step, selected, onSelect, onNext, onPrev }) => {
 
   const steps = [
     {
-      title: '그 때 어떤 감정을 느꼈나요?',
-      subtitle: '가게에서 느꼈던 감정을 선택해주세요 (최대 3개)',
-      options: ['상쾌함', '편안함', '조용함', '활기참', '소박함', '세련됨'],
-      src: Memory1,
-      button: '다음',
-      highlight: Highlight1,
-      highlightClass: 'absolute top-[19vh] w-[32vw] text-start z-0', // step1 위치
-    },
-    {
       title: `그 감정을 느꼈던 동네는\n어디였나요?`,
       subtitle: '',
       options: ['이태원', '한남동', '후암동', '효창동', '용문동', '청파동', '해방촌'],
       src: Memory2,
       button: '결과 보기',
       highlight: Highlight2,
-      highlightClass: 'absolute top-[20vh] left-[10%] w-[50%] z-0', // step2 위치
+      highlightClass: 'absolute top-[20vh] left-[10%] w-[50%] z-0', // step1 위치
+    },
+    {
+      title: '그 때 어떤 감정을 느꼈나요?',
+      subtitle: '가게에서 느꼈던 감정을 선택해주세요 (최대 3개)',
+      options: ['상쾌함', '편안함', '조용함', '활기참', '소박함', '세련됨'],
+      src: Memory1,
+      button: '다음',
+      highlight: Highlight1,
+      highlightClass: 'absolute top-[19vh] w-[32vw] text-start z-0', // step2 위치
     },
   ]
 
@@ -51,7 +51,7 @@ const StepSelector = ({ step, selected, onSelect, onNext, onPrev }) => {
         <img src={Return} onClick={onPrev} className='w-3 h-4 mt-[8vh] ml-2 cursor-pointer z-10' />
         {/*<img src={highlightSrc} alt='highlight' className={highlightClass} />*/}
         <div className='grid justify-items-start ml-5 mb-[8vh] z-10'>
-          <h2 className='whitespace-pre-line text-[6vw] mt-[2vh] font-extrabold mb-[0.5vh] text-gray-800 text-start z-10'>
+          <h2 className='whitespace-pre-line text-[6vw] mt-[2vh] font-[ExtraBold] mb-[0.5vh] text-gray-800 text-start z-10'>
             {currentStep.title}
           </h2>
           {currentStep.subtitle && (
