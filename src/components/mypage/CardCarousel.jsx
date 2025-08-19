@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import EmotionCard from '@/components/mypage/EmotionCard'
-import { useState } from 'react'
 import {
   Carousel,
   CarouselContent,
