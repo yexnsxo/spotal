@@ -7,7 +7,7 @@ const AuthBtn = ({ onClick, text, disabled }) => {
         className={`w-[88.2vw] h-[6.04vh] min-[51px] rounded-[10px] bg-primary text-white text-[1.25rem] font-[SemiBold] cursor-pointer disabled:bg-primary-200 disabled:cursor-not-allowed`}
         onClick={onClick}
         disabled={disabled}
-        type='submit'
+        type='button'
       >
         {text}
       </button>
