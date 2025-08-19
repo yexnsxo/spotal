@@ -21,7 +21,7 @@ const Marker = ({ position, placeName, address, state, summary, emotion, onClick
       }
       image={{
         src: markerSrc,
-        size: { width: 24, height: 30 },
+        size: { width: 50, height: 50 },
       }}
     />
   )
