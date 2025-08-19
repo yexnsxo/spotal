@@ -61,7 +61,7 @@ const OnBoardingPage = () => {
           />
         </div>
       </div>
-      <div className='absolute bottom-[11.14vh] flex justify-between w-full px-[6.67vw] bg-white'>
+      <div className='absolute bottom-[11.14vh] flex justify-between w-full px-[6.67vw]'>
         <FooterBtn onClick={goToLogin} text={'건너뛰기'} />
         <FooterBtn onClick={nextStep} text={step < steps.length - 1 ? '다음' : '시작하기'} />
       </div>
