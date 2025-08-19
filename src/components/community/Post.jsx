@@ -17,7 +17,7 @@ const Post = ({ text, list }) => {
         </div>
         <PostMenu />
       </div>
-      <ImageSlider list={list} />
+      <ImageSlider w='68.974vw' h='29.146vh' list={list} />
       <div className='flex mt-[1.9vh] text-[0.75rem]'>
         <p className='whitespace-pre-line'>{displayedText}</p>
         {text.length > 25 && (
