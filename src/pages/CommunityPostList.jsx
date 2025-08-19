@@ -1,9 +1,9 @@
-import React from 'react'
 import Dropdown from '@/components/community/Dropdown.jsx'
-import Post from '@/components/community/Post.jsx'
 import Header2 from '@/components/shared/Header2.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import { useNavigate } from 'react-router-dom'
+import PostList from '@/components/community/PostList.jsx'
+import { imageData } from './CommunityMyPostList'
 
 const CommunityPostList = () => {
   const navigate = useNavigate()
@@ -23,16 +23,7 @@ const CommunityPostList = () => {
             새 글 작성
           </button>
         </div>
-        <div className='flex flex-col gap-[3.91vh]'>
-          <Post
-            list={['url1', 'url2', 'url3', 'url4']}
-            text={'겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요'}
-          />
-          <Post
-            list={['url1', 'url2', 'url3', 'url4']}
-            text={'겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요'}
-          />
-        </div>
+        <PostList imageData={imageData} />
       </div>
       <Footer selectedMenu={'community'} />
     </div>

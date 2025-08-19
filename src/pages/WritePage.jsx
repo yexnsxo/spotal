@@ -33,10 +33,14 @@ const WritePage = () => {
               />
             </div>
             <div className={`${divClass}`}>
-              <label className={`${labelClass}`}>내용 추가</label>
+              <label className={`${labelClass}`}>내용 작성</label>
+              {/* 나중에 연동 후 백엔드에서 받아온 값 올릴 예정 */}
               <textarea
-                className='w-[71.794vw] h-[9.834vh] focus:border-primary bg-[#ffffff] focus:outline-none rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[1.64vw]'
+                className='w-[71.794vw] h-[9.834vh] bg-[#ffffff] focus:outline-none focus:border-primary rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[1.64vw]'
                 placeholder='작성할 내용을 입력하세요'
+                name='text'
+                value={values.text}
+                onChange={handleChange}
               ></textarea>
             </div>
             <div className={`${divClass}`}>

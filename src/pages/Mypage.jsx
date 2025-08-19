@@ -2,19 +2,71 @@ import DefaultImg from '@/assets/DefaultProfileImg.svg'
 import ImageSlider from '@/components/community/ImageSlider'
 import Footer from '@/components/shared/Footer.jsx'
 import EmotionCard from '@/components/mypage/EmotionCard.jsx'
+import { CardCarousel } from '@/components/mypage/CardCarousel.jsx'
 
 const Mypage = () => {
   const urlList = ['url1', 'url2', 'url3']
-  const placeData = {
-    placeName: '역전회관',
-    status: '운영 중',
-    address: '서울 마포구 염리동 173-21',
-    summary: '55년이 넘는 세월 동안 연탄불이랑 어쩌고 저짜고 듀듀',
-    tags: ['세심함', '소박함', '따뜻함'],
-  }
+  const placeData = [
+    {
+      placeName: '역전회관',
+      status: '운영 중',
+      address: '서울 마포구 염리동 173-21',
+      summary: '55년이 넘는 세월 동안 연탄불이랑 어쩌고 저쩌고 듀듀',
+      tags: ['세심함', '소박함', '따뜻함'],
+    },
+    {
+      placeName: '을지면옥',
+      status: '운영 중',
+      address: '서울 중구 을지로3가 123-45',
+      summary: '평양냉면으로 유명한 오래된 맛집',
+      tags: ['시원함', '깔끔함'],
+    },
+    {
+      placeName: '광장시장 빈대떡',
+      status: '운영 중',
+      address: '서울 종로구 창신동 88',
+      summary: '바삭바삭한 전통 빈대떡 맛집',
+      tags: ['고소함', '전통적'],
+    },
+    {
+      placeName: '광장시장 빈대떡',
+      status: '운영 중',
+      address: '서울 종로구 창신동 88',
+      summary: '바삭바삭한 전통 빈대떡 맛집',
+      tags: ['고소함', '전통적'],
+    },
+    {
+      placeName: '광장시장 빈대떡',
+      status: '운영 중',
+      address: '서울 종로구 창신동 88',
+      summary: '바삭바삭한 전통 빈대떡 맛집',
+      tags: ['고소함', '전통적'],
+    },
+    {
+      placeName: '광장시장 빈대떡',
+      status: '운영 중',
+      address: '서울 종로구 창신동 88',
+      summary: '바삭바삭한 전통 빈대떡 맛집',
+      tags: ['고소함', '전통적'],
+    },
+    {
+      placeName: '광장시장 빈대떡',
+      status: '운영 중',
+      address: '서울 종로구 창신동 88',
+      summary: '바삭바삭한 전통 빈대떡 맛집',
+      tags: ['고소함', '전통적'],
+    },
+    {
+      placeName: '광장시장 빈대떡',
+      status: '운영 중',
+      address: '서울 종로구 창신동 88',
+      summary: '바삭바삭한 전통 빈대떡 맛집',
+      tags: ['고소함', '전통적'],
+    },
+  ]
 
   return (
-    <div className='relative min-height: 100vh'>
+    <div className='relative overflow-auto max-h-[100vh] scrollbar-hide'>
       <div className='w-full h-[19.312vh] bg-primary'></div>
       <img
         className='absolute top-[19.312vh] right-[8.72vw] transform -translate-y-1/2 w-[25.64vw] h-[25.64vw] rounded-full bg-primary-200 border-[2px] border-white'
@@ -48,21 +100,8 @@ const Mypage = () => {
       <div className='flex flex-col mt-[4.38vh] mb-[10vh]'>
         <p className='ml-[18.46vw] text-[18px] font-[Bold] text-primary'>감정보관함</p>
         <hr className='border-primary mt-[1.89vh]' />
-        <div className='flex flex-col gap-[1.54vh] justify-center items-center'>
-          <EmotionCard
-            placeName={placeData.placeName}
-            status={placeData.status}
-            address={placeData.address}
-            summary={placeData.summary}
-            tags={placeData.tags}
-          />
-          <EmotionCard
-            placeName={placeData.placeName}
-            status={placeData.status}
-            address={placeData.address}
-            summary={placeData.summary}
-            tags={placeData.tags}
-          />
+        <div className='mt-[3.08vh]'>
+          <CardCarousel placeData={placeData} />
         </div>
       </div>
       <Footer selectedMenu='my' />
