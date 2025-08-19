@@ -3,10 +3,10 @@ import { Map } from 'react-kakao-maps-sdk'
 import Marker from './Marker'
 import InfoContainer from './InfoContainer'
 
-const KakaoMap = ({ center, markers }) => {
+const KakaoMap = ({ markers }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [isOpenMarker, setIsOpenMarker] = useState(false)
-  const [boundCenter, setCenter] = useState(center)
+  const [boundCenter, setCenter] = useState({ lat: markers[0].lat, lng: markers[0].lng })
 
   const handleMarkerClick = (marker) => {
     if (selectedMarker && selectedMarker.placeName === marker.placeName) {
@@ -16,7 +16,7 @@ const KakaoMap = ({ center, markers }) => {
       setSelectedMarker(marker)
       setIsOpenMarker(true)
       setCenter({
-        lat: marker.lat,
+        lat: marker.lat - 0.005,
         lng: marker.lng,
       })
     }
