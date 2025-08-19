@@ -12,7 +12,11 @@ const SearchResults = ({ keyword, goToMap }) => {
     const ps = new kakao.maps.services.Places()
     ps.keywordSearch(keyword, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        setResults(data)
+        const filtered = data.filter(
+          (place) =>
+            place.address_name.includes('용산구') || place.road_address_name?.includes('용산구'),
+        )
+        setResults(filtered)
       } else {
         setResults([])
       }
@@ -28,7 +32,7 @@ const SearchResults = ({ keyword, goToMap }) => {
           <li
             key={place.id}
             className='cursor-pointer border-b-2 border-primary last:border-0 p-2 hover:bg-gray-100'
-            onClick={() => goToMap(place)}
+            onClick={() => goToMap(place.place_name)}
           >
             <p className='font-medium text-[4vw]'>{place.place_name}</p>
             <p className='text-[3.5vw] text-gray-500'>{place.address_name}</p>

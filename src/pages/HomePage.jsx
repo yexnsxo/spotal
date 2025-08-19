@@ -15,16 +15,17 @@ const HomePage = () => {
   const [isNoResult, setNoResult] = useState(false)
   const [isNoYongsan, setNoYongsan] = useState(false)
   const navigate = useNavigate()
+  const { fetchMarker } = usePlaceSearch()
 
-  const { markers, status } = usePlaceSearch(keyword)
+  const goToMap = async (keyword) => {
+    const { marker, status } = await fetchMarker(keyword)
 
-  const goToMap = (keyword) => {
     if (!keyword.trim()) {
       alert('검색어를 입력해주세요!')
       return
     }
     if (status === 'success') {
-      navigate('/map', { state: { markers: markers } })
+      navigate('/map', { state: { markers: marker } })
     }
     if (status === 'noResults') {
       setNoResult(true)
@@ -34,21 +35,6 @@ const HomePage = () => {
       setNoYongsan(true)
       setKeyword('')
     }
-  }
-
-  const goToMapFromList = (place) => {
-    if (!place.address_name.includes('용산구')) {
-      setNoYongsan(true)
-      return
-    }
-
-    const marker = {
-      lat: parseFloat(place.y),
-      lng: parseFloat(place.x),
-      title: place.place_name,
-    }
-
-    navigate('/map', { state: { markers: [marker] } })
   }
 
   const goToMemory = () => {
@@ -83,7 +69,7 @@ const HomePage = () => {
           <img src={Search} alt='검색 버튼'></img>
         </button>
       </div>
-      <SearchResults keyword={keyword} goToMap={goToMapFromList} />
+      <SearchResults keyword={keyword} goToMap={goToMap} />
       <div className='mb-[120px] fixed bottom-0 flex flex-col items-center justify-center'>
         <img src={Arrow} onClick={handleToggle}></img>
         <p className='mt-[30px] text-[4vw] text-grey-200'>화살표를 눌러 기억을 꺼내보세요</p>
