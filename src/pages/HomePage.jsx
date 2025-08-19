@@ -53,13 +53,13 @@ const HomePage = () => {
       <img className='mt-[18.36vh]' src={Logo} alt='로고' />
       {isNoResult && <SearchNoResults onClose={handleCloseInfo} />}
       {isNoYongsan && <SearchNoYongsan onClose={handleCloseInfo} />}
-      <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-[85%] max-w-[500px]'>
+      <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-[85%]'>
         <input
           type='text'
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           placeholder='가게 이름, 위치를 검색해보세요!'
-          className='ml-3 text-[4vw] outline-0'
+          className='ml-3 text-[4vw] w-[50vw] outline-0'
           aria-label='검색창'
         ></input>
         <button
