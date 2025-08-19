@@ -12,8 +12,8 @@ import {
 
 export function CardCarousel({ placeData }) {
   return (
-    <Carousel opts={{ align: 'center' }}>
-      <CarouselContent>
+    <Carousel opts={{ align: 'center' }} plugins={[]} className={''} setApi={''}>
+      <CarouselContent className={''}>
         {Array.from({ length: Math.ceil(placeData.length / 2) }).map((_, i) => (
           <CarouselItem key={i} className='flex justify-center items-center pb-[1vh]'>
             <div className='grid grid-rows-2 gap-2'>
