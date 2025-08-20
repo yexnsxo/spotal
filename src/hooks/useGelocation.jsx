@@ -1,6 +1,11 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 const useGelocation = () => {
+  const [location, setLocation] = useState({
+    lat: null,
+    lng: null,
+  })
+
   useEffect(() => {
     if (!navigator.geolocation) {
       console.error('이 브라우저에서는 위치 정보가 지원되지 않습니다.')
@@ -9,8 +14,10 @@ const useGelocation = () => {
 
     const watchId = navigator.geolocation.watchPosition(
       (pos) => {
-        const lat = pos.coords.latitude
-        const lng = pos.coords.longitude
+        setLocation({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        })
       },
       (err) => {
         console.error('위치 정보를 가져올 수 없습니다:', err)
@@ -26,6 +33,7 @@ const useGelocation = () => {
       navigator.geolocation.clearWatch(watchId)
     }
   }, [])
+  return location
 }
 
 export default useGelocation
