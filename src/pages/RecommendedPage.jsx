@@ -19,9 +19,9 @@ const RecommendedPage = () => {
   }
 
   return (
-    <div className='overflow-y-auto max-h-[100vh] scrollbar-hide'>
+    <div className='mx-auto overflow-y-auto max-h-[100vh] scrollbar-hide bg-white w-full max-w-[768px]'>
       <Header label={'유사 가게 추천 결과'}></Header>
-      <div className='mt-[80px] w-[80%] mx-auto flex flex-col gap-4 mb-[80px]'>
+      <div className='mt-[80px] items-center w-[80%] mx-auto flex flex-col gap-4 mb-[100px]'>
         <div className='flex justify-end'>{years && <Dropdown label={'년도'} />}</div>
         {/*로직 처리 후, 추천 장소 컴포넌트 차례대로 추가*/}
         <RecommendedPlaces
