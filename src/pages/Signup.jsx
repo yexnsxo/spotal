@@ -8,13 +8,14 @@ import { useFormFilled } from '@/hooks/useFormFilled'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
+export const baseURL = import.meta.env.VITE_API_BASE_URL
+
 const Signup = () => {
   const { values, handleChange, isFilled } = useFormFilled({
     email: '',
     password: '',
     nickname: '',
   })
-  const baseURL = import.meta.env.VITE_API_BASE_URL
   const navigate = useNavigate()
 
   // 중복확인 통과여부 -> 현재 로직 없이 버튼 클릭 시 true 바뀌도록 설정
