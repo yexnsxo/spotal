@@ -11,8 +11,8 @@ const PostList = ({ postData }) => {
         return (
           <div key={post.memory_id}>
             <Post
-              tag1={post.emotions}
-              tag2={post.location}
+              emotionTags={post.emotions}
+              locationTags={post.location}
               urllist={post.images[0].image_url}
               text={post.content}
             />

@@ -3,10 +3,34 @@ import Header2 from '@/components/shared/Header2.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import { useNavigate } from 'react-router-dom'
 import PostList from '@/components/community/PostList.jsx'
-import { imageData } from './CommunityMyPostList'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
+import { baseURL } from './Signup'
 
 const CommunityPostList = () => {
   const navigate = useNavigate()
+  const [postData, setPostData] = useState([])
+
+  const getPost = () => {
+    axios
+      .get(`${baseURL}/community/memories`)
+      .then((res) => {
+        console.log(res.data)
+        console.log(res.data.message)
+        console.log(res.data.data)
+        const posts = Array.isArray(res.data?.data) ? res.data.data : []
+        setPostData(posts.slice().reverse())
+      })
+      .catch((err) => {
+        console.log(err)
+        setPostData([])
+      })
+  }
+
+  useEffect(() => {
+    getPost()
+  }, [])
+
   return (
     <div>
       <Header2 label1={'피드'} label2={'내 글 모음'} link={'/mypost'} />
@@ -23,7 +47,7 @@ const CommunityPostList = () => {
             새 글 작성
           </button>
         </div>
-        <PostList imageData={imageData} />
+        <PostList postData={postData} />
       </div>
       <Footer selectedMenu={'community'} />
     </div>

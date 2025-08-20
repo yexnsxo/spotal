@@ -3,10 +3,17 @@ import Tag from './Tag.jsx'
 import ImageSlider from './ImageSlider.jsx'
 import PostMenu from './PostMenu.jsx'
 
-const Post = ({ text, urllist, tag1, tag2 }) => {
+export const getName = (tag) => {
+  if (Array.isArray(tag)) {
+    return tag.map((e) => e.name)
+  } else return [tag]
+}
+
+const Post = ({ text, urllist, emotionTags, locationTags }) => {
   const [expanded, setExpanded] = useState(false)
   const displayedText = expanded ? text : text.length > 25 ? text.slice(0, 25) : text
-  const tagList = (tag1 + tag2).split(',')
+
+  const tagList = [...getName(emotionTags), ...getName(locationTags)]
 
   return (
     <div className='flex flex-col relative px-[3.846vw] w-[76.67vw] rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] bg-white'>
@@ -27,9 +34,11 @@ const Post = ({ text, urllist, tag1, tag2 }) => {
         )}
       </div>
       <div className='flex gap-[6px] mt-[0.947vh] mb-[1.78vh]'>
-        {tagList.map((tag) => {
-          ;<Tag label={tag} />
-        })}
+        {tagList.map((tag, idx) => (
+          <div key={idx}>
+            <Tag label={tag} />
+          </div>
+        ))}
       </div>
     </div>
   )
