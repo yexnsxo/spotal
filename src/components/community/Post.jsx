@@ -24,7 +24,8 @@ const Post = ({ text, urllist, emotionTags, locationTags }) => {
         </div>
         <PostMenu />
       </div>
-      <ImageSlider w='68.974vw' h='29.146vh' urllist={urllist} />
+      {urllist.length > 0 ? <ImageSlider w='68.974vw' h='29.146vh' urllist={urllist} /> : ''}
+
       <div className='flex mt-[1.9vh] text-[0.75rem]'>
         <p className='whitespace-pre-line'>{displayedText}</p>
         {text.length > 25 && (

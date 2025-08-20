@@ -18,7 +18,7 @@ const PostList = ({ postData }) => {
             <Post
               emotionTags={post.emotions}
               locationTags={post.location}
-              urllist={post.images[0].image_url}
+              urllist={post.images}
               text={post.content}
             />
           </div>
