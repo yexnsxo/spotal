@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Map, Polyline } from 'react-kakao-maps-sdk'
 import Marker from './Marker'
 import InfoContainer from './InfoContainer'
@@ -7,15 +7,12 @@ import useLoadPolyline from '@/hooks/useLoadPolyline'
 const KakaoMap = ({ markers }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [isOpenMarker, setIsOpenMarker] = useState(false)
-  const [boundCenter, setCenter] = useState({ lat: markers[0].lat, lng: markers[0].lng })
-  let linePath = []
+  const mapRef = useRef(null)
 
-  if (markers[0].status === '이전함') {
-    linePath = useLoadPolyline({
-      origin: `${markers[0].lng},${markers[0].lat}`,
-      destination: '127.033,37.501',
-    })
-  }
+  const linePath = useLoadPolyline({
+    origin: markers.length ? `${markers[0].lng},${markers[0].lat}` : null,
+    destination: markers.length && markers[0].status === '이전함' ? '127.033,37.501' : null,
+  })
 
   const handleMarkerClick = (marker) => {
     if (selectedMarker && selectedMarker.placeName === marker.placeName) {
@@ -24,10 +21,10 @@ const KakaoMap = ({ markers }) => {
     } else {
       setSelectedMarker(marker)
       setIsOpenMarker(true)
-      setCenter({
-        lat: marker.lat - 0.005,
-        lng: marker.lng,
-      })
+      if (mapRef.current) {
+        const moveLatLng = new window.kakao.maps.LatLng(marker.lat - 0.005, marker.lng)
+        mapRef.current.panTo(moveLatLng)
+      }
     }
   }
 
@@ -38,9 +35,10 @@ const KakaoMap = ({ markers }) => {
   return (
     <Map
       onClick={handleMapClick}
-      center={boundCenter}
+      center={{ lat: markers[0].lat, lng: markers[0].lng }}
       level={5}
       style={{ width: '100vw', height: '100vh' }}
+      onCreate={(map) => (mapRef.current = map)}
     >
       {markers.map((marker) => (
         <Marker
