@@ -2,28 +2,31 @@ import React, { useState, useMemo } from 'react'
 import Logo from '../assets/Logo.svg'
 import AuthBox from '@/components/auth/AuthBox.jsx'
 import AuthBtn from '@/components/auth/AuthBtn.jsx'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useFormFilled } from '@/hooks/useFormFilled'
+import { baseURL } from './Signup.jsx'
+import axios from 'axios'
 
 const Login = () => {
   const { values, handleChange, isFilled } = useFormFilled({
     email: '',
     password: '',
   })
+  const navigate = useNavigate()
 
   const postLoginRequest = () => {
-    // axios
-    //   .post(`${baseURL}/entries/`, {
-    //   })
-    //   .then((response) => {
-    //     console.log(response)
-    //     alert('로그인에 성공하셨습니다.')
-    //     navigate('/')
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //     alert('로그인에 실패하셨습니다.')
-    //   })
+    axios
+      .post(`${baseURL}/api/users/login/`, {
+        email: values.email,
+        password: values.password,
+      })
+      .then((response) => {
+        alert(response.data.message)
+        navigate('/home')
+      })
+      .catch((error) => {
+        alert('로그인에 실패하셨습니다.')
+      })
   }
 
   return (
