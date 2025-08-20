@@ -33,7 +33,7 @@ const CommunityMyPostList = () => {
             <Dropdown label={'동네'} />
           </div>
         </div>
-        <PostList imageData={imageData} />
+        <PostList postData={imageData} />
       </div>
       <Footer selectedMenu={'community'} />
     </div>
