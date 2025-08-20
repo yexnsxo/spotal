@@ -1,12 +1,17 @@
 import { useState } from 'react'
-import { Map } from 'react-kakao-maps-sdk'
+import { Map, Polyline } from 'react-kakao-maps-sdk'
 import Marker from './Marker'
 import InfoContainer from './InfoContainer'
+import useLoadPolyline from '@/hooks/useLoadPolyline'
 
 const KakaoMap = ({ markers }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [isOpenMarker, setIsOpenMarker] = useState(false)
   const [boundCenter, setCenter] = useState({ lat: markers[0].lat, lng: markers[0].lng })
+  const linePath = useLoadPolyline({
+    origin: `${markers[0].lng},${markers[0].lat}`,
+    destination: '127.033,37.501',
+  })
 
   const handleMarkerClick = (marker) => {
     if (selectedMarker && selectedMarker.placeName === marker.placeName) {
@@ -45,7 +50,15 @@ const KakaoMap = ({ markers }) => {
           onClick={handleMarkerClick}
         />
       ))}
-
+      {linePath.length > 0 && (
+        <Polyline
+          path={linePath}
+          strokeWeight={5}
+          strokeColor='#ff6200'
+          strokeOpacity={0.8}
+          strokeStyle='solid'
+        />
+      )}
       {isOpenMarker && (
         <InfoContainer
           placeName={selectedMarker.placeName}
