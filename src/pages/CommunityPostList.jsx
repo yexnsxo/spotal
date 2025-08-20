@@ -19,7 +19,7 @@ const CommunityPostList = () => {
         console.log(res.data.message)
         console.log(res.data.data)
         const posts = Array.isArray(res.data?.data) ? res.data.data : []
-        setPostData(posts.slice().reverse())
+        setPostData(posts)
       })
       .catch((err) => {
         console.log(err)
