@@ -46,7 +46,7 @@ const usePlaceSearch = () => {
     }
   }
 
-  return { fetchMarker }
+  return { fetchMarker, status }
 }
 
 export default usePlaceSearch
