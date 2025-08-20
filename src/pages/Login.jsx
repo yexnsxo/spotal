@@ -22,6 +22,8 @@ const Login = () => {
       })
       .then((response) => {
         alert(response.data.message)
+        localStorage.setItem('Token', response.data.token)
+        localStorage.setItem('user.id', response.data.user.id)
         navigate('/home')
       })
       .catch((error) => {
