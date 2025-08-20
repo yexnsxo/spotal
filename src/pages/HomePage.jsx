@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo.svg'
 import Search from '../assets/Search.svg'
@@ -49,44 +49,53 @@ const HomePage = () => {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center justify-items-center'>
+    <div className='bg-white flex flex-col items-center w-full min-h-screen max-w-[768px] mx-auto px-4'>
       <img className='mt-[18.36vh]' src={Logo} alt='로고' />
+
       {isNoResult && <SearchNoResults onClose={handleCloseInfo} />}
       {isNoYongsan && <SearchNoYongsan onClose={handleCloseInfo} />}
-      <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-[85%]'>
+
+      {/* 검색창 */}
+      <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-full'>
         <input
           type='text'
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           placeholder='가게 이름, 위치를 검색해보세요!'
-          className='ml-3 text-[4vw] w-[50vw] outline-0'
+          className='ml-3 text-base md:text-lg w-full outline-0'
           aria-label='검색창'
-        ></input>
+        />
         <button
           onClick={() => goToMap(keyword)}
-          className='flex justify-center items-center min-w-[40px] w-[9vw] min-h-[37px] h-[4vh] rounded-[12px] bg-primary'
+          className='flex justify-center items-center min-w-[40px] h-[4vh] rounded-[12px] bg-primary px-2'
         >
-          <img src={Search} alt='검색 버튼'></img>
+          <img src={Search} alt='검색 버튼' />
         </button>
       </div>
+
       <SearchResults keyword={keyword} goToMap={goToMap} />
-      <div className='mb-[120px] fixed bottom-0 flex flex-col items-center justify-center'>
-        <img src={Arrow} onClick={handleToggle}></img>
-        <p className='mt-[30px] text-[4vw] text-grey-200'>화살표를 눌러 기억을 꺼내보세요</p>
+
+      {/* 화살표 영역 */}
+      <div className='fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-[120px] flex flex-col items-center justify-center w-full max-w-[768px]'>
+        <img src={Arrow} onClick={handleToggle} />
+        <p className='mt-4 text-base md:text-lg text-grey-200'>화살표를 눌러 기억을 꺼내보세요</p>
       </div>
+
+      {/* 기억 꺼내기 영역 */}
       <div
         onClick={goToMemory}
         className={`
-          fixed bottom-0 mb-[120px] flex flex-col items-center justify-center z-[30]
-          h-[15vh] w-[85%] bg-[#FEF1DA] border border-primary rounded-[7px]
+          fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-[120px] flex flex-col items-center justify-center z-[30]
+          h-[15vh] w-[85%] mx-auto max-w-[700px] bg-[#FEF1DA] border border-primary rounded-[7px]
           transition-transform duration-500 ease-out
-           ${isToggle ? 'translate-y-0 opacity-100 visible' : 'translate-y-full opacity-0 invisible'}
+          ${isToggle ? 'translate-y-0 opacity-100 visible' : 'translate-y-full opacity-0 invisible'}
         `}
       >
-        <h1 className='text-[5.1vw] font-bold text-grey-700'>감정으로 기억 꺼내기</h1>
-        <p className='mt-[10px] text-[4.2vw] text-[#828282]'>분위기, 느낌으로 기억하시나요?</p>
+        <h1 className='text-lg md:text-2xl font-bold text-grey-700'>감정으로 기억 꺼내기</h1>
+        <p className='mt-2 text-base md:text-lg text-[#828282]'>분위기, 느낌으로 기억하시나요?</p>
       </div>
-      <Footer selectedMenu={'home'}></Footer>
+
+      <Footer selectedMenu='home' />
     </div>
   )
 }
