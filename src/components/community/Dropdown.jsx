@@ -13,7 +13,6 @@ export const locationList = [
   '청파동',
   '해방촌',
 ]
-export const yearList = ['전체', '2024년', '2023년', '2022년', '2021년', '2020년']
 
 const Dropdown = ({ label }) => {
   const [open, setOpen] = useState(false)
@@ -30,8 +29,6 @@ const Dropdown = ({ label }) => {
     options = emotionList
   } else if (label === '동네') {
     options = locationList
-  } else if (label === '년도') {
-    options = yearList
   }
 
   return (
