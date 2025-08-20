@@ -3,7 +3,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 
-function ImageSlider({ list, w, h }) {
+function ImageSlider({ urllist, w, h }) {
   const [current, setCurrent] = useState(0)
   const settings = {
     dots: true,
@@ -36,9 +36,9 @@ function ImageSlider({ list, w, h }) {
       style={{ width: w, height: h }}
     >
       <Slider {...settings}>
-        {list.map((url, i) => (
+        {urllist.map((url, i) => (
           <div
-            key={`${list}-${i}`}
+            key={`${urllist}-${i}`}
             className='h-full outline-none [--tw-tap-highlight-color:transparent]'
           >
             <img
