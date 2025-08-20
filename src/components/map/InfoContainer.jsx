@@ -16,9 +16,9 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
       <button className='block bg-[#ADADAD] w-[134px] h-[5px] rounded-[10px] mx-auto mb-6'></button>
 
       <div className='flex justify-between items-center mb-2 bg-primary-300 pt-3 pb-3 pl-5 pr-5 rounded-[10px]'>
-        <h2 className='m-0 font-bold text-[5vw] max-w-[44vw]'>{placeName}</h2>
+        <h2 className='m-0 font-bold text-xl max-w-[44vw]'>{placeName}</h2>
         <span
-          className={`text-[3.5vw] px-3 py-1 rounded-full border font-semibold select-none ${
+          className={`text-sm px-3 py-1 rounded-full border font-semibold select-none ${
             status === '폐업함'
               ? 'bg-[#FDF2F8] text-[#BE195D] border-[#BE195D]'
               : status === '이전함'
@@ -31,11 +31,11 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
       </div>
 
       <div className='bg-primary-300 pt-5 pb-3 pl-5 pr-5 rounded-[10px] mb-2'>
-        <p className='text-[4vw] text-black mb-2 whitespace-pre-wrap'>
+        <p className='text-m text-black mb-2 whitespace-pre-wrap'>
           <strong className='mr-1'>주소:</strong> {address}
         </p>
 
-        <p className='text-[4vw] leading-relaxed text-black mb-2'>
+        <p className='text-m leading-relaxed text-black mb-2'>
           <strong className='mr-1'>요약:</strong> {summary}
         </p>
 
@@ -43,7 +43,7 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [] }) => {
           {tags.map((tag, idx) => (
             <span
               key={idx}
-              className='text-[3.2vw] text-gray-600 border border-[#ADADAD] px-2 py-1 rounded-[50px] select-none bg-[#FFFEFC]'
+              className='text-xs text-gray-600 border border-[#ADADAD] px-2 py-1 rounded-[50px] select-none bg-[#FFFEFC]'
             >
               {tag}
             </span>

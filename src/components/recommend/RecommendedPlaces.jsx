@@ -17,12 +17,12 @@ const RecommendedPlaces = ({ placeName, status, address, summary, tags = [] }) =
   return (
     <>
       <div
-        className='max-w-[500px] bg-white rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] p-6 pb-4 cursor-pointer'
+        className='max-w-[400px] bg-white rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] p-6 pb-4 cursor-pointer'
         onClick={handleOpenInfo}
       >
-        <img src='' className='bg-grey-100 w-[80vw] h-[15vh] rounded-[10px] mb-2'></img>
+        <img src='' className='bg-grey-100 w-[80vw] h-[150px] rounded-[10px] mb-2'></img>
         <div className='flex justify-between items-center mb-2 pt-1 pl-1 rounded-[10px]'>
-          <h2 className='m-0 font-bold text-[4.5vw]'>{placeName}</h2>
+          <h2 className='m-0 font-bold text-xl'>{placeName}</h2>
           <img
             src={isMarked ? BookMark2 : BookMark}
             onClick={(e) => {
@@ -35,7 +35,7 @@ const RecommendedPlaces = ({ placeName, status, address, summary, tags = [] }) =
           {tags.map((tag, idx) => (
             <span
               key={idx}
-              className='text-[3.2vw] text-[#FFBA42] border border-[#FFBA42] px-2 py-1 rounded-[50px] select-none bg-[#FFF8EC]'
+              className='text-xs text-[#FFBA42] border border-[#FFBA42] px-2 py-1 rounded-[50px] select-none bg-[#FFF8EC]'
             >
               {tag}
             </span>
