@@ -5,7 +5,7 @@ import Community from '@/assets/Community.svg?react'
 
 const Footer = ({ selectedMenu = '' }) => {
   return (
-    <div className='fixed bottom-0 left-0 right-0 z-50 bg-white flex items-center justify-between w-[100vw] pr-[7.82vw] pl-[7.82vw] h-[7.464vh] rounded-t-[20px] shadow-[0_-1px_5px_rgba(0,0,0,0.1)]'>
+    <div className='fixed bottom-0 z-50 bg-white flex items-center justify-between w-full max-w-[768px] pr-[7.82vw] pl-[7.82vw] h-[7.464vh] rounded-t-[20px] left-1/2 transform -translate-x-1/2 shadow-[0_-1px_5px_rgba(0,0,0,0.1)] '>
       <Link to={'/home'}>
         <Home className={selectedMenu === 'home' ? 'text-primary' : 'text-grey-200'} />
       </Link>
