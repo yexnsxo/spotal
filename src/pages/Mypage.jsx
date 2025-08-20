@@ -66,18 +66,18 @@ const Mypage = () => {
   ]
 
   return (
-    <div className='relative overflow-auto max-h-[100vh] scrollbar-hide'>
+    <div className='relative overflow-auto max-h-[100vh] scrollbar-hide max-w-[768px] w-full mx-auto bg-white'>
       <div className='w-full h-[19.312vh] bg-primary'></div>
       <img
-        className='absolute top-[19.312vh] right-[8.72vw] transform -translate-y-1/2 w-[25.64vw] h-[25.64vw] rounded-full bg-primary-200 border-[2px] border-white'
+        className='absolute top-[19.312vh] right-[30px] transform -translate-y-1/2 w-[25.64vw] max-w-[25%] max-h-[25%] h-[25.64vw] rounded-full bg-primary-200 border-[2px] border-white'
         src={DefaultImg}
       />
-      <div className='flex flex-col gap-[1.57vh] w-full h-[18.25vh] pl-[8.21vw]'>
+      <div className='flex flex-col gap-[1.57vh] w-full h-[18.25vh] pl-[30px]'>
         <h3 className='mt-[4.74vh] font-[Bold] text-[24px]'>숙멋사</h3>
         <p className='text-[1rem]'>따뜻함을 좋아하는 감성탐험가</p>
       </div>
       <div className='bg-[#f8f8f8] flex flex-col justify-center pt-[1.78vh]'>
-        <p className='ml-[18.46vw] text-[18px] font-[Bold] text-primary'>북마크</p>
+        <p className='ml-[70px] text-[18px] font-[Bold] text-primary'>북마크</p>
         <hr className='border-primary mt-[1.89vh]' />
         <div className='flex flex-col gap-[2.47vw] ml-[3.85vw] py-[3.1vh]'>
           <p className='text-gray-200 text-[12px]'>스크랩한 글이 이곳에 저장됩니다.</p>
@@ -98,7 +98,7 @@ const Mypage = () => {
         </div>
       </div>
       <div className='flex flex-col mt-[4.38vh] mb-[10vh]'>
-        <p className='ml-[18.46vw] text-[18px] font-[Bold] text-primary'>감정보관함</p>
+        <p className='ml-[70px] text-[18px] font-[Bold] text-primary'>감정보관함</p>
         <hr className='border-primary mt-[1.89vh]' />
         <div className='mt-[3.08vh]'>
           <CardCarousel placeData={placeData} />
