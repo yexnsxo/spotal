@@ -2,20 +2,28 @@ import { useState, useEffect } from 'react'
 import Camera from '@/assets/Camera.svg'
 
 const sameArray = (a = [], b = []) => a.length === b.length && a.every((v, i) => v === b[i])
-const ImageUploader = ({ onChange, urllist }) => {
+const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
   const [images, setImages] = useState([])
+  const [files, setFiles] = useState([])
 
   useEffect(() => {
     if (!urllist) return
+    // urllist(객체 배열/문자열 혼합 가능)를 "문자열 URL 배열"로 정규화
     const urls = (Array.isArray(urllist) ? urllist : [])
       .map((u) => (typeof u === 'string' ? u : u?.image_url))
       .filter(Boolean)
+
+    // 현재 images와 동일하면 set 생략 → 루프 차단
     if (!sameArray(images, urls)) setImages(urls)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urllist])
 
   useEffect(() => {
     onChange?.(images)
   }, [images, onChange])
+  useEffect(() => {
+    onFilesChange?.(files)
+  }, [files, onFilesChange])
 
   const handleUpload = (e) => {
     const uploaded = Array.from(e.target.files || [])
@@ -24,6 +32,7 @@ const ImageUploader = ({ onChange, urllist }) => {
       return
     }
     const newUrls = uploaded.map((f) => URL.createObjectURL(f))
+    setFiles((prev) => [...prev, uploaded])
     setImages((prev) => [...prev, ...newUrls])
     e.target.value = ''
   }

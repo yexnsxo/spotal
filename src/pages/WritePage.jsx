@@ -14,6 +14,7 @@ const WritePage = () => {
   const labelClass = 'font-[Medium] text-[1rem]'
   const divClass = 'flex flex-col gap-[1.54vh]'
   const [images, setImages] = useState([])
+  const [files, setFiles] = useState([])
   const navigate = useNavigate()
 
   const { values, handleChange, isFilled } = useFormFilled({
@@ -42,13 +43,21 @@ const WritePage = () => {
       formData.append('location_id', String(values.location))
     }
 
-    ;(images ?? []).forEach((file) => {
-      formData.append('images', file)
-    })
+    const flatFiles = (files ?? []).flat() // 1단계만 중첩이라면 flat()으로 충분
+    // 또는 깊이 모르면 flat(Infinity)
+    flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
     formData.append('user_id', localStorage.getItem('user.id'))
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1])
+    // ✅ 정확히 보기
+    for (const [k, v] of formData.entries()) {
+      if (v instanceof File) {
+        console.log(k, v.name, v.type, v.size)
+      } else {
+        console.log(k, v)
+      }
     }
+
+    // 또는
+    console.log('images:', files) // 콤마로 찍기
     axios
       .post(`${baseURL}/community/memories/`, formData)
       .then((res) => {
@@ -69,7 +78,12 @@ const WritePage = () => {
           <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>이미지 추가</label>
-              <ImageUploader urllist={images} onChange={setImages} />
+              <ImageUploader
+                urllist={images}
+                onChange={setImages}
+                onFilesChange={setFiles}
+                onRemove={() => {}}
+              />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>내용 작성</label>

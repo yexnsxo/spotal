@@ -16,6 +16,7 @@ const EditPage = () => {
   const [data, setData] = useState(null)
   const { memory_id } = useParams()
   const [images, setImages] = useState([])
+  const [files, setFiles] = useState([])
   const navigate = useNavigate()
 
   const { values, handleChange, isFilled, setValues } = useFormFilled({
@@ -77,9 +78,9 @@ const EditPage = () => {
     if (values.location != null) {
       formData.append('location_id', String(values.location))
     }
-    ;(images ?? []).forEach((file) => {
-      formData.append('images', file)
-    })
+    const flatFiles = (files ?? []).flat() // 1단계만 중첩이라면 flat()으로 충분
+    // 또는 깊이 모르면 flat(Infinity)
+    flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
     formData.append('user_id', localStorage.getItem('user.id'))
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1])
@@ -104,7 +105,12 @@ const EditPage = () => {
           <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>이미지 추가</label>
-              <ImageUploader urllist={images} onChange={setImages} />
+              <ImageUploader
+                urllist={images}
+                onChange={setImages}
+                onFilesChange={setFiles}
+                onRemove={() => {}}
+              />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>내용 수정</label>
