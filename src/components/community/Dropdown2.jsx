@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import TagBtn from './TagBtn.jsx'
 import { useOutsideClick } from '@/hooks/useOutsideClick.jsx'
 import ChevronUp from '@/assets/ChevronUp.svg'
@@ -34,7 +34,6 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name, value }) => {
       setSelected((prev) => (prev.length ? [] : prev))
       return
     }
-
     if (isEmotion) {
       const ids = toIdArray(value)
       const next = options.filter((opt) => ids.includes(Number(opt[id])))
