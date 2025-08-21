@@ -41,7 +41,7 @@ function ImageSlider({ urllist = [], w, h }) {
   return (
     <div
       className='relative mt-[1.6vh] rounded-[10px] overflow-hidden'
-      style={{ width: w, height: h }}
+      style={{ width: w, height: h, maxWidth: '31.5rem' }}
     >
       <Slider {...settings}>
         {imageUrlList.map((url, i) => (

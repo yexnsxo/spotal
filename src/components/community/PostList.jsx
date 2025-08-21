@@ -11,7 +11,7 @@ const PostList = ({ postData }) => {
     )
   }
   return (
-    <div className='flex flex-col gap-[3.91vh]'>
+    <div className='flex flex-col gap-[3.91vh] w-full'>
       {postData.map((post) => {
         const locationName = post?.location?.name ?? null
         const emotionNames = Array.isArray(post?.emotions)

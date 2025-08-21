@@ -2,7 +2,6 @@ import Dropdown from '@/components/community/Dropdown.jsx'
 import Header2 from '@/components/shared/Header2.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import PostList from '@/components/community/PostList.jsx'
-import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { baseURL } from './Signup'
@@ -32,18 +31,20 @@ const CommunityMyPostList = () => {
   }, [])
 
   return (
-    <div>
-      <Header2 label1={'내 글'} label2={'새 글 작성'} link={'/writepage'} />
-      <div className='px-[10.769vw] pt-[7.11vh] pb-[10vh] bg-white min-h-screen'>
-        <div className='flex justify-between my-[2.49vh]'>
-          <div className='flex gap-[1.54vw] '>
-            <Dropdown label={'감정'} />
-            <Dropdown label={'동네'} />
+    <div className='flex flex-col items-center justify-center '>
+      <div className='max-w-[768px] w-full flex flex-col items-center justify-center bg-white'>
+        <Header2 label1={'내 글'} label2={'새 글 작성'} link={'/writepage'} />
+        <div className='pt-[7.11vh] pb-[10vh] bg-white min-h-screen'>
+          <div className='flex justify-between my-[2.49vh]'>
+            <div className='flex gap-[1.54vw] '>
+              <Dropdown label={'감정'} />
+              <Dropdown label={'동네'} />
+            </div>
           </div>
+          <PostList postData={myPostData} />
         </div>
-        <PostList postData={myPostData} />
+        <Footer selectedMenu={'community'} />
       </div>
-      <Footer selectedMenu={'community'} />
     </div>
   )
 }

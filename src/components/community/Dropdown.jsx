@@ -45,14 +45,14 @@ const Dropdown = ({ label }) => {
         onClick={() => {
           setOpen((o) => !o)
         }}
-        className={`flex items-center justify-center w-[18.72vw] h-[3.08vh] bg-grey-100 cursor-pointer rounded-[5px] font-[SemiBold] text-[12px] text-grey-700 ${filtered ? 'bg-primary-300' : 'bg-grey-100'}`}
+        className={`flex items-center justify-center w-[18.72vw] max-w-[6rem] h-[1.5rem] bg-grey-100 cursor-pointer rounded-[5px] font-[SemiBold] text-[12px] text-grey-700 ${filtered ? 'bg-primary-300' : 'bg-grey-100'}`}
       >
         {displayLabel}
         <img src={DropdownSign} />
       </button>
 
       {open && (
-        <div className='flex flex-col bg-grey-100 rounded-[10px] w-[18.72vw] mt-[1px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full left-0 z-40'>
+        <div className='flex flex-col bg-grey-100 rounded-[10px] w-[18.72vw] max-w-[6rem] mt-[1px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full left-0 z-40'>
           <button
             className={`hover:bg-primary-300 p-[5px] active:bg-primary-300 ${
               selected === '전체' ? 'bg-primary-300' : 'bg-grey-100'
