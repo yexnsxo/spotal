@@ -35,11 +35,11 @@ const WritePage = () => {
     const formData = new FormData()
     formData.append('content', values.text)
     ;(values.emotion ?? []).forEach((id) => {
-      formData.append('emotions.emotion_id', String(id))
+      formData.append('emotion_id', String(id))
     })
 
     if (values.location != null) {
-      formData.append('locations.location_id', String(values.location))
+      formData.append('location_id', String(values.location))
     }
 
     ;(images ?? []).forEach((file) => {
@@ -69,7 +69,7 @@ const WritePage = () => {
           <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>이미지 추가</label>
-              <ImageUploader onChange={setImages} />
+              <ImageUploader urllist={images} onChange={setImages} />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>내용 작성</label>
@@ -88,11 +88,13 @@ const WritePage = () => {
                 options={locationList}
                 name='location'
                 onChange={handleChange}
+                value={values.location}
               />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>감정 태그 추가</label>
               <Dropdown2
+                value={values.emotion}
                 placeholder='원하는 감정 태그를 선택하세요'
                 options={emotionList}
                 name='emotion'
