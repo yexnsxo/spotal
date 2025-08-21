@@ -18,6 +18,7 @@ const EditPage = () => {
   const [images, setImages] = useState([])
   const [files, setFiles] = useState([])
   const navigate = useNavigate()
+  // const [deletedIds, setDeletedIds] = useState([])
 
   const { values, handleChange, isFilled, setValues } = useFormFilled({
     text: '',
@@ -64,7 +65,6 @@ const EditPage = () => {
       emotion: toIdArrayByKey(data?.emotions, 'emotion_id'),
       location: data?.location?.location_id ?? null,
     }
-
     setValues(nextValues)
     setImages(Array.isArray(data?.images) ? data.images : [])
   }, [data, setValues])
@@ -81,6 +81,7 @@ const EditPage = () => {
     const flatFiles = (files ?? []).flat() // 1단계만 중첩이라면 flat()으로 충분
     // 또는 깊이 모르면 flat(Infinity)
     flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
+    // deletedIds.forEach((id) => formData.append('deleted_image_id', String(id)))
     formData.append('user_id', localStorage.getItem('user.id'))
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1])
@@ -109,7 +110,13 @@ const EditPage = () => {
                 urllist={images}
                 onChange={setImages}
                 onFilesChange={setFiles}
-                onRemove={() => {}}
+                onRemove={(id) => {
+                  console.log(id)
+                  // setDeletedIds((prev) => [...prev, id])
+                  axios.delete(`${baseURL}/community/images/${id}/`).then((res) => {
+                    setImages((prev) => prev.filter((img) => img.image_id !== id))
+                  })
+                }}
               />
             </div>
             <div className={`${divClass}`}>

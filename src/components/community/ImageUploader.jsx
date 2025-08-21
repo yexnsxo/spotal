@@ -1,26 +1,47 @@
 import { useState, useEffect } from 'react'
 import Camera from '@/assets/Camera.svg'
 
-const sameArray = (a = [], b = []) => a.length === b.length && a.every((v, i) => v === b[i])
+const sameImageList = (a = [], b = []) =>
+  a.length === b.length && a.every((x, i) => x?.id === b[i]?.id && x?.src === b[i]?.src)
+
+const mergeUnique = (list = []) => {
+  const map = new Map()
+  for (const it of list) {
+    if (!it?.src) continue
+    const key = it?.id != null ? `id:${it.id}` : `src:${it.src}`
+    if (!map.has(key)) map.set(key, it)
+  }
+  return Array.from(map.values())
+}
+
 const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
   const [images, setImages] = useState([])
   const [files, setFiles] = useState([])
+  const [removedIds, setRemovedIds] = useState(new Set())
 
+  // 1) 서버 데이터 → id 보존해서 정규화
   useEffect(() => {
     if (!urllist) return
-    // urllist(객체 배열/문자열 혼합 가능)를 "문자열 URL 배열"로 정규화
-    const urls = (Array.isArray(urllist) ? urllist : [])
-      .map((u) => (typeof u === 'string' ? u : u?.image_url))
+    console.log(urllist)
+    const normalized = (Array.isArray(urllist) ? urllist : [])
+      .map((u) => {
+        const src = typeof u === 'string' ? u : (u?.image_url ?? u?.src)
+        const id = typeof u === 'number' ? null : (u?.image_id ?? null)
+        return src ? { id, src, isLocal: false } : null
+      })
       .filter(Boolean)
 
-    // 현재 images와 동일하면 set 생략 → 루프 차단
-    if (!sameArray(images, urls)) setImages(urls)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urllist])
+    setImages((prev) => {
+      const locals = prev.filter((it) => it.isLocal) // 기존 로컬 보존
+      const merged = mergeUnique([...normalized, ...locals]) // 중복 제거 병합
+      return sameImageList(prev, merged) ? prev : merged
+    })
+  }, [urllist, removedIds])
 
-  useEffect(() => {
-    onChange?.(images)
-  }, [images, onChange])
+  // useEffect(() => {
+  //   onChange?.(images)
+  // }, [images, onChange])
+
   useEffect(() => {
     onFilesChange?.(files)
   }, [files, onFilesChange])
@@ -31,17 +52,35 @@ const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
       alert('최대 10개까지 업로드할 수 있어요!')
       return
     }
-    const newUrls = uploaded.map((f) => URL.createObjectURL(f))
-    setFiles((prev) => [...prev, uploaded])
-    setImages((prev) => [...prev, ...newUrls])
+    const newItems = uploaded.map((f) => ({
+      id: null,
+      src: URL.createObjectURL(f),
+      isLocal: true,
+      file: f,
+    }))
+
+    setFiles((prev) => [...prev, ...uploaded])
+    setImages((prev) => mergeUnique([...prev, ...newItems])) // ← 중복 방지
     e.target.value = ''
   }
 
   const handleDelete = (index) => {
-    setImages((prev) => prev.filter((_, i) => i !== index))
-  }
+    setImages((prev) => {
+      const target = prev[index]
+      if (target?.id != null) {
+        onRemove?.(target.id)
+        setRemovedIds((s) => new Set(s).add(target.id))
+      }
 
-  // const getSrc = (image) => (typeof image === 'string' ? image : URL.createObjectURL(image))
+      if (target?.isLocal && target.src?.startsWith('blob:')) {
+        // files에서도 같이 제거
+        const localIdx = prev.slice(0, index).filter((it) => it.isLocal).length
+        setFiles((fprev) => fprev.filter((_, i) => i !== localIdx))
+        URL.revokeObjectURL(target.src)
+      }
+      return prev.filter((_, i) => i !== index)
+    })
+  }
 
   return (
     <div className='relative'>
@@ -61,7 +100,7 @@ const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
             className='relative flex flex-col shrink-0 snap-start justify-center items-center w-[14.87vw] h-[14.87vw] bg-white border-[0.9px] border-grey-200 rounded-[9px] overflow-hidden'
           >
             <img
-              src={image}
+              src={image.src}
               alt={`upload-${i}`}
               className='w-full h-full object-cover'
               loading='lazy'
