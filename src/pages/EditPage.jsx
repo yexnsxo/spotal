@@ -16,7 +16,9 @@ const EditPage = () => {
   const [data, setData] = useState(null)
   const { memory_id } = useParams()
   const [images, setImages] = useState([])
+  const [files, setFiles] = useState([])
   const navigate = useNavigate()
+  // const [deletedIds, setDeletedIds] = useState([])
 
   const { values, handleChange, isFilled, setValues } = useFormFilled({
     text: '',
@@ -45,7 +47,6 @@ const EditPage = () => {
 
     const toIdArrayByKey = (v, key) => {
       if (Array.isArray(v)) {
-        // 배열: [obj | number | string] → [number]
         return v
           .map((x) => (x && typeof x === 'object' ? Number(x[key]) : Number(x)))
           .filter((n) => !Number.isNaN(n))
@@ -61,12 +62,9 @@ const EditPage = () => {
 
     const nextValues = {
       text: data?.content ?? '',
-      // ✅ 어떤 형태가 와도 [number]로
       emotion: toIdArrayByKey(data?.emotions, 'emotion_id'),
-      // ✅ 단일 숫자 (없으면 null)
       location: data?.location?.location_id ?? null,
     }
-
     setValues(nextValues)
     setImages(Array.isArray(data?.images) ? data.images : [])
   }, [data, setValues])
@@ -80,9 +78,10 @@ const EditPage = () => {
     if (values.location != null) {
       formData.append('location_id', String(values.location))
     }
-    ;(images ?? []).forEach((file) => {
-      formData.append('images', file)
-    })
+    const flatFiles = (files ?? []).flat() // 1단계만 중첩이라면 flat()으로 충분
+    // 또는 깊이 모르면 flat(Infinity)
+    flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
+    // deletedIds.forEach((id) => formData.append('deleted_image_id', String(id)))
     formData.append('user_id', localStorage.getItem('user.id'))
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1])
@@ -107,7 +106,18 @@ const EditPage = () => {
           <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>이미지 추가</label>
-              <ImageUploader urllist={images} onChange={setImages} />
+              <ImageUploader
+                urllist={images}
+                onChange={setImages}
+                onFilesChange={setFiles}
+                onRemove={(id) => {
+                  console.log(id)
+                  // setDeletedIds((prev) => [...prev, id])
+                  axios.delete(`${baseURL}/community/images/${id}/`).then((res) => {
+                    setImages((prev) => prev.filter((img) => img.image_id !== id))
+                  })
+                }}
+              />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>내용 수정</label>

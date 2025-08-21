@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Tag = ({ label }) => {
   if (!label) return null
   return (
