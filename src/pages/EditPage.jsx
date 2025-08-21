@@ -45,7 +45,6 @@ const EditPage = () => {
 
     const toIdArrayByKey = (v, key) => {
       if (Array.isArray(v)) {
-        // 배열: [obj | number | string] → [number]
         return v
           .map((x) => (x && typeof x === 'object' ? Number(x[key]) : Number(x)))
           .filter((n) => !Number.isNaN(n))
@@ -61,9 +60,7 @@ const EditPage = () => {
 
     const nextValues = {
       text: data?.content ?? '',
-      // ✅ 어떤 형태가 와도 [number]로
       emotion: toIdArrayByKey(data?.emotions, 'emotion_id'),
-      // ✅ 단일 숫자 (없으면 null)
       location: data?.location?.location_id ?? null,
     }
 
