@@ -24,6 +24,7 @@ const Login = () => {
         alert(response.data.message)
         localStorage.setItem('Token', response.data.token)
         localStorage.setItem('user.id', response.data.user.id)
+        localStorage.setItem('user.nickname', response.data.user.nickname)
         navigate('/home')
       })
       .catch((error) => {

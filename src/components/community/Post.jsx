@@ -3,7 +3,7 @@ import Tag from './Tag.jsx'
 import ImageSlider from './ImageSlider.jsx'
 import PostMenu from './PostMenu.jsx'
 
-const Post = ({ text, urllist, emotionTags, locationTags, memory_id }) => {
+const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) => {
   const [expanded, setExpanded] = useState(false)
   const displayedText = expanded ? text : text.length > 25 ? text.slice(0, 25) : text
 
@@ -12,9 +12,9 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id }) => {
       <div className='flex justify-between items-center ml-[0.5vw] mr-[2vw] mt-[1.6vh]'>
         <div className='flex gap-[0.5rem] items-center'>
           <img className='w-[5.13vw] h-[5.13vw] rounded-full bg-grey-100 border-none' />
-          <p className='font-[Medium] text-[0.75rem]'>사용자 1</p>
+          <p className='font-[Medium] text-[0.75rem]'>사용자 {userId}</p>
         </div>
-        <PostMenu memory_id={memory_id} />
+        <PostMenu memory_id={memory_id} postUserId={userId} />
       </div>
       {urllist.length > 0 ? <ImageSlider w='68.974vw' h='29.146vh' urllist={urllist} /> : ''}
       <div className='flex mt-[1.9vh] text-[0.75rem]'>
