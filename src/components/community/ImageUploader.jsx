@@ -3,11 +3,14 @@ import Camera from '@/assets/Camera.svg'
 
 const sameArray = (a = [], b = []) => a.length === b.length && a.every((v, i) => v === b[i])
 const ImageUploader = ({ onChange, urllist }) => {
-  const [images, setImages] = useState(Array.isArray(urllist) ? urllist : [])
+  const [images, setImages] = useState([])
 
   useEffect(() => {
-    const next = Array.isArray(urllist) ? urllist : []
-    if (!sameArray(images, next)) setImages(next)
+    if (!urllist) return
+    const urls = (Array.isArray(urllist) ? urllist : [])
+      .map((u) => (typeof u === 'string' ? u : u?.image_url))
+      .filter(Boolean)
+    if (!sameArray(images, urls)) setImages(urls)
   }, [urllist])
 
   useEffect(() => {
@@ -20,7 +23,8 @@ const ImageUploader = ({ onChange, urllist }) => {
       alert('최대 10개까지 업로드할 수 있어요!')
       return
     }
-    setImages((prev) => [...prev, ...uploaded])
+    const newUrls = uploaded.map((f) => URL.createObjectURL(f))
+    setImages((prev) => [...prev, ...newUrls])
     e.target.value = ''
   }
 
@@ -28,7 +32,7 @@ const ImageUploader = ({ onChange, urllist }) => {
     setImages((prev) => prev.filter((_, i) => i !== index))
   }
 
-  const getSrc = (image) => (typeof image === 'string' ? image : URL.createObjectURL(image))
+  // const getSrc = (image) => (typeof image === 'string' ? image : URL.createObjectURL(image))
 
   return (
     <div className='relative'>
@@ -48,7 +52,7 @@ const ImageUploader = ({ onChange, urllist }) => {
             className='relative flex flex-col shrink-0 snap-start justify-center items-center w-[14.87vw] h-[14.87vw] bg-white border-[0.9px] border-grey-200 rounded-[9px] overflow-hidden'
           >
             <img
-              src={getSrc(image)}
+              src={image}
               alt={`upload-${i}`}
               className='w-full h-full object-cover'
               loading='lazy'
