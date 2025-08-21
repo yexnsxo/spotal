@@ -78,12 +78,7 @@ const WritePage = () => {
           <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>이미지 추가</label>
-              <ImageUploader
-                urllist={images}
-                onChange={setImages}
-                onFilesChange={setFiles}
-                onRemove={() => {}}
-              />
+              <ImageUploader urllist={images} onFilesChange={setFiles} onRemove={() => {}} />
             </div>
             <div className={`${divClass}`}>
               <label className={`${labelClass}`}>내용 작성</label>

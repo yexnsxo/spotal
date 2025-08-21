@@ -14,12 +14,11 @@ const mergeUnique = (list = []) => {
   return Array.from(map.values())
 }
 
-const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
+const ImageUploader = ({ urllist, onFilesChange, onRemove }) => {
   const [images, setImages] = useState([])
   const [files, setFiles] = useState([])
   const [removedIds, setRemovedIds] = useState(new Set())
 
-  // 1) 서버 데이터 → id 보존해서 정규화
   useEffect(() => {
     if (!urllist) return
     console.log(urllist)
@@ -32,15 +31,11 @@ const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
       .filter(Boolean)
 
     setImages((prev) => {
-      const locals = prev.filter((it) => it.isLocal) // 기존 로컬 보존
-      const merged = mergeUnique([...normalized, ...locals]) // 중복 제거 병합
+      const locals = prev.filter((it) => it.isLocal)
+      const merged = mergeUnique([...normalized, ...locals])
       return sameImageList(prev, merged) ? prev : merged
     })
   }, [urllist, removedIds])
-
-  // useEffect(() => {
-  //   onChange?.(images)
-  // }, [images, onChange])
 
   useEffect(() => {
     onFilesChange?.(files)
@@ -60,7 +55,7 @@ const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
     }))
 
     setFiles((prev) => [...prev, ...uploaded])
-    setImages((prev) => mergeUnique([...prev, ...newItems])) // ← 중복 방지
+    setImages((prev) => mergeUnique([...prev, ...newItems]))
     e.target.value = ''
   }
 
@@ -73,7 +68,6 @@ const ImageUploader = ({ onChange, urllist, onFilesChange, onRemove }) => {
       }
 
       if (target?.isLocal && target.src?.startsWith('blob:')) {
-        // files에서도 같이 제거
         const localIdx = prev.slice(0, index).filter((it) => it.isLocal).length
         setFiles((fprev) => fprev.filter((_, i) => i !== localIdx))
         URL.revokeObjectURL(target.src)
