@@ -78,8 +78,8 @@ const Signup = () => {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center justify-items-center bg-white'>
-      <img className='mt-[11.492vh]' src={Logo} alt='Logo' />
+    <div className='flex flex-col min-h-screen items-center justify-items-center bg-white'>
+      <img className='mt-[15vh]' src={Logo} alt='Logo' />
       <img className='mt-[3.08vh]' src={SignupImg} alt='SignupImg' />
       <form
         onSubmit={(e) => {

@@ -34,8 +34,8 @@ const SearchResults = ({ keyword, goToMap }) => {
             className='cursor-pointer border-b-2 border-primary last:border-0 p-2 hover:bg-gray-100'
             onClick={() => goToMap(place.place_name)}
           >
-            <p className='font-medium text-[4vw]'>{place.place_name}</p>
-            <p className='text-[3.5vw] text-gray-500'>{place.address_name}</p>
+            <p className='font-medium text-l'>{place.place_name}</p>
+            <p className='text-xs text-gray-500'>{place.address_name}</p>
           </li>
         ))}
       </ul>

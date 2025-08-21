@@ -57,7 +57,7 @@ const HomePage = () => {
       {isNoResult && <SearchNoResults onClose={handleCloseInfo} />}
       {isNoYongsan && <SearchNoYongsan onClose={handleCloseInfo} />}
 
-      <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-full'>
+      <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-full max-w-[500px]'>
         <input
           type='text'
           value={keyword}
