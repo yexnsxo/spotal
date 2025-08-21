@@ -60,55 +60,59 @@ const WritePage = () => {
   }
 
   return (
-    <div>
-      <Header label={'글 작성하기'} />
-      <div className='bg-white flex justify-center'>
-        <div className='w-[81.025vw] mt-[13.98vh] bg-primary-300 rounded-[10px]'>
-          <form className='flex flex-col gap-[3.31vh] px-[4.872vw] py-[5.213vh]'>
-            <div className={`${divClass}`}>
-              <label className={`${labelClass}`}>이미지 추가</label>
-              <ImageUploader urllist={images} onFilesChange={setFiles} onRemove={() => {}} />
-            </div>
-            <div className={`${divClass}`}>
-              <label className={`${labelClass}`}>내용 작성</label>
-              <textarea
-                className='w-[71.794vw] h-[9.834vh] bg-[#ffffff] focus:outline-none focus:border-primary rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[1.64vw]'
-                placeholder='작성할 내용을 입력하세요'
-                name='text'
-                value={values.text}
-                onChange={handleChange}
-              ></textarea>
-            </div>
-            <div className={`${divClass}`}>
-              <label className={`${labelClass}`}>장소 태그 추가</label>
-              <Dropdown2
-                placeholder='원하는 장소 태그를 선택하세요'
-                options={locationList}
-                name='location'
-                onChange={handleChange}
-                value={values.location}
-              />
-            </div>
-            <div className={`${divClass}`}>
-              <label className={`${labelClass}`}>감정 태그 추가</label>
-              <Dropdown2
-                value={values.emotion}
-                placeholder='원하는 감정 태그를 선택하세요'
-                options={emotionList}
-                name='emotion'
-                onChange={handleChange}
-              />
-            </div>
-            <Button
-              type={'button'}
-              onClick={postWriteRequest}
-              label={'작성 완료'}
-              disabled={!isFilled}
-            />
-          </form>
+    <div className='flex flex-col justify-center items-center'>
+      <div className='w-full max-w-[768px] bg-white min-h-screen'>
+        <Header label={'글 작성하기'} />
+        <div className='bg-white flex justify-center pb-[13vh]'>
+          <div className='w-[80%] pt-[13.98vh] bg-primary-300 rounded-[10px] '>
+            <form className='flex flex-col justify-center align-middle'>
+              <div className='flex flex-col gap-[2.3vh] self-center py-10 mx-5'>
+                <div className={`${divClass}`}>
+                  <label className={`${labelClass}`}>이미지 추가</label>
+                  <ImageUploader urllist={images} onFilesChange={setFiles} onRemove={() => {}} />
+                </div>
+                <div className={`${divClass}`}>
+                  <label className={`${labelClass}`}>내용 작성</label>
+                  <textarea
+                    className='w-[71.794vw] max-w-[36rem] md:w-[36rem] h-[9.834vh] bg-[#ffffff] focus:outline-none focus:border-primary rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[0.5rem]'
+                    placeholder='작성할 내용을 입력하세요'
+                    name='text'
+                    value={values.text}
+                    onChange={handleChange}
+                  ></textarea>
+                </div>
+                <div className={`${divClass}`}>
+                  <label className={`${labelClass}`}>장소 태그 추가</label>
+                  <Dropdown2
+                    placeholder='원하는 장소 태그를 선택하세요'
+                    options={locationList}
+                    name='location'
+                    onChange={handleChange}
+                    value={values.location}
+                  />
+                </div>
+                <div className={`${divClass}`}>
+                  <label className={`${labelClass}`}>감정 태그 추가</label>
+                  <Dropdown2
+                    value={values.emotion}
+                    placeholder='원하는 감정 태그를 선택하세요'
+                    options={emotionList}
+                    name='emotion'
+                    onChange={handleChange}
+                  />
+                </div>
+                <Button
+                  type={'button'}
+                  onClick={postWriteRequest}
+                  label={'작성 완료'}
+                  disabled={!isFilled}
+                />
+              </div>
+            </form>
+          </div>
         </div>
+        <Footer selectedMenu='community' />
       </div>
-      <Footer selectedMenu='community' />
     </div>
   )
 }
