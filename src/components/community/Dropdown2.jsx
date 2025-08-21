@@ -81,7 +81,7 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name, value }) => {
   return (
     <div ref={rootRef} className='relative'>
       <div
-        className={`flex w-[71.794vw] h-[5.213vh] bg-[#ffffff] rounded-[9px] border-[0.9px] py-[0.5rem] px-[0.4rem] cursor-text ${open ? 'border-primary' : 'border-gray-200'}`}
+        className={`flex w-full h-[5.213vh] bg-[#ffffff] rounded-[9px] border-[0.9px] py-[0.5rem] px-[0.4rem] cursor-text ${open ? 'border-primary' : 'border-gray-200'}`}
         onFocus={() => setOpen(true)}
       >
         <input
@@ -100,7 +100,7 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name, value }) => {
         />
       </div>
       {open && (
-        <div className='absolute top-full left-0 mt-[4px] z-40 grid grid-cols-3 gap-x-[3.59vw] gap-y-[2.843vh] rounded-[9px] px-[1.794vw] py-[2.37vh] bg-white shadow-[0_4px_4px_rgba(0,0,0,0.2)]'>
+        <div className='absolute top-full w-full left-0 mt-[4px] z-40 grid grid-cols-3 gap-x-[3.59vw] gap-y-[2.843vh] rounded-[9px] px-[1.794vw] py-[2.37vh] bg-white shadow-[0_4px_4px_rgba(0,0,0,0.2)]'>
           {options.map((opt) => {
             const isSelected = selected.some((s) => s[id] === opt[id])
             return (
