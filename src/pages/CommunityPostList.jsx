@@ -34,7 +34,7 @@ const CommunityPostList = () => {
   return (
     <div>
       <Header2 label1={'피드'} label2={'내 글 모음'} link={'/mypost'} />
-      <div className='px-[10.769vw] pt-[7.11vh] pb-[10vh] bg-white'>
+      <div className='px-[10.769vw] pt-[7.11vh] pb-[10vh] bg-white min-h-screen'>
         <div className='flex justify-between my-[2.49vh]'>
           <div className='flex gap-[1.54vw] '>
             <Dropdown label={'감정'} />

@@ -1,10 +1,25 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import TagBtn from './TagBtn.jsx'
 import { useOutsideClick } from '@/hooks/useOutsideClick.jsx'
 import ChevronUp from '@/assets/ChevronUp.svg'
 import ChevronDown from '@/assets/ChevronDown.svg'
 
-const Dropdown2 = ({ placeholder, options = [], onChange, name }) => {
+const arraysEqualById = (a = [], b = [], idKey) => {
+  if (a.length !== b.length) return false
+  for (let i = 0; i < a.length; i++) {
+    if (a[i][idKey] !== b[i][idKey]) return false
+  }
+  return true
+}
+
+const toIdArray = (v) =>
+  Array.isArray(v)
+    ? v.map(Number).filter((n) => !Number.isNaN(n))
+    : v == null || v === ''
+      ? []
+      : [Number(v)].filter((n) => !Number.isNaN(n))
+
+const Dropdown2 = ({ placeholder, options = [], onChange, name, value }) => {
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState([])
 
@@ -13,6 +28,24 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name }) => {
 
   const isEmotion = name === 'emotion'
   const id = isEmotion ? 'emotion_id' : 'location_id'
+
+  useEffect(() => {
+    if (!options.length) {
+      setSelected((prev) => (prev.length ? [] : prev))
+      return
+    }
+
+    if (isEmotion) {
+      const ids = toIdArray(value)
+      const next = options.filter((opt) => ids.includes(Number(opt[id])))
+      setSelected((prev) => (arraysEqualById(prev, next, id) ? prev : next))
+    } else {
+      const n = value == null || value === '' ? null : Number(value)
+      const found = n == null ? null : options.find((opt) => Number(opt[id]) === n)
+      const next = found ? [found] : []
+      setSelected((prev) => (arraysEqualById(prev, next, id) ? prev : next))
+    }
+  }, [value, options, isEmotion, id])
 
   const handleClick = (opt, isSelected) => {
     if (isEmotion) {
@@ -35,8 +68,13 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name }) => {
   }
 
   useEffect(() => {
-    const ids = selected.map((s) => s[id])
-    onChange?.({ name, ids })
+    if (isEmotion) {
+      const ids = selected.map((s) => Number(s[id]))
+      onChange?.({ target: { name, value: ids } })
+    } else {
+      const picked = selected[0] ? Number(selected[0][id]) : null
+      onChange?.({ target: { name, value: picked } })
+    }
   }, [selected, name, onChange])
 
   const displayText = selected.map((s) => s.name).join(', ')

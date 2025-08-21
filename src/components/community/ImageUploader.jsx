@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
 import Camera from '@/assets/Camera.svg'
 
-const ImageUploader = ({ onChange }) => {
-  const [images, setImages] = useState([])
+const sameArray = (a = [], b = []) => a.length === b.length && a.every((v, i) => v === b[i])
+const ImageUploader = ({ onChange, urllist }) => {
+  const [images, setImages] = useState(Array.isArray(urllist) ? urllist : [])
+
+  useEffect(() => {
+    const next = Array.isArray(urllist) ? urllist : []
+    if (!sameArray(images, next)) setImages(next)
+  }, [urllist])
 
   useEffect(() => {
     onChange?.(images)
@@ -22,6 +28,8 @@ const ImageUploader = ({ onChange }) => {
     setImages((prev) => prev.filter((_, i) => i !== index))
   }
 
+  const getSrc = (image) => (typeof image === 'string' ? image : URL.createObjectURL(image))
+
   return (
     <div className='relative'>
       <div className='flex gap-[7px] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
@@ -34,13 +42,13 @@ const ImageUploader = ({ onChange }) => {
           </span>
           <input type='file' accept='image/*' multiple className='hidden' onChange={handleUpload} />
         </label>
-        {images.map((file, i) => (
+        {images.map((image, i) => (
           <div
             key={i}
             className='relative flex flex-col shrink-0 snap-start justify-center items-center w-[14.87vw] h-[14.87vw] bg-white border-[0.9px] border-grey-200 rounded-[9px] overflow-hidden'
           >
             <img
-              src={URL.createObjectURL(file)}
+              src={getSrc(image)}
               alt={`upload-${i}`}
               className='w-full h-full object-cover'
               loading='lazy'
