@@ -9,10 +9,13 @@ const KakaoMap = ({ markers }) => {
   const [isOpenMarker, setIsOpenMarker] = useState(false)
   const mapRef = useRef(null)
 
-  const linePath = useLoadPolyline({
-    origin: markers.length ? `${markers[0].lng},${markers[0].lat}` : null,
-    destination: markers.length && markers[0].status === '이전함' ? '127.033,37.501' : null,
-  })
+  const linePath =
+    markers.length && markers[0].status === '이전함'
+      ? useLoadPolyline({
+          origin: `${markers[0].lng},${markers[0].lat}`,
+          destination: '127.033,37.501',
+        })
+      : []
 
   const handleMarkerClick = (marker) => {
     if (selectedMarker && selectedMarker.placeName === marker.placeName) {
