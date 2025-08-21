@@ -2,38 +2,46 @@ import Dropdown from '@/components/community/Dropdown.jsx'
 import Header2 from '@/components/shared/Header2.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import PostList from '@/components/community/PostList.jsx'
-
-export const imageData = [
-  {
-    url: ['url1', 'url2', 'url3', 'url4'],
-    text: '겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요',
-  },
-  {
-    url: ['url1', 'url2', 'url3', 'url4'],
-    text: '겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요',
-  },
-  {
-    url: ['url1', 'url2', 'url3', 'url4'],
-    text: '겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요',
-  },
-  {
-    url: ['url1', 'url2', 'url3', 'url4'],
-    text: '겨울마다 이 골목에서 붕어빵 먹던 기억이 나네요...\n 이젠 못먹는 게 아쉬워요',
-  },
-]
+import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { baseURL } from './Signup'
 
 const CommunityMyPostList = () => {
+  const [myPostData, setMyPostData] = useState([])
+  const userId = localStorage.getItem('user.id')
+
+  const getMyPost = () => {
+    axios
+      .get(`${baseURL}/community/my/?user_id=${userId}`)
+      .then((res) => {
+        console.log(res.data)
+        console.log(res.data.message)
+        console.log(res.data.data)
+        const posts = Array.isArray(res.data?.data) ? res.data.data : []
+        setMyPostData(posts)
+      })
+      .catch((err) => {
+        console.log(err)
+        setMyPostData([])
+      })
+  }
+
+  useEffect(() => {
+    getMyPost()
+  }, [])
+
   return (
     <div>
       <Header2 label1={'내 글'} label2={'새 글 작성'} link={'/writepage'} />
-      <div className='px-[10.769vw] pt-[7.11vh] pb-[10vh] bg-white'>
+      <div className='px-[10.769vw] pt-[7.11vh] pb-[10vh] bg-white min-h-screen'>
         <div className='flex justify-between my-[2.49vh]'>
           <div className='flex gap-[1.54vw] '>
             <Dropdown label={'감정'} />
             <Dropdown label={'동네'} />
           </div>
         </div>
-        <PostList postData={imageData} />
+        <PostList postData={myPostData} />
       </div>
       <Footer selectedMenu={'community'} />
     </div>
