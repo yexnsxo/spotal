@@ -1,21 +1,34 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Camera from '@/assets/Camera.svg'
 
-const ImageUploader = ({ files, onChange, name }) => {
+const sameArray = (a = [], b = []) => a.length === b.length && a.every((v, i) => v === b[i])
+const ImageUploader = ({ onChange, urllist }) => {
+  const [images, setImages] = useState(Array.isArray(urllist) ? urllist : [])
+
+  useEffect(() => {
+    const next = Array.isArray(urllist) ? urllist : []
+    if (!sameArray(images, next)) setImages(next)
+  }, [urllist])
+
+  useEffect(() => {
+    onChange?.(images)
+  }, [images, onChange])
+
   const handleUpload = (e) => {
-    const uploadedFiles = Array.from(e.target.files)
-    if (files.length + uploadedFiles.length > 10) {
+    const uploaded = Array.from(e.target.files || [])
+    if (images.length + uploaded.length > 10) {
       alert('최대 10개까지 업로드할 수 있어요!')
       return
     }
-    const recentFiles = [...files, ...uploadedFiles]
-    onChange?.(recentFiles)
+    setImages((prev) => [...prev, ...uploaded])
+    e.target.value = ''
   }
 
   const handleDelete = (index) => {
-    const recentFiles = files.filter((_, i) => i !== index)
-    onChange?.(recentFiles)
+    setImages((prev) => prev.filter((_, i) => i !== index))
   }
+
+  const getSrc = (image) => (typeof image === 'string' ? image : URL.createObjectURL(image))
 
   return (
     <div className='relative'>
@@ -25,24 +38,17 @@ const ImageUploader = ({ files, onChange, name }) => {
             <img src={Camera} />
           </span>
           <span className='text-grey-700 text-[11px] font-[Medium] mt-[2px]'>
-            {files.length}/10
+            {images.length}/10
           </span>
-          <input
-            type='file'
-            name={name}
-            accept='image/*'
-            multiple
-            className='hidden'
-            onChange={handleUpload}
-          />
+          <input type='file' accept='image/*' multiple className='hidden' onChange={handleUpload} />
         </label>
-        {files.map((file, i) => (
+        {images.map((image, i) => (
           <div
             key={i}
             className='relative flex flex-col shrink-0 snap-start justify-center items-center w-[14.87vw] h-[14.87vw] bg-white border-[0.9px] border-grey-200 rounded-[9px] overflow-hidden'
           >
             <img
-              src={URL.createObjectURL(file)}
+              src={getSrc(image)}
               alt={`upload-${i}`}
               className='w-full h-full object-cover'
               loading='lazy'

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 
-function ImageSlider({ urllist, w, h }) {
+function ImageSlider({ urllist = [], w, h }) {
   const [current, setCurrent] = useState(0)
   const settings = {
     dots: true,
