@@ -43,26 +43,15 @@ const WritePage = () => {
       formData.append('location_id', String(values.location))
     }
 
-    const flatFiles = (files ?? []).flat() // 1단계만 중첩이라면 flat()으로 충분
-    // 또는 깊이 모르면 flat(Infinity)
+    const flatFiles = (files ?? []).flat()
     flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
     formData.append('user_id', localStorage.getItem('user.id'))
-    // ✅ 정확히 보기
-    for (const [k, v] of formData.entries()) {
-      if (v instanceof File) {
-        console.log(k, v.name, v.type, v.size)
-      } else {
-        console.log(k, v)
-      }
-    }
-
-    // 또는
-    console.log('images:', files) // 콤마로 찍기
+    console.log('images:', files)
     axios
       .post(`${baseURL}/community/memories/`, formData)
       .then((res) => {
         console.log(res)
-        navigate('/post')
+        navigate(-1)
       })
       .catch((err) => {
         console.log('status', err.response?.status)
