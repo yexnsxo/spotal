@@ -47,9 +47,9 @@ const OnBoardingPage = () => {
   return (
     <>
       <ProgressBar step={step} totalSteps={steps.length} onBack={prevStep} />
-      <div className='flex flex-col justify-center items-center justify-items-center bg-white'>
+      <div className='flex flex-col min-h-screen items-center justify-items-center bg-white'>
         <p
-          className='font-[SemiBold] text-grey-700 mt-[7.345vh] text-[20px] text-center'
+          className='font-[SemiBold] text-grey-700 mt-[17%] text-xl text-center'
           dangerouslySetInnerHTML={{ __html: steps[step].question }}
         />
         <div className='absolute top-[39.9vh] w-[76.9vw] h-[35.54vh] left-1/2 -translate-x-1/2'>

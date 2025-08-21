@@ -11,7 +11,7 @@ const ProgressBar = ({ step, totalSteps = 3, onBack }) => {
   }, [])
 
   return (
-    <div className='flex ml-[5.9vw] mt-[25.48px] bg-white'>
+    <div className='flex pl-[5.9vw] pt-[25.48px] bg-white'>
       <img
         className='mr-[3.44vw] w-[6.58px] h-[15.28px] hover:cursor-pointer'
         src={Return}
