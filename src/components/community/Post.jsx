@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Tag from './Tag.jsx'
 import ImageSlider from './ImageSlider.jsx'
 import PostMenu from './PostMenu.jsx'
 import BookMark from '@/assets/BookMark.svg?react'
+import axios from 'axios'
+import { baseURL } from '@/pages/Signup.jsx'
 
 const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) => {
   const [expanded, setExpanded] = useState(false)
@@ -10,6 +12,54 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
   const currentUserId = localStorage.getItem('user.id')
   const isUser = currentUserId == userId
   const [isMarked, SetIsMarked] = useState(false)
+  const [bookmarkId, SetBookmarkId] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    axios
+      .get(`${baseURL}/community/bookmarks/?user_id=${userId}`)
+      .then((res) => {
+        console.log(res)
+        const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
+        if (cancelled) return
+        if (marked) {
+          SetIsMarked(true)
+          SetBookmarkId(marked.bookmark_id)
+        } else {
+          SetIsMarked(false)
+          SetBookmarkId(null)
+        }
+      })
+      .catch(console.error)
+    return () => {
+      cancelled = true
+    }
+  }, [userId, memory_id, baseURL])
+
+  const handleBookmark = (isMarked) => {
+    if (!isMarked) {
+      axios
+        .post(`${baseURL}/community/bookmarks/create/`, {
+          user_id: userId,
+          memory: memory_id,
+        })
+        .then((res) => {
+          console.log(res.data)
+          SetIsMarked(true)
+          console.log(res.data.bookmark_id)
+          SetBookmarkId(res.data.bookmark_id)
+        })
+        .catch((err) => console.log(err))
+    } else {
+      axios
+        .delete(`${baseURL}/community/bookmarks/${bookmarkId}/delete/?user_id=${userId}`)
+        .then((res) => {
+          console.log(res.data)
+          SetIsMarked(false)
+        })
+        .catch((err) => console.log(err))
+    }
+  }
 
   return (
     <div className='flex flex-col gap-[0.8vh] relative px-[3.846vw] w-[76.67vw] md:w-[36.7rem] rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] bg-white'>
@@ -51,12 +101,12 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
         </div>
         {isUser || (
           <BookMark
-            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] ${
+            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] mr-[-8px] ${
               isMarked
                 ? '[&_*]:fill-primary [&_*]:stroke-primary'
-                : '[&_*]:fill-gray-300 [&_*]:stroke-gray-300'
+                : '[&_*]:fill-gray-200 [&_*]:stroke-gray-200'
             }`}
-            onClick={() => SetIsMarked((m) => !m)}
+            onClick={() => handleBookmark(isMarked)}
           />
         )}
       </div>
