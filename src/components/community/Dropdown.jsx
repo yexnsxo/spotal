@@ -61,6 +61,7 @@ const Dropdown = ({ label }) => {
               setDisplayLabel(label)
               setFiltered(false)
               setOpen(false)
+              setSelected('전체')
             }}
           >
             전체
