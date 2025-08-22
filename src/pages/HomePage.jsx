@@ -7,14 +7,12 @@ import Footer from '@/components/shared/Footer'
 import SearchResults from '@/components/search/SearchResults'
 import usePlaceSearch from '@/hooks/usePlaceSearch'
 import SearchNoResults from '@/components/search/SearchNoResults'
-import SearchNoYongsan from '@/components/search/SearchNoYongsan'
 import Loading from '@/components/shared/Loading'
 
 const HomePage = () => {
   const [keyword, setKeyword] = useState('')
   const [isToggle, setIsToggle] = useState(false)
   const [isNoResult, setNoResult] = useState(false)
-  const [isNoYongsan, setNoYongsan] = useState(false)
   const navigate = useNavigate()
   const { fetchMarker, status } = usePlaceSearch()
 
@@ -32,10 +30,6 @@ const HomePage = () => {
       setNoResult(true)
       setKeyword('')
     }
-    if (status === 'noYongsan') {
-      setNoYongsan(true)
-      setKeyword('')
-    }
   }
 
   const goToMemory = () => {
@@ -46,7 +40,6 @@ const HomePage = () => {
 
   const handleCloseInfo = () => {
     setNoResult(false)
-    setNoYongsan(false)
   }
 
   return (
@@ -55,7 +48,6 @@ const HomePage = () => {
       <img className='mt-[18.36vh]' src={Logo} alt='로고' />
 
       {isNoResult && <SearchNoResults onClose={handleCloseInfo} />}
-      {isNoYongsan && <SearchNoYongsan onClose={handleCloseInfo} />}
 
       <div className='flex justify-between items-center border-2 border-primary rounded-[20px] p-2 mt-[3vh] h-[6.5vh] w-full max-w-[500px]'>
         <input
