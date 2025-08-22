@@ -13,37 +13,26 @@ const RecommendedPage = () => {
     return () => document.body.classList.remove('scrollbar-hide')
   }, [])
 
-  {
-    /*넘어온 값을 바탕으로 로직 처리*/
-  }
-
   return (
     <div className='mx-auto overflow-y-auto h-[100vh] scrollbar-hide bg-white w-full max-w-[768px]'>
       <Header label={'유사 가게 추천 결과'}></Header>
-      <div className='mt-[80px] items-center mx-auto flex flex-col gap-4 mb-[100px]'>
-        {/*로직 처리 후, 추천 장소 컴포넌트 차례대로 추가*/}
-        <RecommendedPlaces
-          placeName={placeData.placeName}
-          status={placeData.status}
-          address={placeData.address}
-          summary={placeData.summary}
-          tags={placeData.tags}
-          image={'dddd'}
-        />
-        <RecommendedPlaces
-          placeName={placeData.placeName}
-          status={placeData.status}
-          address={placeData.address}
-          summary={placeData.summary}
-          tags={placeData.tags}
-        />
-        <RecommendedPlaces
-          placeName={placeData.placeName}
-          status={placeData.status}
-          address={placeData.address}
-          summary={placeData.summary}
-          tags={placeData.tags}
-        />
+      <div className='mt-[80px] items-center w-[80%] mx-auto flex flex-col gap-4 mb-[100px]'>
+        <div className='flex justify-end'>{years && <Dropdown label={'년도'} />}</div>
+        {Array.isArray(placeData) && placeData.length > 0 ? (
+          placeData.map((place) => (
+            <RecommendedPlaces
+              key={place.shop_id}
+              placeName={place.name}
+              status='운영중'
+              address={place.address}
+              summary={place.ai_summary}
+              tags={place.emotions}
+              image={place.image_url}
+            />
+          ))
+        ) : (
+          <p className='text-gray-500'>추천 장소가 없습니다.</p>
+        )}
       </div>
       <Footer></Footer>
     </div>

@@ -3,7 +3,7 @@ import Marker1 from '@/assets/Marker1.svg'
 import Marker2 from '@/assets/Marker2.svg'
 
 const Marker = ({ position, placeName, address, state, summary, emotion, onClick }) => {
-  const markerSrc = state === '운영중' ? Marker1 : Marker2
+  const markerSrc = state === '폐업함' ? Marker2 : Marker1
 
   return (
     <MapMarker
