@@ -2,11 +2,13 @@ import { useState, useRef } from 'react'
 import { Map, Polyline } from 'react-kakao-maps-sdk'
 import Marker from './Marker'
 import InfoContainer from './InfoContainer'
+import Loading from '../shared/Loading'
 import useLoadPolyline from '@/hooks/useLoadPolyline'
 
 const KakaoMap = ({ markers }) => {
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [isOpenMarker, setIsOpenMarker] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const mapRef = useRef(null)
 
   const linePath =
@@ -35,45 +37,53 @@ const KakaoMap = ({ markers }) => {
     setIsOpenMarker(false)
   }
 
+  const handleLoading = () => {
+    setIsLoading(true)
+  }
+
   return (
-    <Map
-      onClick={handleMapClick}
-      center={{ lat: markers[0].lat, lng: markers[0].lng }}
-      level={5}
-      style={{ width: '100vw', height: '100vh' }}
-      onCreate={(map) => (mapRef.current = map)}
-    >
-      {markers.map((marker) => (
-        <Marker
-          key={marker.title}
-          position={{ lat: marker.lat, lng: marker.lng }}
-          placeName={marker.title}
-          address={marker.address}
-          state={marker.status}
-          summary={marker.summary_card}
-          emotion={marker.emotions}
-          onClick={handleMarkerClick}
-        />
-      ))}
-      {linePath.length > 0 && (
-        <Polyline
-          path={linePath}
-          strokeWeight={5}
-          strokeColor='#ff6200'
-          strokeOpacity={0.8}
-          strokeStyle='solid'
-        />
-      )}
-      {isOpenMarker && (
-        <InfoContainer
-          placeName={selectedMarker.placeName}
-          status={selectedMarker.state}
-          address={selectedMarker.address}
-          summary={selectedMarker.summary}
-          tags={selectedMarker.emotion}
-        />
-      )}
-    </Map>
+    <div>
+      {isLoading && <Loading />}
+      <Map
+        onClick={handleMapClick}
+        center={{ lat: markers[0].lat, lng: markers[0].lng }}
+        level={5}
+        style={{ maxWidth: '768px', width: '100vw', height: '100vh' }}
+        onCreate={(map) => (mapRef.current = map)}
+      >
+        {markers.map((marker) => (
+          <Marker
+            key={marker.title}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            placeName={marker.title}
+            address={marker.address}
+            state={marker.status}
+            summary={marker.summary_card}
+            emotion={marker.emotions}
+            onClick={handleMarkerClick}
+          />
+        ))}
+        {linePath.length > 0 && (
+          <Polyline
+            path={linePath}
+            strokeWeight={5}
+            strokeColor='#ff6200'
+            strokeOpacity={0.8}
+            strokeStyle='solid'
+          />
+        )}
+        {isOpenMarker && (
+          <InfoContainer
+            placeName={selectedMarker.placeName}
+            status={selectedMarker.state}
+            address={selectedMarker.address}
+            summary={selectedMarker.summary}
+            tags={selectedMarker.emotion}
+            load={handleLoading}
+          />
+        )}
+      </Map>
+    </div>
   )
 }
 
