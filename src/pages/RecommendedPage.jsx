@@ -17,16 +17,16 @@ const RecommendedPage = () => {
     <div className='mx-auto overflow-y-auto h-[100vh] scrollbar-hide bg-white w-full max-w-[768px]'>
       <Header label={'유사 가게 추천 결과'}></Header>
       <div className='mt-[80px] items-center w-[80%] mx-auto flex flex-col gap-4 mb-[100px]'>
-        <div className='flex justify-end'>{years && <Dropdown label={'년도'} />}</div>
         {Array.isArray(placeData) && placeData.length > 0 ? (
           placeData.map((place) => (
             <RecommendedPlaces
               key={place.shop_id}
+              id={place.shop_id}
               placeName={place.name}
               status='운영중'
               address={place.address}
               summary={place.ai_summary}
-              tags={place.emotions}
+              tags={[...(place.emotions || []), place.location]}
               image={place.image_url}
             />
           ))

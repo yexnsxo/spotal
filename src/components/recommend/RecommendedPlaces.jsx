@@ -3,17 +3,50 @@ import BookMark from '@/assets/BookMark.svg'
 import BookMark2 from '@/assets/BookMark2.svg'
 import RecommendedInfo from './RecommendedInfo'
 import NoResult from '@/assets/NoResult.svg'
+import axios from 'axios'
 
-const RecommendedPlaces = ({ placeName, status, address, summary, tags = [], image = null }) => {
+const RecommendedPlaces = ({
+  id,
+  placeName,
+  status,
+  address,
+  summary,
+  tags = [],
+  image = null,
+}) => {
   const [isMarked, setIsMarked] = useState(false)
   const [isInfoOpen, setIsInfoOpen] = useState(false)
+  const [bookmarkID, setBookmarkId] = useState()
   const [imgSrc, setImgSrc] = useState(image || NoResult)
+  const currentUserId = localStorage.getItem('user.id')
 
   const handleOpenInfo = () => {
     setIsInfoOpen(true)
   }
   const handleCloseInfo = () => {
     setIsInfoOpen(false)
+  }
+
+  const handleBookmark = (isMarked) => {
+    if (!isMarked) {
+      axios
+        .post(`${import.meta.env.VITE_API_BASE_URL}/api/places/saved/create/`, {
+          shop: id,
+          user: currentUserId,
+        })
+        .then((res) => {
+          setBookmarkId(res.data.saved_id)
+          setIsMarked(true)
+        })
+        .catch((err) => console.log(err))
+    } else {
+      axios
+        .delete(`${import.meta.env.VITE_API_BASE_URL}/api/places/saved/${bookmarkID}/delete/`)
+        .then((res) => {
+          setIsMarked(false)
+        })
+        .catch((err) => console.log(err))
+    }
   }
 
   return (
@@ -37,6 +70,7 @@ const RecommendedPlaces = ({ placeName, status, address, summary, tags = [], ima
             onClick={(e) => {
               e.stopPropagation()
               setIsMarked((prev) => !prev)
+              handleBookmark(isMarked)
             }}
           />
         </div>
