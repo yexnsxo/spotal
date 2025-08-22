@@ -11,6 +11,21 @@ const KakaoMap = ({ markers }) => {
   const [isLoading, setIsLoading] = useState(false)
   const mapRef = useRef(null)
 
+  const yOffsetByLevel = {
+    1: 0.0003125,
+    2: 0.000625,
+    3: 0.00125,
+    4: 0.0025,
+    5: 0.005,
+    6: 0.01,
+    7: 0.02,
+    8: 0.04,
+    9: 0.08,
+    10: 0.16,
+    11: 0.32,
+    12: 0.64,
+  }
+
   const linePath =
     markers.length && markers[0].status === '이전함'
       ? useLoadPolyline({
@@ -27,7 +42,9 @@ const KakaoMap = ({ markers }) => {
       setSelectedMarker(marker)
       setIsOpenMarker(true)
       if (mapRef.current) {
-        const moveLatLng = new window.kakao.maps.LatLng(marker.lat - 0.005, marker.lng)
+        const level = mapRef.current.getLevel()
+        const offset = yOffsetByLevel[level] || 0
+        const moveLatLng = new window.kakao.maps.LatLng(marker.lat - offset, marker.lng)
         mapRef.current.panTo(moveLatLng)
       }
     }

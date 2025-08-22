@@ -19,7 +19,7 @@ const RecommendedPlaces = ({ placeName, status, address, summary, tags = [], ima
   return (
     <>
       <div
-        className='max-w-[400px] bg-white rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] p-6 pb-4 cursor-pointer'
+        className='max-w-[500px] min-w-[300px] w-[80%] bg-white rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] p-6 pb-4 cursor-pointer'
         onClick={handleOpenInfo}
       >
         <img
