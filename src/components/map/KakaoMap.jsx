@@ -40,7 +40,7 @@ const KakaoMap = ({ markers }) => {
       onClick={handleMapClick}
       center={{ lat: markers[0].lat, lng: markers[0].lng }}
       level={5}
-      style={{ width: '100vw', height: '100vh' }}
+      style={{ maxWidth: '768px', width: '100vw', height: '100vh' }}
       onCreate={(map) => (mapRef.current = map)}
     >
       {markers.map((marker) => (
