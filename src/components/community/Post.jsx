@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import Tag from './Tag.jsx'
 import ImageSlider from './ImageSlider.jsx'
 import PostMenu from './PostMenu.jsx'
+import BookMark from '@/assets/BookMark.svg?react'
 
 const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) => {
   const [expanded, setExpanded] = useState(false)
   const displayedText = expanded ? text : text.length > 25 ? text.slice(0, 25) : text
   const currentUserId = localStorage.getItem('user.id')
   const isUser = currentUserId == userId
+  const [isMarked, SetIsMarked] = useState(false)
 
   return (
     <div className='flex flex-col gap-[0.8vh] relative px-[3.846vw] w-[76.67vw] md:w-[36.7rem] rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] bg-white'>
@@ -38,13 +40,25 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
           )}
         </div>
       </div>
-      <div className='flex gap-[6px] mb-[1.78vh]'>
-        {emotionTags.map((tag, idx) => (
-          <div key={idx}>
-            <Tag label={tag} />
-          </div>
-        ))}
-        <Tag label={locationTags} />
+      <div className='flex justify-between items-center mb-[1.78vh] md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]  mt-[1.6vh]'>
+        <div className='flex gap-[6px]'>
+          {emotionTags.map((tag, idx) => (
+            <div key={idx}>
+              <Tag label={tag} />
+            </div>
+          ))}
+          <Tag label={locationTags} />
+        </div>
+        {isUser || (
+          <BookMark
+            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] ${
+              isMarked
+                ? '[&_*]:fill-primary [&_*]:stroke-primary'
+                : '[&_*]:fill-gray-300 [&_*]:stroke-gray-300'
+            }`}
+            onClick={() => SetIsMarked((m) => !m)}
+          />
+        )}
       </div>
     </div>
   )
