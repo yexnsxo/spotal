@@ -77,7 +77,7 @@ const HomePage = () => {
         onClick={goToMemory}
         className={`
           fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-[120px] flex flex-col items-center justify-center z-[30]
-          h-[15vh] w-[85%] mx-auto max-w-[700px] bg-[#FEF1DA] border border-primary rounded-[7px]
+          h-[15vh] w-[85%] mx-auto max-w-[500px] bg-[#FEF1DA] border border-primary rounded-[7px]
           transition-transform duration-500 ease-out
           ${isToggle ? 'translate-y-0 opacity-100 visible' : 'translate-y-full opacity-0 invisible'}
         `}
