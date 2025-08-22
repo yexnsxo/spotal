@@ -19,7 +19,6 @@ const PostList = ({ postData }) => {
           : []
         const urls = Array.isArray(post?.images) ? post.images : []
         const content = typeof post?.content === 'string' ? post.content : ''
-        console.log(emotionNames)
         return (
           <div key={post.memory_id}>
             <Post
