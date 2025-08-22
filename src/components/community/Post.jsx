@@ -19,7 +19,6 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
     axios
       .get(`${baseURL}/community/bookmarks/?user_id=${userId}`)
       .then((res) => {
-        console.log(res)
         const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
         if (cancelled) return
         if (marked) {
@@ -30,7 +29,9 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
           SetBookmarkId(null)
         }
       })
-      .catch(console.error)
+      .catch((err) => {
+        console.log(err)
+      })
     return () => {
       cancelled = true
     }
@@ -44,9 +45,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
           memory: memory_id,
         })
         .then((res) => {
-          console.log(res.data)
           SetIsMarked(true)
-          console.log(res.data.bookmark_id)
           SetBookmarkId(res.data.bookmark_id)
         })
         .catch((err) => console.log(err))
@@ -54,7 +53,6 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
       axios
         .delete(`${baseURL}/community/bookmarks/${bookmarkId}/delete/?user_id=${userId}`)
         .then((res) => {
-          console.log(res.data)
           SetIsMarked(false)
         })
         .catch((err) => console.log(err))
