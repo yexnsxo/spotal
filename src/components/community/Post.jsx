@@ -6,7 +6,7 @@ import BookMark from '@/assets/BookMark.svg?react'
 import axios from 'axios'
 import { baseURL } from '@/pages/Signup.jsx'
 
-const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) => {
+const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nickname }) => {
   const [expanded, setExpanded] = useState(false)
   const displayedText = expanded ? text : text.length > 25 ? text.slice(0, 25) : text
   const currentUserId = localStorage.getItem('user.id')
@@ -47,6 +47,8 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
         .then((res) => {
           SetIsMarked(true)
           SetBookmarkId(res.data.bookmark_id)
+          console.log(res.data)
+          console.log(res.data.bookmark_id)
         })
         .catch((err) => console.log(err))
     } else {
@@ -64,7 +66,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId }) =
       <div className='flex justify-between items-center md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]  mt-[1.6vh]'>
         <div className='flex gap-[0.5rem] items-center'>
           <img className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-grey-100 border-none' />
-          <p className='font-[Medium] text-[0.75rem]'>사용자 {userId}</p>
+          <p className='font-[Medium] text-[0.75rem]'>{nickname}</p>
         </div>
         {isUser && <PostMenu memory_id={memory_id} />}
       </div>
