@@ -42,9 +42,11 @@ const Mypage = () => {
           <p className='text-gray-200 text-[12px]'>스크랩한 글이 이곳에 저장됩니다.</p>
           <div className='flex gap-[3.33vw] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
             {userInfo?.bookmarks?.map((b) => {
-              ;<div className='shrink-0 snap-start overflow-hidden'>
-                <ImageSlider w='96px' h='96px' urllist={b?.images} />
-              </div>
+              return (
+                <div className='shrink-0 snap-start overflow-hidden'>
+                  <ImageSlider w='96px' h='96px' urllist={b?.images} />
+                </div>
+              )
             })}
           </div>
         </div>

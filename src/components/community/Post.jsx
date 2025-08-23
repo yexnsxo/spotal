@@ -20,9 +20,11 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
       .get(`${baseURL}/community/bookmarks/?user_id=${userId}`)
       .then((res) => {
         const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
+        const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
         if (cancelled) return
-        if (marked) {
+        if (marked && sameUser) {
           SetIsMarked(true)
+          console.log(res)
           SetBookmarkId(marked.bookmark_id)
         } else {
           SetIsMarked(false)
@@ -41,7 +43,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
     if (!isMarked) {
       axios
         .post(`${baseURL}/community/bookmarks/create/`, {
-          user_id: userId,
+          user_id: currentUserId,
           memory: memory_id,
         })
         .then((res) => {
@@ -90,7 +92,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
           )}
         </div>
       </div>
-      <div className='flex justify-between items-center mb-[1.78vh] md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]  mt-[1.6vh]'>
+      <div className='flex justify-between items-center mb-[1.78vh] md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]'>
         <div className='flex gap-[6px]'>
           {emotionTags.map((tag, idx) => (
             <div key={idx}>
