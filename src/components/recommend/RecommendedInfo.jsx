@@ -9,7 +9,7 @@ const RecommendedInfo = ({ placeName, status, address, summary, tags = [], image
           <img src={Close} onClick={onClose} className=''></img>
         </div>
 
-        <img src={image} className='bg-grey-100 w-[80vw] h-[150px] rounded-[10px] mb-2'></img>
+        <img src={image} className='bg-grey-100 w-[80vw] h-[20%] rounded-[10px] mb-2'></img>
 
         <div className='flex justify-between items-center mb-2 bg-primary-300 pt-3 pb-3 pl-5 pr-5 rounded-[10px]'>
           <h2 className='m-0 font-bold text-xl max-w-[44vw]'>{placeName}</h2>
