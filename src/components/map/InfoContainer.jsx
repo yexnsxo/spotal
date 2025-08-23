@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../shared/Button'
 import useRecommend from '@/hooks/useRecommend'
-import Loading from '../shared/Loading'
 
-const InfoContainer = ({ placeName, status, address, summary, tags = [], load }) => {
+const InfoContainer = ({ placeName, status, address, summary, tags = [], category, load }) => {
   const navigate = useNavigate()
   const { fetchRecommend } = useRecommend()
+
+  const isFoodIncluded = category?.includes('food') ?? false
 
   const goToRecommended = async () => {
     load(true)
@@ -15,7 +16,6 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [], load })
       state: { placeData: recommend },
     })
   }
-
   return (
     <div className='absolute bottom-[80px] left-1/2 -translate-x-1/2 w-[85%] max-w-[500px] bg-white rounded-[20px] shadow-lg p-6 z-[30]'>
       <button className='block bg-[#ADADAD] w-[134px] h-[5px] rounded-[10px] mx-auto mb-6'></button>
@@ -54,7 +54,9 @@ const InfoContainer = ({ placeName, status, address, summary, tags = [], load })
           ))}
         </div>
       </div>
-      <Button onClick={goToRecommended} type={'submit'} label={'유사 가게 추천 받기'}></Button>
+      {isFoodIncluded && (
+        <Button onClick={goToRecommended} type={'submit'} label={'유사 가게 추천 받기'}></Button>
+      )}
     </div>
   )
 }

@@ -77,6 +77,7 @@ const KakaoMap = ({ markers }) => {
             state={marker.status}
             summary={marker.summary_card}
             emotion={marker.emotions}
+            category={marker.category}
             onClick={handleMarkerClick}
           />
         ))}
@@ -96,6 +97,7 @@ const KakaoMap = ({ markers }) => {
             address={selectedMarker.address}
             summary={selectedMarker.summary}
             tags={selectedMarker.emotion}
+            category={selectedMarker.category}
             load={handleLoading}
           />
         )}
