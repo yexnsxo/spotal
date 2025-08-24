@@ -57,7 +57,7 @@ const RecommendedPlaces = ({
       >
         <img
           src={image}
-          className='bg-grey-100 w-[80vw] h-[30%] rounded-[10px] mb-2'
+          className='bg-grey-100 w-[80vw] object-cover aspect-[16/9] rounded-[10px] mb-2'
           onError={(e) => {
             e.currentTarget.src = NoResult
             setImgSrc(NoResult)
