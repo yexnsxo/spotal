@@ -8,7 +8,6 @@ import SearchResults from '@/components/search/SearchResults'
 import usePlaceSearch from '@/hooks/usePlaceSearch'
 import SearchNoResults from '@/components/search/SearchNoResults'
 import Loading from '@/components/shared/Loading'
-import useKakaoScript from '@/hooks/useKakaoScript'
 
 const HomePage = () => {
   const [keyword, setKeyword] = useState('')
@@ -16,7 +15,6 @@ const HomePage = () => {
   const [isNoResult, setNoResult] = useState(false)
   const navigate = useNavigate()
   const { fetchMarker, status } = usePlaceSearch()
-  const isKakaoLoad = useKakaoScript()
 
   const goToMap = async (keyword) => {
     const { marker, status } = await fetchMarker(keyword)
@@ -68,7 +66,7 @@ const HomePage = () => {
         </button>
       </div>
 
-      {isKakaoLoad && <SearchResults keyword={keyword} goToMap={goToMap} />}
+      <SearchResults keyword={keyword} goToMap={goToMap} />
 
       <div className='fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-[120px] flex flex-col items-center justify-center w-full max-w-[768px]'>
         <img src={Arrow} onClick={handleToggle} />

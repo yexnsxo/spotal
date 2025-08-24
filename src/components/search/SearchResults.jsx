@@ -8,7 +8,7 @@ const SearchResults = ({ keyword, goToMap }) => {
       setResults([])
       return
     }
-    if (!window.kakao?.maps?.services) return
+
     const ps = new kakao.maps.services.Places()
     ps.keywordSearch(keyword, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
