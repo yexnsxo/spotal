@@ -17,12 +17,14 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
   useEffect(() => {
     let cancelled = false
     axios
-      .get(`${baseURL}/community/bookmarks/?user_id=${userId}`)
+      .get(`${baseURL}/community/bookmarks/?user_id=${currentUserId}`)
       .then((res) => {
         const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
+        const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
         if (cancelled) return
-        if (marked) {
+        if (marked && sameUser) {
           SetIsMarked(true)
+          console.log(res)
           SetBookmarkId(marked.bookmark_id)
         } else {
           SetIsMarked(false)
@@ -35,13 +37,13 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
     return () => {
       cancelled = true
     }
-  }, [userId, memory_id, baseURL])
+  }, [userId, memory_id, baseURL, currentUserId, bookmarkId])
 
   const handleBookmark = (isMarked) => {
     if (!isMarked) {
       axios
         .post(`${baseURL}/community/bookmarks/create/`, {
-          user_id: userId,
+          user_id: currentUserId,
           memory: memory_id,
         })
         .then((res) => {
@@ -53,7 +55,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         .catch((err) => console.log(err))
     } else {
       axios
-        .delete(`${baseURL}/community/bookmarks/${bookmarkId}/delete/?user_id=${userId}`)
+        .delete(`${baseURL}/community/bookmarks/${bookmarkId}/delete/?user_id=${currentUserId}`)
         .then((res) => {
           SetIsMarked(false)
         })
@@ -71,8 +73,8 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         {isUser && <PostMenu memory_id={memory_id} />}
       </div>
       {urllist.length > 0 ? (
-        <div className='self-center'>
-          <ImageSlider w='68.974vw' h='29.146vh' urllist={urllist} />
+        <div className='self-center h-auto'>
+          <ImageSlider w='68.974vw' urllist={urllist} />
         </div>
       ) : (
         ''
@@ -90,7 +92,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
           )}
         </div>
       </div>
-      <div className='flex justify-between items-center mb-[1.78vh] md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]  mt-[1.6vh]'>
+      <div className='flex justify-between items-center mb-[1.78vh] md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]'>
         <div className='flex gap-[6px]'>
           {emotionTags.map((tag, idx) => (
             <div key={idx}>
