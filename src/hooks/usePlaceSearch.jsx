@@ -1,46 +1,55 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import useGelocation from './useGelocation'
 
-const SearchResults = ({ keyword, goToMap }) => {
-  const [results, setResults] = useState([])
+const usePlaceSearch = () => {
+  const [marker, setMarker] = useState([])
+  const [status, setStatus] = useState('idle')
+  const current = useGelocation()
 
-  useEffect(() => {
-    if (!keyword.trim()) {
-      setResults([])
-      return
-    }
+  const fetchMarker = async (keyword) => {
+    if (!keyword.trim()) return { marker: [], status: 'idle' }
 
-    const ps = new kakao.maps.services.Places()
-    ps.keywordSearch(keyword, (data, status) => {
-      if (status === kakao.maps.services.Status.OK) {
-        const filtered = data.filter(
-          (place) =>
-            place.address_name.includes('용산구') || place.road_address_name?.includes('용산구'),
-        )
-        setResults(filtered)
+    setStatus('loading')
+
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/search/store/`, {
+        params: { q: keyword, lat: current.lat, lng: current.lng },
+      })
+      console.log(res.data)
+      if (res.data && res.data.store) {
+        const emotionNames = res.data.store.emotions?.map((e) => e.name) || []
+        const newMarker = [
+          {
+            lat: res.data.latitude,
+            lng: res.data.longitude,
+            title: res.data.store.name,
+            address: res.data.store.address,
+            status: res.data.store.status,
+            summary_card: res.data.summary_card,
+            photos: res.data.photos,
+            emotions: emotionNames,
+            category: res.data.store.uptaenm,
+            previous_lat: res.data.store.previous_lat,
+            previous_lng: res.data.store.previous_lng,
+          },
+        ]
+        setMarker(newMarker)
+        setStatus('success')
+        return { marker: newMarker, status: 'success' }
       } else {
-        setResults([])
+        setMarker([])
+        setStatus('noResults')
+        return { marker: [], status: 'noResults' }
       }
-    })
-  }, [keyword])
+    } catch {
+      setMarker([])
+      setStatus('noResults')
+      return { marker: [], status: 'noResults' }
+    }
+  }
 
-  if (results.length === 0) return null
-
-  return (
-    <div className='absolute top-[33vh] w-[85%] max-w-[500px] p-3 pt-2 pb-1 border-2 border-primary rounded-[20px] bg-white shadow-md z-100 overflow-y-auto max-h-[55vh] scrollbar-hide'>
-      <ul>
-        {results.map((place) => (
-          <li
-            key={place.id}
-            className='cursor-pointer border-b-2 border-primary last:border-0 p-2 hover:bg-gray-100'
-            onClick={() => goToMap(place.place_name)}
-          >
-            <p className='font-medium text-l'>{place.place_name}</p>
-            <p className='text-xs text-gray-500'>{place.address_name}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+  return { fetchMarker, status }
 }
 
-export default SearchResults
+export default usePlaceSearch
