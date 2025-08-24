@@ -17,7 +17,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
   useEffect(() => {
     let cancelled = false
     axios
-      .get(`${baseURL}/community/bookmarks/?user_id=${userId}`)
+      .get(`${baseURL}/community/bookmarks/?user_id=${currentUserId}`)
       .then((res) => {
         const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
         const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
@@ -37,7 +37,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
     return () => {
       cancelled = true
     }
-  }, [userId, memory_id, baseURL])
+  }, [userId, memory_id, baseURL, currentUserId, bookmarkId])
 
   const handleBookmark = (isMarked) => {
     if (!isMarked) {
@@ -55,7 +55,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         .catch((err) => console.log(err))
     } else {
       axios
-        .delete(`${baseURL}/community/bookmarks/${bookmarkId}/delete/?user_id=${userId}`)
+        .delete(`${baseURL}/community/bookmarks/${bookmarkId}/delete/?user_id=${currentUserId}`)
         .then((res) => {
           SetIsMarked(false)
         })
@@ -73,8 +73,8 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         {isUser && <PostMenu memory_id={memory_id} />}
       </div>
       {urllist.length > 0 ? (
-        <div className='self-center'>
-          <ImageSlider w='68.974vw' h='29.146vh' urllist={urllist} />
+        <div className='self-center h-auto'>
+          <ImageSlider w='68.974vw' urllist={urllist} />
         </div>
       ) : (
         ''
