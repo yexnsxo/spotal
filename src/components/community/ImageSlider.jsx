@@ -56,8 +56,8 @@ function ImageSlider({ urllist = [], w }) {
           >
             <div className='justify-center items-center [&>div]:rounded-[10px] [&>div]:overflow-hidden'>
               <img
-                className='object-cover bg-grey-100 rounded-[10px] overflow-hidden'
-                style={{ width: w, height: w }}
+                className='object-cover bg-grey-100 rounded-[10px] overflow-hidden aspect-square'
+                style={{ width: w }}
                 alt='골목 과거 사진'
                 src={url}
                 loading='lazy'
