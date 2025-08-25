@@ -4,9 +4,17 @@ import { useNavigate } from 'react-router-dom'
 import Button from '@/components/shared/Button'
 import useGelocation from '@/hooks/useGelocation'
 
-const RecommendedInfo = ({ placeName, status, address, summary, tags = [], image, onClose }) => {
+const RecommendedInfo = ({
+  current,
+  placeName,
+  status,
+  address,
+  summary,
+  tags = [],
+  image,
+  onClose,
+}) => {
   const navigate = useNavigate()
-  const current = useGelocation()
 
   const savedLocation = JSON.parse(localStorage.getItem('current_location') || 'null')
 
