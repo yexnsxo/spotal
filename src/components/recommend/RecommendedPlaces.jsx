@@ -3,6 +3,7 @@ import BookMark from '@/assets/BookMark.svg'
 import BookMark2 from '@/assets/BookMark2.svg'
 import RecommendedInfo from './RecommendedInfo'
 import NoResult from '@/assets/NoResult.svg'
+import { baseURL } from '@/pages/Signup'
 import axios from 'axios'
 
 const RecommendedPlaces = ({
@@ -31,7 +32,7 @@ const RecommendedPlaces = ({
   const handleBookmark = (isMarked) => {
     if (!isMarked) {
       axios
-        .post(`${import.meta.env.VITE_API_BASE_URL}/api/places/saved/create/`, {
+        .post(`${baseURL}/api/places/saved/create/`, {
           shop: id,
           user: currentUserId,
           rec: rec,
@@ -43,7 +44,7 @@ const RecommendedPlaces = ({
         .catch((err) => console.log(err))
     } else {
       axios
-        .delete(`${import.meta.env.VITE_API_BASE_URL}/api/places/saved/${bookmarkID}/delete/`)
+        .delete(`${baseURL}/api/places/saved/${bookmarkID}/delete/`)
         .then((res) => {
           setIsMarked(false)
         })
