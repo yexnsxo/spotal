@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Header from '@/components/shared/Header.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import Dropdown2 from '@/components/community/Dropdown2.jsx'
@@ -18,6 +18,14 @@ const EditPage = () => {
   const [images, setImages] = useState([])
   const [files, setFiles] = useState([])
   const navigate = useNavigate()
+  const dropdownRef = useRef(null)
+
+  const scrollTo = () => {
+    const dropdown = dropdownRef.current
+    if (!dropdown) return
+    const y = dropdown.getBoundingClientRect().top + window.scrollY + 200
+    window.scrollTo({ top: y, behavior: 'smooth' })
+  }
 
   const { values, handleChange, isFilled, setValues } = useFormFilled({
     text: '',
@@ -128,6 +136,15 @@ const EditPage = () => {
                 </div>
                 <div className={`${divClass}`}>
                   <label className={`${labelClass}`}>장소 태그 추가</label>
+                  <div ref={dropdownRef} onClick={scrollTo}>
+                    <Dropdown2
+                      placeholder='원하는 장소 태그를 선택하세요'
+                      options={locationList}
+                      name='location'
+                      onChange={handleChange}
+                      value={values.location}
+                    />
+                  </div>
                   <Dropdown2
                     placeholder='원하는 장소 태그를 선택하세요'
                     options={locationList}
@@ -138,13 +155,15 @@ const EditPage = () => {
                 </div>
                 <div className={`${divClass}`}>
                   <label className={`${labelClass}`}>감정 태그 추가</label>
-                  <Dropdown2
-                    placeholder='원하는 감정 태그를 선택하세요'
-                    options={emotionList}
-                    name='emotion'
-                    onChange={handleChange}
-                    value={values.emotion}
-                  />
+                  <div ref={dropdownRef} onClick={scrollTo}>
+                    <Dropdown2
+                      placeholder='원하는 감정 태그를 선택하세요'
+                      options={emotionList}
+                      name='emotion'
+                      onChange={handleChange}
+                      value={values.emotion}
+                    />
+                  </div>
                 </div>
                 <Button
                   type={'button'}
