@@ -8,6 +8,13 @@ const RecommendedInfo = ({ placeName, status, address, summary, tags = [], image
   const navigate = useNavigate()
   const current = useGelocation()
 
+  const savedLocation = JSON.parse(localStorage.getItem('current_location') || 'null')
+
+  const finalLocation = {
+    lat: current.lat || savedLocation?.lat,
+    lng: current.lng || savedLocation?.lng,
+  }
+
   const goToMap = () => {
     const { kakao } = window
     const geocoder = new kakao.maps.services.Geocoder()
@@ -25,8 +32,8 @@ const RecommendedInfo = ({ placeName, status, address, summary, tags = [], image
           emotions: tags,
           lat,
           lng,
-          previous_lng: current.lng,
-          previous_lat: current.lat,
+          previous_lng: finalLocation.lng,
+          previous_lat: finalLocation.lat,
         }
         navigate('/map', { state: { markers: [marker] } })
       } else {
@@ -81,7 +88,12 @@ const RecommendedInfo = ({ placeName, status, address, summary, tags = [], image
             ))}
           </div>
         </div>
-        <Button onClick={goToMap} type={'submit'} label={'지도에서 보기'}></Button>
+        <Button
+          onClick={goToMap}
+          disabled={!current.lat || !current.lng}
+          type={'submit'}
+          label={'지도에서 보기'}
+        ></Button>
       </div>
     </div>
   )
