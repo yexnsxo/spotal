@@ -17,9 +17,6 @@ const RecommendedInfo = ({ placeName, status, address, summary, tags = [], image
         const lat = result[0].y
         const lng = result[0].x
 
-        console.log(current.lat)
-        console.log(current.lng)
-
         const marker = {
           title: placeName,
           status,
