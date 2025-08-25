@@ -20,7 +20,7 @@ const StepSelector = ({ step, selected, onSelect, onNext, onPrev }) => {
         { name: '해방촌', num: 7 },
       ],
       src: Memory2,
-      button: '결과 보기',
+      button: '다음',
       highlight: Highlight2,
       highlightClass: 'absolute top-20 left-10 w-1/2 z-0', // step1 위치
     },
@@ -36,7 +36,7 @@ const StepSelector = ({ step, selected, onSelect, onNext, onPrev }) => {
         { name: '세심함', num: 6 },
       ],
       src: Memory1,
-      button: '다음',
+      button: '결과 보기',
       highlight: Highlight1,
       highlightClass: 'absolute top-20 w-1/3 text-start z-0', // step2 위치
     },
