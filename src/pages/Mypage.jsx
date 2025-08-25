@@ -14,7 +14,6 @@ const Mypage = () => {
     axios
       .get(`${baseURL}/mypage/${userId}/`)
       .then((res) => {
-        console.log(res.data)
         setUserInfo(res.data)
       })
       .catch((err) => console.log(err))

@@ -18,11 +18,9 @@ const Signup = () => {
   })
   const navigate = useNavigate()
 
-  // 중복확인 통과여부 -> 현재 로직 없이 버튼 클릭 시 true 바뀌도록 설정
   const [emailChecked, setEmailChecked] = useState(false)
   const [nicknameChecked, setNicknameChecked] = useState(false)
 
-  // 중복 확인 버튼 클릭 시 버튼 색 변경
   const emailBtnBg = emailChecked
     ? 'bg-primary-300 text-primary border border-[1px] border-primary'
     : 'bg-grey-100 text-grey-700'
@@ -32,7 +30,6 @@ const Signup = () => {
 
   const canSubmit = isFilled && emailChecked && nicknameChecked
 
-  // 회원가입 폼 제출 로직
   const postSignupRequest = () => {
     axios
       .post(`${baseURL}/api/users/signup/`, {
@@ -40,26 +37,25 @@ const Signup = () => {
         password: values.password,
         nickname: values.nickname,
       })
-      .then((response) => {
+      .then(() => {
         alert('회원가입에 성공하셨습니다.')
         navigate('/login')
       })
-      .catch((error) => {
+      .catch(() => {
         alert('회원가입에 실패하셨습니다.')
       })
   }
 
-  // 추후 백엔드 api와 연결 예정
   const handleEmailChecked = () => {
     axios
       .post(`${baseURL}/api/users/check-email/`, {
         email: values.email,
       })
-      .then((response) => {
+      .then(() => {
         alert('사용 가능한 이메일입니다.')
         setEmailChecked(true)
       })
-      .catch((error) => {
+      .catch(() => {
         alert('사용 불가능한 이메일입니다.')
       })
   }
@@ -68,11 +64,11 @@ const Signup = () => {
       .post(`${baseURL}/api/users/check-nickname/`, {
         nickname: values.nickname,
       })
-      .then((response) => {
+      .then(() => {
         alert('사용 가능한 닉네임입니다.')
         setNicknameChecked(true)
       })
-      .catch((error) => {
+      .catch(() => {
         alert('사용 불가능한 닉네임입니다.')
       })
   }
@@ -84,7 +80,7 @@ const Signup = () => {
         <SignupImg className='mt-[3.08vh]' aria-label='SignupImg' />
         <form
           onSubmit={(e) => {
-            e.preventDefault() // 새로고침 방지!
+            e.preventDefault()
             postSignupRequest()
           }}
         >
