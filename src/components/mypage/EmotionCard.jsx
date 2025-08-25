@@ -42,7 +42,7 @@ const EmotionCard = ({ placeName, status, address, summary, tags = [], url }) =>
             </span>
           </div>
           <div
-            className='flex items-baseline w-[40vw] md:w-[21rem]'
+            className='flex items-baseline w-[40vw] md:w-[17rem]'
             onClick={() => setIsExpanded(true)}
           >
             <strong className='font-[Bold] text-[10px] text-gray-700 shrink-0 mr-1'>요약:</strong>
@@ -51,10 +51,11 @@ const EmotionCard = ({ placeName, status, address, summary, tags = [], url }) =>
                 isExpanded ? 'whitespace-pre-wrap overflow-visible' : 'truncate'
               }`}
             >
-              {summary}
+              양이 많고 시끌벅적한 분위기에서 편안하게 술과 함께 다양한 안주를 즐길 수 있는
+              곳이에요.
             </span>
           </div>
-          <div className='flex gap-[1.28vw] flex-wrap'>
+          <div className='flex gap-x-[1.28vw] gap-y-[5px] flex-wrap'>
             {tags.map((tag, idx) => (
               <div
                 key={idx}
