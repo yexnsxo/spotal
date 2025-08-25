@@ -82,7 +82,7 @@ const HomePage = () => {
           ${isToggle ? 'translate-y-0 opacity-100 visible' : 'translate-y-full opacity-0 invisible'}
         `}
       >
-        <h1 className='text-lg md:text-2xl font-bold text-grey-700'>감정으로 기억 꺼내기</h1>
+        <h1 className='text-lg md:text-2xl font-[Bold] text-grey-700'>감정으로 기억 꺼내기</h1>
         <p className='mt-2 text-base md:text-lg text-[#828282]'>분위기, 느낌으로 기억하시나요?</p>
       </div>
       <Footer selectedMenu='home' />
