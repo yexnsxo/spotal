@@ -31,15 +31,6 @@ const WritePage = () => {
     emotion: [],
   })
 
-  useEffect(() => {
-    axios
-      .get(`${baseURL}/community/memories/tag-options`)
-      .then((res) => console.log(res.data))
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
   const postWriteRequest = () => {
     const formData = new FormData()
     formData.append('content', values.text)
@@ -102,7 +93,10 @@ const WritePage = () => {
                   </div>
                 </div>
                 <div className={`${divClass}`}>
-                  <label className={`${labelClass}`}>감정 태그 추가</label>
+                  <label className={`${labelClass}`}>
+                    감정 태그 추가{' '}
+                    <span className='text-[12px] text-gray-500'>(최대 3개 선택 가능)</span>
+                  </label>
                   <div ref={dropdownRef} onClick={scrollTo}>
                     <Dropdown2
                       value={values.emotion}

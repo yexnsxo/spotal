@@ -127,7 +127,7 @@ const EditPage = () => {
                 <div className={`${divClass}`}>
                   <label className={`${labelClass}`}>내용 수정</label>
                   <textarea
-                    className='w-[71.794vw] max-w-[36rem] md:w-[36rem] h-[9.834vh] bg-[#ffffff] focus:outline-none focus:border-primary rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[1.64vw]'
+                    className='w-[71.794vw] max-w-[36rem] md:w-[36rem] h-[9.834vh] bg-[#ffffff] focus:outline-none focus:border-primary rounded-[9px] resize-none border-[0.9px] border-grey-200 py-[0.9vh] px-[0.5rem]'
                     placeholder='작성할 내용을 입력하세요'
                     name='text'
                     value={values.text}
@@ -145,16 +145,12 @@ const EditPage = () => {
                       value={values.location}
                     />
                   </div>
-                  <Dropdown2
-                    placeholder='원하는 장소 태그를 선택하세요'
-                    options={locationList}
-                    name='location'
-                    onChange={handleChange}
-                    value={values.location}
-                  />
                 </div>
                 <div className={`${divClass}`}>
-                  <label className={`${labelClass}`}>감정 태그 추가</label>
+                  <label className={`${labelClass}`}>
+                    감정 태그 추가{' '}
+                    <span className='text-[12px] text-gray-500'>(최대 3개 선택 가능)</span>
+                  </label>
                   <div ref={dropdownRef} onClick={scrollTo}>
                     <Dropdown2
                       placeholder='원하는 감정 태그를 선택하세요'

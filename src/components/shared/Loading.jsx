@@ -9,9 +9,7 @@ const Loading = () => {
       <h1 className='font-[Bold] text-grey-700 text-xl mb-20'>로딩 중입니다!</h1>
       <BeatLoader color='#ffba42' />
       <div className='relative flex justify-center items-center mt-[10vh]'>
-        {/* 블러 배경 */}
         <div className='absolute w-[100%] h-[100%] bg-primary-200 blur-[9rem] rounded-full pointer-events-none -z-10 animate-pulse bg-gradient-to-b from-primary-200 to-primary' />
-        {/* 캐릭터 이미지 */}
         <Loadingsvg
           className='relative z-10 w-full h-full object-contain'
           aria-label='로딩 캐릭터'

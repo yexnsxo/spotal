@@ -30,7 +30,6 @@ const RecommendedInfo = ({ placeName, status, address, summary, tags = [], image
         }
         navigate('/map', { state: { markers: [marker] } })
       } else {
-        alert('좌표를 불러오지 못했습니다.')
       }
     })
   }
