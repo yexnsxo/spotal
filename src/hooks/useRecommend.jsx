@@ -4,7 +4,7 @@ import axios from 'axios'
 const useRecommend = () => {
   const [state, setStatus] = useState('idle')
 
-  const fetchRecommend = async (keyword, address, emotion) => {
+  const fetchRecommend = async (keyword, address, emotion, id) => {
     setStatus('loading')
 
     try {
@@ -14,6 +14,7 @@ const useRecommend = () => {
           name: keyword,
           address: address,
           emotion_tags: emotion,
+          user_id: id,
         },
 
         {
@@ -29,7 +30,7 @@ const useRecommend = () => {
     }
   }
 
-  const fetchRecommend2 = async (location, emotion) => {
+  const fetchRecommend2 = async (location, emotion, id) => {
     setStatus('loading')
 
     try {
@@ -38,6 +39,7 @@ const useRecommend = () => {
         {
           selected_location: location,
           selected_emotions: emotion,
+          user_id: id,
         },
 
         {

@@ -58,7 +58,7 @@ const RecommendedPlaces = ({
         onClick={handleOpenInfo}
       >
         <img
-          src={image}
+          src={imgSrc}
           className='bg-grey-100 w-[80vw] object-cover aspect-[16/9] rounded-[10px] mb-2'
           onError={(e) => {
             e.currentTarget.src = NoResult

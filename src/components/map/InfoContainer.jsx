@@ -6,12 +6,12 @@ import useRecommend from '@/hooks/useRecommend'
 const InfoContainer = ({ placeName, status, address, summary, tags = [], category, load }) => {
   const navigate = useNavigate()
   const { fetchRecommend } = useRecommend()
-
+  const currentUserId = localStorage.getItem('user.id')
   const isFoodIncluded = category?.includes('food') ?? false
 
   const goToRecommended = async () => {
     load(true)
-    const recommend = await fetchRecommend(placeName, address, tags)
+    const recommend = await fetchRecommend(placeName, address, tags, currentUserId)
     navigate('/recommended', {
       state: { placeData: recommend },
     })
