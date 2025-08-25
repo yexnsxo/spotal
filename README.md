@@ -1,4 +1,4 @@
-#  SPOTAL
+#  SPOTAL!
 <img width="599" height="424" alt="스크린샷 2025-08-26 오전 3 33 01" src="https://github.com/user-attachments/assets/c22ea3dd-e8d0-4123-9268-d3311bff3ef0" />
 
 
