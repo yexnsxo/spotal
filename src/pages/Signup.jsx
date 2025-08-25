@@ -7,6 +7,7 @@ import AuthBtn from '@/components/auth/AuthBtn.jsx'
 import { useFormFilled } from '@/hooks/useFormFilled'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 export const baseURL = import.meta.env.VITE_API_BASE_URL
 
@@ -38,11 +39,11 @@ const Signup = () => {
         nickname: values.nickname,
       })
       .then(() => {
-        alert('회원가입에 성공하셨습니다.')
+        toast('🟢 회원가입에 성공하셨습니다.')
         navigate('/login')
       })
       .catch(() => {
-        alert('회원가입에 실패하셨습니다.')
+        toast('🔴 회원가입에 실패하셨습니다.')
       })
   }
 
@@ -52,11 +53,11 @@ const Signup = () => {
         email: values.email,
       })
       .then(() => {
-        alert('사용 가능한 이메일입니다.')
+        toast('🟢 사용 가능한 이메일입니다.')
         setEmailChecked(true)
       })
       .catch(() => {
-        alert('사용 불가능한 이메일입니다.')
+        toast('🔴 사용 불가능한 이메일입니다.')
       })
   }
   const handleNicknamChecked = () => {
@@ -65,11 +66,11 @@ const Signup = () => {
         nickname: values.nickname,
       })
       .then(() => {
-        alert('사용 가능한 닉네임입니다.')
+        toast('🟢 사용 가능한 닉네임입니다.')
         setNicknameChecked(true)
       })
       .catch(() => {
-        alert('사용 불가능한 닉네임입니다.')
+        toast('🔴 사용 불가능한 닉네임입니다.')
       })
   }
 
@@ -78,12 +79,7 @@ const Signup = () => {
       <div className='flex flex-col min-h-screen items-center justify-center bg-white w-full max-w-[768px]'>
         <Logo className='mt-[6.5vh]' aria-label='Logo' />
         <SignupImg className='mt-[3.08vh]' aria-label='SignupImg' />
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            postSignupRequest()
-          }}
-        >
+        <form>
           <div className='flex flex-col justify-center items-center gap-[0.83vh] mt-0'>
             <AuthBox2
               label={'이메일'}

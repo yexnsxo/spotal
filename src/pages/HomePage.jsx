@@ -8,6 +8,7 @@ import SearchResults from '@/components/search/SearchResults'
 import usePlaceSearch from '@/hooks/usePlaceSearch'
 import SearchNoResults from '@/components/search/SearchNoResults'
 import Loading from '@/components/shared/Loading'
+import { toast } from 'sonner'
 
 const HomePage = () => {
   const [keyword, setKeyword] = useState('')
@@ -20,7 +21,7 @@ const HomePage = () => {
     const { marker, status } = await fetchMarker(keyword)
 
     if (!keyword.trim()) {
-      alert('검색어를 입력해주세요!')
+      toast('🟡 검색어를 입력해주세요!')
       return
     }
     if (status === 'success') {

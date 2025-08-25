@@ -5,6 +5,7 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import { baseURL } from '@/pages/Signup'
 import axios from 'axios'
 import MenuSign from '@/assets/MenuSign.svg?react'
+import { toast } from 'sonner'
 
 const PostMenu = ({ memory_id }) => {
   const [open, setOpen] = useState(false)
@@ -18,12 +19,12 @@ const PostMenu = ({ memory_id }) => {
       .delete(`${baseURL}/community/memories/${memory_id}/`)
       .then((response) => {
         console.log(response)
-        alert('게시글 삭제가 완료되었습니다.')
+        toast('🟢 게시글 삭제가 완료되었습니다.')
         window.location.reload()
       })
       .catch((error) => {
         console.log(error)
-        alert('게시글을 삭제하지 못했습니다.')
+        toast('🔴 게시글을 삭제하지 못하였습니다.')
       })
   }
 
