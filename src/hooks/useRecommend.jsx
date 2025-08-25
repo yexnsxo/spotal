@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { baseURL } from '@/pages/Signup'
 
 const useRecommend = () => {
   const [state, setStatus] = useState('idle')
@@ -9,7 +10,7 @@ const useRecommend = () => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/places/`,
+        `${baseURL}/api/places/`,
         {
           name: keyword,
           address: address,
@@ -22,7 +23,6 @@ const useRecommend = () => {
         },
       )
       setStatus('success')
-      console.log(res.data)
       return res.data
     } catch (err) {
       setStatus('noResults')
@@ -35,7 +35,7 @@ const useRecommend = () => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/infer/create-session/`,
+        `${baseURL}/api/infer/create-session/`,
         {
           selected_location: location,
           selected_emotions: emotion,
@@ -47,7 +47,6 @@ const useRecommend = () => {
         },
       )
       setStatus('success')
-      console.log(res.data)
       return res.data
     } catch (err) {
       setStatus('noResults')
