@@ -51,8 +51,7 @@ const EmotionCard = ({ placeName, status, address, summary, tags = [], url }) =>
                 isExpanded ? 'whitespace-pre-wrap overflow-visible' : 'truncate'
               }`}
             >
-              양이 많고 시끌벅적한 분위기에서 편안하게 술과 함께 다양한 안주를 즐길 수 있는
-              곳이에요.
+              {summary}
             </span>
           </div>
           <div className='flex gap-x-[1.28vw] gap-y-[5px] flex-wrap'>
