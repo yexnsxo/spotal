@@ -62,7 +62,7 @@ const StepSelector = ({ step, selected, onSelect, onNext, onPrev }) => {
         />
 
         <div className='grid justify-items-start ml-5 mb-12 z-10'>
-          <h2 className='whitespace-pre-line text-xl md:text-2xl lg:text-3xl mt-2 mb-1 text-gray-800 text-start z-10 font-[ExtraBlod]'>
+          <h2 className='whitespace-pre-line text-xl md:text-2xl lg:text-3xl mt-2 mb-1 text-gray-800 text-start z-10 font-[SemiBold]'>
             {currentStep.title}
           </h2>
           {currentStep.subtitle && (
