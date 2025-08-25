@@ -41,8 +41,10 @@ const EmotionCard = ({ placeName, status, address, summary, tags = [], url }) =>
               {address}
             </span>
           </div>
-
-          <div className='flex items-baseline w-[40vw]' onClick={() => setIsExpanded(true)}>
+          <div
+            className='flex items-baseline w-[40vw] md:w-[22rem]'
+            onClick={() => setIsExpanded(true)}
+          >
             <strong className='font-[Bold] text-[10px] text-gray-700 shrink-0 mr-1'>요약:</strong>
             <span
               className={`font-[SemiBold] text-[10px] text-gray-700 truncate min-w-0 hover:whitespace-pre-wrap hover:overflow-visible ${

@@ -66,7 +66,7 @@ const RecommendedPlaces = ({
           }}
         ></img>
         <div className='flex justify-between items-center mb-2 pt-1 pl-1 rounded-[10px]'>
-          <h2 className='m-0 font-bold text-xl truncate max-w-[87%]'>{placeName}</h2>
+          <h2 className='m-0 font-[Bold] text-xl truncate max-w-[87%]'>{placeName}</h2>
           <img
             src={isMarked ? BookMark2 : BookMark}
             onClick={(e) => {
