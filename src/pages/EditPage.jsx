@@ -37,9 +37,7 @@ const EditPage = () => {
     axios
       .get(`${baseURL}/community/memories/${memory_id}/`)
       .then((res) => {
-        console.log('데이터', res.data.data)
         setData(res.data.data)
-        console.log(data)
       })
       .catch((err) => {
         console.log(err)
@@ -88,18 +86,13 @@ const EditPage = () => {
     const flatFiles = (files ?? []).flat()
     flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
     formData.append('user_id', localStorage.getItem('user.id'))
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1])
-    }
     axios
       .patch(`${baseURL}/community/memories/${memory_id}/`, formData)
       .then((res) => {
-        console.log(res)
         navigate('/post')
       })
       .catch((err) => {
-        console.log('status', err.response?.status)
-        console.log('body', err.response?.data)
+        console.log(err)
       })
   }
 
@@ -117,7 +110,6 @@ const EditPage = () => {
                     urllist={images}
                     onFilesChange={setFiles}
                     onRemove={(id) => {
-                      console.log(id)
                       axios.delete(`${baseURL}/community/images/${id}/`).then((res) => {
                         setImages((prev) => prev.filter((img) => img.image_id !== id))
                       })

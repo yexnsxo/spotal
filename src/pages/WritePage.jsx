@@ -45,16 +45,13 @@ const WritePage = () => {
     const flatFiles = (files ?? []).flat()
     flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
     formData.append('user_id', localStorage.getItem('user.id'))
-    console.log('images:', files)
     axios
       .post(`${baseURL}/community/memories/`, formData)
       .then((res) => {
-        console.log(res)
         navigate(-1)
       })
       .catch((err) => {
-        console.log('status', err.response?.status)
-        console.log('body', err.response?.data)
+        console.log(err)
       })
   }
 
