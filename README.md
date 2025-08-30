@@ -76,9 +76,6 @@ Spotal은 **사용자의 기억과 상황에 맞춰**, 다음과 같은 입체�
 
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"> 
 
-
-<img width="1440" height="1024" alt="Desktop - 8" src="https://github.com/user-attachments/assets/c15a7f28-e364-4ebf-be7b-1daa4cce345e" />
-
 ### 폴더 구조
 
 ``` Spotal-FE/
@@ -147,3 +144,43 @@ Spotal-FE/
 ├── vercel.json                         # Vercel 배포 설정
 └── vite.config.js                      # Vite 빌드 설정
 ```
+
+### 실행 방법
+**Prerequisites**
+- Node.js >= 16
+- Git
+- 카카오 API REST 키 (Kakao Developers 사이트에서 발급 가능)
+- 카카오 API APP 키 (Kakao Developers 사이트에서 발급 가능)
+- 백엔드 서버 실행 (⚠️ 반드시 함께 구동해야 전체 기능 사용 가능)
+  </br>
+  백엔드 레포: https://github.com/Likelion-at-SMWU-13th/Spotal-BE
+
+**1. 프로젝트 클론**
+```bash
+git clone https://github.com/your-username/Spotal-FE.git
+cd Spotal-FE
+```
+
+**2. 필요한 라이브러리 설치**
+```bash
+npm install
+```
+
+**3. 환경변수 설정**
+프로젝트 루트에 `.env` 파일을 생성하고 다음 정보를 입력:
+```env
+# 카카오 API 키 설정
+VITE_KAKAO_APP_KEY= your-kakao-app-key
+VITE_KAKAO_REST_KEY= your-kakao-rest-key
+
+# 백엔드 서버 설정
+VITE_API_BASE_URL=your-backend-server-url
+```
+
+**4. 개발 서버 실행**
+```bash
+npm run dev
+```
+서버가 실행되면 http://localhost:5173 (기본 포트)에서 접속할 수 있습니다.
+
+<img width="1440" height="1024" alt="Desktop - 8" src="https://github.com/user-attachments/assets/c15a7f28-e364-4ebf-be7b-1daa4cce345e" />
