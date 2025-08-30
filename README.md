@@ -78,3 +78,72 @@ Spotal은 **사용자의 기억과 상황에 맞춰**, 다음과 같은 입체�
 
 
 <img width="1440" height="1024" alt="Desktop - 8" src="https://github.com/user-attachments/assets/c15a7f28-e364-4ebf-be7b-1daa4cce345e" />
+
+### 폴더 구조
+
+``` Spotal-FE/
+Spotal-FE/
+├── 📁 public/                          # 정적 파일
+│   └── Favicon.png                     # 파비콘 이미지
+│
+├── 📁 src/                             # 소스 코드
+│   ├── 📁 assets/                      # 이미지, 아이콘 등 정적 리소스
+│   │
+│   ├── 📁 components/                  # UI 컴포넌트 모음
+│   │   ├── 📁 auth/                    # 로그인/회원가입 관련 컴포넌트
+│   │   ├── 📁 community/               # 커뮤니티 관련 UI
+│   │   ├── 📁 fonts/                   # 폰트 관련 컴포넌트
+│   │   ├── 📁 map/                     # 지도 관련 UI
+│   │   ├── 📁 memory/                  # 사용자 기록/메모리 UI
+│   │   ├── 📁 mypage/                  # 마이페이지 관련 UI
+│   │   ├── 📁 onboarding/              # 온보딩 화면
+│   │   ├── 📁 recommend/               # 추천 시스템 관련 UI
+│   │   ├── 📁 search/                  # 검색 UI
+│   │   ├── 📁 shared/                  # 공통 재사용 컴포넌트 (버튼, 모달 등)
+│   │   └── 📁 ui/                      # 기본 UI 요소 (아이콘, 입력창 등)
+│   │
+│   ├── 📁 hooks/                       # 커스텀 훅
+│   │   ├── useFormFilled.jsx           # 폼 입력 상태 관리
+│   │   ├── useGelocation.jsx           # 위치 정보 가져오기
+│   │   ├── useLoadPolyline.jsx         # 지도 Polyline 로드
+│   │   ├── useLoadSearch.jsx           # 검색 데이터 로드
+│   │   ├── useOutsideClick.jsx         # 외부 클릭 감지
+│   │   ├── usePlaceSearch.jsx          # 장소 검색 훅
+│   │   └── useRecommend.jsx            # 추천 데이터 훅
+│   │
+│   ├── 📁 lib/                         # 외부 라이브러리/유틸 모음
+│   │
+│   ├── 📁 pages/                       # 페이지 단위 컴포넌트
+│   │   ├── CommunityMyPostList.jsx     # 내가 쓴 커뮤니티 글 목록
+│   │   ├── CommunityPostList.jsx       # 전체 커뮤니티 글 목록
+│   │   ├── EditPage.jsx                # 게시글 수정 페이지
+│   │   ├── HomePage.jsx                # 메인 홈 화면
+│   │   ├── Login.jsx                   # 로그인 페이지
+│   │   ├── MapPage.jsx                 # 지도 기반 페이지
+│   │   ├── MemorySearchPage.jsx        # 메모리 검색 페이지
+│   │   ├── Mypage.jsx                  # 마이페이지
+│   │   ├── OnBoardingPage.jsx          # 온보딩 페이지
+│   │   ├── RecommendedPage.jsx         # 추천 결과 페이지
+│   │   ├── Signup.jsx                  # 회원가입 페이지
+│   │   └── WritePage.jsx               # 글쓰기 페이지
+│   │
+│   ├── App.jsx                         # 앱 루트 컴포넌트
+│   ├── App.css                         # 앱 전역 스타일
+│   ├── index.css                       # 전역 CSS (Tailwind 포함)
+│   ├── main.jsx                        # React 진입점
+│   └── router.jsx                      # 라우팅 설정
+│
+├── .env                                # 환경 변수 설정
+├── .gitignore                          # Git 무시 파일
+├── .prettierrc                         # 코드 포맷 설정
+├── components.json                     # 컴포넌트 자동화/설정 파일
+├── eslint.config.js                    # ESLint 설정
+├── index.html                          # 메인 HTML 템플릿
+├── jsconfig.json                       # 경로 alias 및 JS 설정
+├── package.json                        # 프로젝트 의존성 및 스크립트
+├── package-lock.json                   # 의존성 버전 고정
+├── README.md                           # 프로젝트 설명 문서
+├── tailwind.config.js                  # TailwindCSS 설정
+├── vercel.json                         # Vercel 배포 설정
+└── vite.config.js                      # Vite 빌드 설정
+```
