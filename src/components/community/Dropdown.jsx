@@ -21,6 +21,12 @@ export const locationList = [
   { location_id: 7, name: '해방촌' },
 ]
 
+export const categoryList = [
+  { category_id: 1, name: '제보' },
+  { category_id: 2, name: '홍보' },
+  { category_id: 3, name: '추억 기록' },
+]
+
 const Dropdown = ({ label, onSelect }) => {
   const [open, setOpen] = useState(false)
 
