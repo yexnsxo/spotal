@@ -27,7 +27,8 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name, value }) => {
   useOutsideClick(rootRef, () => setOpen(false), open)
 
   const isEmotion = name === 'emotion'
-  const id = isEmotion ? 'emotion_id' : 'location_id'
+  const isLocation = name === 'location'
+  const id = isEmotion ? 'emotion_id' : isLocation ? 'location_id' : 'category_id'
 
   useEffect(() => {
     if (!options.length) {
@@ -44,7 +45,7 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name, value }) => {
       const next = found ? [found] : []
       setSelected((prev) => (arraysEqualById(prev, next, id) ? prev : next))
     }
-  }, [value, options, isEmotion, id])
+  }, [value, options, isEmotion, id, isLocation])
 
   const handleClick = (opt, isSelected) => {
     if (isEmotion) {
