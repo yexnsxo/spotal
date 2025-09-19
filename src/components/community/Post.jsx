@@ -5,6 +5,7 @@ import PostMenu from './PostMenu.jsx'
 import BookMark from '@/assets/BookMark.svg?react'
 import axios from 'axios'
 import { baseURL } from '@/pages/Signup.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nickname }) => {
   const [expanded, setExpanded] = useState(false)
@@ -13,6 +14,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
   const isUser = currentUserId == userId
   const [isMarked, SetIsMarked] = useState(false)
   const [bookmarkId, SetBookmarkId] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     let cancelled = false
@@ -70,7 +72,13 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         {isUser && <PostMenu memory_id={memory_id} />}
       </div>
       <div className='h-auto'>
-        <ImageSlider w='68.974vw' urllist={urllist} />
+        <ImageSlider
+          w='68.974vw'
+          urllist={urllist}
+          onClick={() => {
+            navigate(`/post/${memory_id}`)
+          }}
+        />
       </div>
       <div className='flex items-baseline gap-[5px] h-auto m-0 my-1'>
         <p className='whitespace-pre-line text-[12px]'>{displayedText}</p>

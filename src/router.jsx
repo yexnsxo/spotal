@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage.jsx'
 import MapPage from './pages/MapPage'
 import RecommendedPage from './pages/RecommendedPage'
 import MemorySearchPage from './pages/MemorySearchPage'
+import CommunityPost from './pages/CommunityPost'
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: 'post',
         element: <CommunityPostList />,
+      },
+      {
+        path: 'post/:memory_id',
+        element: <CommunityPost />,
       },
       {
         path: 'home',

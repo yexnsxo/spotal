@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import Slider from 'react-slick'
 import PostDefaultImg from '@/assets/PostDefaultImg.svg'
 
-function ImageSlider({ urllist = [], w }) {
+function ImageSlider({ urllist = [], w, onClick = () => {} }) {
   const [current, setCurrent] = useState(0)
   const [imageUrlList, setImageUrlList] = useState([])
   const settings = {
@@ -47,6 +47,7 @@ function ImageSlider({ urllist = [], w }) {
     <div
       className='relative mt-[1.6vh] [&>div]:rounded-[10px] [&>div]:overflow-hidden'
       style={{ width: w, maxWidth: '31.5rem', overflow: 'hidden', borderRadius: '10px' }}
+      onClick={onClick}
     >
       <Slider {...settings}>
         {imageUrlList.map((url, i) => (
