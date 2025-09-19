@@ -18,7 +18,10 @@ const PostDetail = ({ postData, commentData }) => {
   const memory_id = postData?.memory_id ?? null
   const nickname = postData?.nickname ?? ''
   const [comment, setComment] = useState('')
-  const commentList = commentData ?? []
+  const [comments, setComments] = useState(commentData ?? [])
+  useEffect(() => {
+    setComments(commentData ?? [])
+  }, [commentData])
 
   const currentUserId = localStorage.getItem('user.id')
   const isUser = currentUserId == userId
@@ -80,13 +83,21 @@ const PostDetail = ({ postData, commentData }) => {
       })
       .then((res) => {
         console.log(res)
+        const newComment = res.data?.data ?? {
+          comment_id: res.data?.id,
+          user_id: Number(currentUserId),
+          nickname,
+          content: comment,
+        }
+        setComments((prev) => [newComment, ...prev])
+        setComment('')
         toast('🟢 댓글 작성이 완료되었습니다')
       })
       .catch((err) => {
         console.log(err)
         console.error('STATUS:', err.response?.status)
         console.error('DATA  :', err.response?.data)
-        toast('🔴 댓글 작성이 실패하였습니다')
+        toast('🔴 댓글 작성에 실패하였습니다')
       })
   }
 
@@ -126,9 +137,12 @@ const PostDetail = ({ postData, commentData }) => {
         )}
       </div>
       {/* 댓글 */}
-      {commentList.map((c) => (
+      {[...comments].reverse().map((c) => (
         <div>
-          <Comment c={c} />
+          <Comment
+            c={c}
+            onDeleted={(id) => setComments((prev) => prev.filter((c) => c.comment_id !== id))}
+          />
         </div>
       ))}
       {/* 댓글 입력창 */}

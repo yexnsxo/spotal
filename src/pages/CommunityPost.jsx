@@ -1,6 +1,5 @@
 import Header2 from '@/components/shared/Header2.jsx'
 import Footer from '@/components/shared/Footer.jsx'
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { baseURL } from './Signup'

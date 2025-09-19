@@ -1,6 +1,6 @@
 import CommentMenu from './CommentMenu'
 
-const Comment = ({ c }) => {
+const Comment = ({ c, onDeleted }) => {
   const currentUserId = localStorage.getItem('user.id')
   return (
     <div>
@@ -13,7 +13,7 @@ const Comment = ({ c }) => {
           </div>
         </div>
         {Number(c.user_id) === Number(currentUserId) && (
-          <CommentMenu comment_id={c.comment_id} memory_id={c.memory_id} />
+          <CommentMenu comment_id={c.comment_id} onDeleted={onDeleted} />
         )}
       </div>
       <hr className='text-gray-100 mt-[5px]' />
