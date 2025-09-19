@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Tag from './Tag.jsx'
 import ImageSlider from './ImageSlider.jsx'
 import PostMenu from './PostMenu.jsx'
@@ -7,6 +7,7 @@ import axios from 'axios'
 import { baseURL } from '@/pages/Signup.jsx'
 import ArrowUp from '@/assets/ArrowUp.svg?react'
 import { toast } from 'sonner'
+import Comment from './Comment.jsx'
 
 const PostDetail = ({ postData, commentData }) => {
   const userId = postData?.user_id ?? null
@@ -124,7 +125,14 @@ const PostDetail = ({ postData, commentData }) => {
           />
         )}
       </div>
-      <div className='w-full h-[3.55vh] bg-gray-100 rounded-[10px] mb-[1.6vh] flex items-center justify-between'>
+      {/* 댓글 */}
+      {commentList.map((c) => (
+        <div>
+          <Comment c={c} />
+        </div>
+      ))}
+      {/* 댓글 입력창 */}
+      <div className='w-full h-[3.55vh] bg-gray-100 rounded-[10px] my-[1.6vh] flex items-center justify-between'>
         <input
           className='ml-[0.9rem] flex-1 text-[10px] placeholder:text-gray-300 focus:outline-none'
           placeholder='댓글을 입력해주세요'
