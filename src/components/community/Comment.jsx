@@ -2,7 +2,6 @@ import CommentMenu from './CommentMenu'
 import Message from '@/assets/Message.svg?react'
 import axios from 'axios'
 import { baseURL } from '@/pages/Signup'
-import { useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
 import { Toaster } from 'sonner'
 import { toast } from 'sonner'
@@ -18,6 +17,7 @@ const Comment = ({ c, onDeleted }) => {
   const [recomment, setRecomment] = useState('')
   const [open, setOpen] = useState(false)
   const profileImg = c?.img_url || DefaultImg
+  const [sending, isSending] = useState(false)
 
   const readRecomment = (commentId) => {
     axios
@@ -29,6 +29,7 @@ const Comment = ({ c, onDeleted }) => {
   }
 
   const postReComment = () => {
+    isSending(true)
     axios
       .post(`${baseURL}/community/comments/`, {
         content: recomment,
@@ -36,6 +37,7 @@ const Comment = ({ c, onDeleted }) => {
         parent: c.comment_id,
       })
       .then((res) => {
+        isSending(false)
         console.log(res)
         const newComment = res.data?.data ?? {
           comment_id: res.data?.id,
@@ -48,6 +50,7 @@ const Comment = ({ c, onDeleted }) => {
         toast('🟢 답글 작성이 완료되었습니다')
       })
       .catch((err) => {
+        isSending(false)
         console.log(err)
         console.error('STATUS:', err.response?.status)
         console.error('DATA  :', err.response?.data)
@@ -86,7 +89,7 @@ const Comment = ({ c, onDeleted }) => {
       {open && (
         <>
           {recomments.reverse().map((r) => (
-            <div key={c.comment_id}>
+            <div key={`recomment-${c.comment_id}`}>
               <ReComment r={r} />
             </div>
           ))}
@@ -99,7 +102,7 @@ const Comment = ({ c, onDeleted }) => {
                 value={recomment}
                 onChange={(e) => setRecomment(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter') postReComment()
+                  if (e.key === 'Enter' && !sending) postReComment()
                 }}
               />
               <ArrowUp className='mr-[0.9rem] w-[15px] cursor-pointer' onClick={postReComment} />

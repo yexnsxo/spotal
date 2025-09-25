@@ -22,6 +22,7 @@ const PostDetail = ({ postData, commentData }) => {
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState(commentData ?? [])
   const profileImg = postData?.img_url || DefaultImg
+  const [sending, isSending] = useState(false)
 
   useEffect(() => {
     setComments(commentData ?? [])
@@ -79,6 +80,7 @@ const PostDetail = ({ postData, commentData }) => {
   }
 
   const postComment = () => {
+    isSending(true)
     axios
       .post(`${baseURL}/community/comments/`, {
         content: comment,
@@ -86,6 +88,7 @@ const PostDetail = ({ postData, commentData }) => {
         memory_id: memory_id,
       })
       .then((res) => {
+        isSending(false)
         console.log(res)
         const newComment = res.data?.data ?? {
           comment_id: res.data?.id,
@@ -98,6 +101,7 @@ const PostDetail = ({ postData, commentData }) => {
         toast('🟢 댓글 작성이 완료되었습니다')
       })
       .catch((err) => {
+        isSending(false)
         console.log(err)
         console.error('STATUS:', err.response?.status)
         console.error('DATA  :', err.response?.data)
@@ -160,7 +164,7 @@ const PostDetail = ({ postData, commentData }) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') postComment()
+            if (e.key === 'Enter' && !sending) postComment()
           }}
         />
         <ArrowUp className='mr-[0.9rem] w-[15px] cursor-pointer' onClick={postComment} />
