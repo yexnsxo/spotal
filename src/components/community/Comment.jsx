@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import ArrowUp from '@/assets/ArrowUp.svg?react'
 import RecommentArrow from '@/assets/RecommentArrow.svg?react'
 import ReComment from './ReComment'
+import DefaultImg from '@/assets/DefaultProfileImg.svg'
 
 const Comment = ({ c, onDeleted }) => {
   const currentUserId = localStorage.getItem('user.id')
@@ -16,6 +17,7 @@ const Comment = ({ c, onDeleted }) => {
   const [recomments, setRecomments] = useState([])
   const [recomment, setRecomment] = useState('')
   const [open, setOpen] = useState(false)
+  const profileImg = c?.img_url || DefaultImg
 
   const readRecomment = (commentId) => {
     axios
@@ -57,7 +59,10 @@ const Comment = ({ c, onDeleted }) => {
     <div>
       <div className='flex justify-between items-center md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]'>
         <div className='flex gap-[0.7rem]'>
-          <img className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-grey-100 border-none' />
+          <img
+            src={profileImg}
+            className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
+          />
           <div className='gap-[0.5rem] items-center'>
             <p className='font-[Medium] text-[10px]'>{c.nickname}</p>
             <p className='text-[11px]'>{c.content}</p>

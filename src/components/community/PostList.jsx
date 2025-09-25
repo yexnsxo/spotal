@@ -1,5 +1,6 @@
 import Post from './Post.jsx'
 import NoResult from '@/assets/NoResult.svg?react'
+import DefaultImg from '@/assets/DefaultProfileImg.svg'
 
 const PostList = ({ postData }) => {
   if (postData.length === 0) {
@@ -10,6 +11,7 @@ const PostList = ({ postData }) => {
       </div>
     )
   }
+  const profileImg = postData?.img_url || DefaultImg
   return (
     <div className='flex flex-col gap-[3.91vh] w-full'>
       {postData.map((post) => {
@@ -23,6 +25,7 @@ const PostList = ({ postData }) => {
               text={post.content}
               memory_id={post.memory_id}
               nickname={post.nickname}
+              src={profileImg}
             />
           </div>
         )
