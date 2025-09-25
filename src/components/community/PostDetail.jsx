@@ -17,8 +17,10 @@ const PostDetail = ({ postData, commentData }) => {
   const text = postData?.content ?? ''
   const memory_id = postData?.memory_id ?? null
   const nickname = postData?.nickname ?? ''
+  const currentUserNickname = localStorage.getItem('user.nickname')
   const [comment, setComment] = useState('')
   const [comments, setComments] = useState(commentData ?? [])
+
   useEffect(() => {
     setComments(commentData ?? [])
   }, [commentData])
@@ -86,7 +88,7 @@ const PostDetail = ({ postData, commentData }) => {
         const newComment = res.data?.data ?? {
           comment_id: res.data?.id,
           user_id: Number(currentUserId),
-          nickname,
+          nickname: currentUserNickname,
           content: comment,
         }
         setComments((prev) => [newComment, ...prev])
@@ -138,7 +140,7 @@ const PostDetail = ({ postData, commentData }) => {
       </div>
       {/* 댓글 */}
       {[...comments].reverse().map((c) => (
-        <div>
+        <div key={c.comment_id}>
           <Comment
             c={c}
             onDeleted={(id) => setComments((prev) => prev.filter((c) => c.comment_id !== id))}
@@ -156,7 +158,7 @@ const PostDetail = ({ postData, commentData }) => {
             if (e.key === 'Enter') postComment()
           }}
         />
-        <ArrowUp className='mr-[0.9rem] w-[15px]' onClick={postComment} />
+        <ArrowUp className='mr-[0.9rem] w-[15px] cursor-pointer' onClick={postComment} />
       </div>
     </div>
   )
