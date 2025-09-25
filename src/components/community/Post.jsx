@@ -5,14 +5,16 @@ import PostMenu from './PostMenu.jsx'
 import BookMark from '@/assets/BookMark.svg?react'
 import axios from 'axios'
 import { baseURL } from '@/pages/Signup.jsx'
+import { useNavigate } from 'react-router-dom'
 
-const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nickname }) => {
+const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nickname, src }) => {
   const [expanded, setExpanded] = useState(false)
   const displayedText = expanded ? text : text.length > 25 ? text.slice(0, 25) : text
   const currentUserId = localStorage.getItem('user.id')
   const isUser = currentUserId == userId
   const [isMarked, SetIsMarked] = useState(false)
   const [bookmarkId, SetBookmarkId] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     let cancelled = false
@@ -64,13 +66,22 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
     <div className='flex flex-col gap-[0.8vh] relative px-[3.846vw] md:px-[40px] w-[76.67vw] md:w-[36.7rem] rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] bg-white'>
       <div className='flex justify-between items-center md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]  mt-[1.6vh]'>
         <div className='flex gap-[0.5rem] items-center'>
-          <img className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-grey-100 border-none' />
+          <img
+            src={src}
+            className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
+          />
           <p className='font-[Medium] text-[0.75rem]'>{nickname}</p>
         </div>
         {isUser && <PostMenu memory_id={memory_id} />}
       </div>
       <div className='h-auto'>
-        <ImageSlider w='68.974vw' urllist={urllist} />
+        <ImageSlider
+          w='68.974vw'
+          urllist={urllist}
+          onClick={() => {
+            navigate(`/post/${memory_id}`)
+          }}
+        />
       </div>
       <div className='flex items-baseline gap-[5px] h-auto m-0 my-1'>
         <p className='whitespace-pre-line text-[12px]'>{displayedText}</p>
