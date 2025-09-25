@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 import Comment from './Comment.jsx'
 import DefaultImg from '@/assets/DefaultProfileImg.svg'
 
-const PostDetail = ({ postData, commentData }) => {
+const PostDetail = ({ postData, memoryId }) => {
   const userId = postData?.user_id ?? null
   const emotionTags = postData?.emotions?.map((e) => (typeof e === 'string' ? e : e.name)) ?? []
   const locationTags = postData?.location?.name ?? ''
@@ -20,13 +20,47 @@ const PostDetail = ({ postData, commentData }) => {
   const nickname = postData?.nickname ?? ''
   const currentUserNickname = localStorage.getItem('user.nickname')
   const [comment, setComment] = useState('')
-  const [comments, setComments] = useState(commentData ?? [])
   const profileImg = postData?.img_url || DefaultImg
   const [sending, isSending] = useState(false)
+  const [newCommentData, setNewCommentData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [commentData, setCommentData] = useState([])
+  const [comments, setComments] = useState([])
+
+  const getPostComment = () => {
+    axios
+      .get(`${baseURL}/community/comments/?memory_id=${memory_id}`)
+      .then((res) => {
+        setLoading(false)
+        const comments = res?.data
+        setCommentData(comments)
+        console.log(comments)
+      })
+      .catch(() => {
+        setLoading(false)
+        setCommentData([])
+      })
+  }
 
   useEffect(() => {
+    getPostComment()
     setComments(commentData ?? [])
   }, [commentData])
+
+  const getNewPostComment = () => {
+    axios
+      .get(`${baseURL}/community/comments/?memory_id=${memoryId}`)
+      .then((res) => {
+        setLoading(false)
+        const comments = res?.data
+        setNewCommentData(comments)
+        console.log(comments)
+      })
+      .catch(() => {
+        setLoading(false)
+        setNewCommentData([])
+      })
+  }
 
   const currentUserId = localStorage.getItem('user.id')
   const isUser = currentUserId == userId
@@ -90,13 +124,6 @@ const PostDetail = ({ postData, commentData }) => {
       .then((res) => {
         isSending(false)
         console.log(res)
-        const newComment = res.data?.data ?? {
-          comment_id: res.data?.id,
-          user_id: Number(currentUserId),
-          nickname: currentUserNickname,
-          content: comment,
-        }
-        setComments((prev) => [newComment, ...prev])
         setComment('')
         toast('🟢 댓글 작성이 완료되었습니다')
       })
@@ -164,7 +191,10 @@ const PostDetail = ({ postData, commentData }) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && !sending) postComment()
+            if (e.key === 'Enter' && !sending) {
+              postComment()
+              getPostComment()
+            }
           }}
         />
         <ArrowUp className='mr-[0.9rem] w-[15px] cursor-pointer' onClick={postComment} />

@@ -27,25 +27,10 @@ const CommunityPost = () => {
         setPostData([])
       })
   }
-  const getPostComment = () => {
-    axios
-      .get(`${baseURL}/community/comments/?memory_id=${memory_id}`)
-      .then((res) => {
-        setLoading(false)
-        const comments = res?.data
-        setCommentData(comments)
-        console.log(comments)
-      })
-      .catch(() => {
-        setLoading(false)
-        setCommentData([])
-      })
-  }
 
   useEffect(() => {
     setLoading(true)
     getPost()
-    getPostComment()
   }, [memory_id])
 
   if (loading) return <Loading />
@@ -55,7 +40,7 @@ const CommunityPost = () => {
         <div className='max-w-[768px] w-full flex flex-col items-center justify-center bg-white'>
           <Header2 label1={'피드'} label2={'내 글 모음'} link={'/mypost'} />
           <div className='pb-[10vh] bg-white min-h-screen pt-[10vh]'>
-            <PostDetail postData={postData} commentData={commentData} />
+            <PostDetail postData={postData} memoryId={memory_id} />
           </div>
           <Footer selectedMenu={'community'} />
         </div>
