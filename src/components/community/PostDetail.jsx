@@ -12,26 +12,26 @@ import DefaultImg from '@/assets/DefaultProfileImg.svg'
 import Message from '@/assets/Message.svg?react'
 import Message2 from '@/assets/Message2.svg?react'
 
-const PostDetail = ({ postData, memoryId }) => {
+const PostDetail = ({ memoryId }) => {
+  const [postData, setPostData] = useState(null)
   const userId = postData?.user_id ?? null
   const emotionTags = postData?.emotions?.map((e) => (typeof e === 'string' ? e : e.name)) ?? []
   const locationTags = postData?.location?.name ?? ''
   const urllist = postData?.images ?? []
   const text = postData?.content ?? ''
-  const memory_id = postData?.memory_id ?? null
   const nickname = postData?.nickname ?? ''
   const [comment, setComment] = useState('')
   const profileImg = postData?.profile_image_url || DefaultImg
   const [sending, isSending] = useState(false)
   const [commentData, setCommentData] = useState([])
   const [comments, setComments] = useState([])
-  const [commentLength, setCommentLength] = useState(0)
+  const commentLength = postData?.comment_count ?? 0
+  const [loading, setLoading] = useState(false)
 
   const getPostComment = () => {
     axios
       .get(`${baseURL}/community/comments/?memory_id=${memoryId}`)
       .then((res) => {
-        setCommentLength(res?.data?.length)
         const comments = res?.data
         setCommentData(comments)
       })
@@ -40,7 +40,23 @@ const PostDetail = ({ postData, memoryId }) => {
       })
   }
 
+  const getPost = () => {
+    axios
+      .get(`${baseURL}/community/memories/${memoryId}/`)
+      .then((res) => {
+        setLoading(false)
+        const post = res?.data?.data
+        setPostData(post)
+        console.log(post)
+      })
+      .catch(() => {
+        setLoading(false)
+        setPostData([])
+      })
+  }
+
   useEffect(() => {
+    getPost()
     getPostComment()
     setComments(commentData ?? [])
   }, [commentData])
@@ -56,7 +72,7 @@ const PostDetail = ({ postData, memoryId }) => {
     axios
       .get(`${baseURL}/community/bookmarks/?user_id=${currentUserId}`)
       .then((res) => {
-        const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
+        const marked = res.data.find((id) => Number(id?.memory) === Number(memoryId))
         const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
         if (cancelled) return
         setBookmarkLength(res?.data?.length)
@@ -74,14 +90,14 @@ const PostDetail = ({ postData, memoryId }) => {
     return () => {
       cancelled = true
     }
-  }, [userId, memory_id, baseURL, currentUserId, bookmarkId, isMarked])
+  }, [userId, memoryId, baseURL, currentUserId, bookmarkId, isMarked])
 
   const handleBookmark = (isMarked) => {
     if (!isMarked) {
       axios
         .post(`${baseURL}/community/bookmarks/create/`, {
           user_id: currentUserId,
-          memory: memory_id,
+          memory: memoryId,
         })
         .then((res) => {
           SetIsMarked(true)
@@ -104,12 +120,13 @@ const PostDetail = ({ postData, memoryId }) => {
       .post(`${baseURL}/community/comments/`, {
         content: comment,
         user_id: currentUserId,
-        memory_id: memory_id,
+        memory_id: memoryId,
       })
       .then((res) => {
         isSending(false)
         setComment('')
         toast('🟢 댓글 작성이 완료되었습니다')
+        getPostComment()
       })
       .catch((err) => {
         isSending(false)
@@ -138,7 +155,7 @@ const PostDetail = ({ postData, memoryId }) => {
           />
           <p className='font-[Medium] text-[0.75rem]'>{nickname}</p>
         </div>
-        {isUser && <PostMenu memory_id={memory_id} />}
+        {isUser && <PostMenu memory_id={memoryId} />}
       </div>
       <div className='h-auto'>
         <ImageSlider w='68.974vw' urllist={urllist} />
