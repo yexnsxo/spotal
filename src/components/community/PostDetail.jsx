@@ -9,6 +9,8 @@ import ArrowUp from '@/assets/ArrowUp.svg?react'
 import { toast } from 'sonner'
 import Comment from './Comment.jsx'
 import DefaultImg from '@/assets/DefaultProfileImg.svg'
+import Message from '@/assets/Message.svg?react'
+import Message2 from '@/assets/Message2.svg?react'
 
 const PostDetail = ({ postData, memoryId }) => {
   const userId = postData?.user_id ?? null
@@ -18,26 +20,22 @@ const PostDetail = ({ postData, memoryId }) => {
   const text = postData?.content ?? ''
   const memory_id = postData?.memory_id ?? null
   const nickname = postData?.nickname ?? ''
-  const currentUserNickname = localStorage.getItem('user.nickname')
   const [comment, setComment] = useState('')
-  const profileImg = postData?.img_url || DefaultImg
+  const profileImg = postData?.profile_image_url || DefaultImg
   const [sending, isSending] = useState(false)
-  const [newCommentData, setNewCommentData] = useState([])
-  const [loading, setLoading] = useState(false)
   const [commentData, setCommentData] = useState([])
   const [comments, setComments] = useState([])
+  const [commentLength, setCommentLength] = useState(0)
 
   const getPostComment = () => {
     axios
-      .get(`${baseURL}/community/comments/?memory_id=${memory_id}`)
+      .get(`${baseURL}/community/comments/?memory_id=${memoryId}`)
       .then((res) => {
-        setLoading(false)
+        setCommentLength(res?.data?.length)
         const comments = res?.data
         setCommentData(comments)
-        console.log(comments)
       })
       .catch(() => {
-        setLoading(false)
         setCommentData([])
       })
   }
@@ -47,25 +45,11 @@ const PostDetail = ({ postData, memoryId }) => {
     setComments(commentData ?? [])
   }, [commentData])
 
-  const getNewPostComment = () => {
-    axios
-      .get(`${baseURL}/community/comments/?memory_id=${memoryId}`)
-      .then((res) => {
-        setLoading(false)
-        const comments = res?.data
-        setNewCommentData(comments)
-        console.log(comments)
-      })
-      .catch(() => {
-        setLoading(false)
-        setNewCommentData([])
-      })
-  }
-
   const currentUserId = localStorage.getItem('user.id')
   const isUser = currentUserId == userId
   const [isMarked, SetIsMarked] = useState(false)
   const [bookmarkId, SetBookmarkId] = useState(null)
+  const [bookmarkLength, setBookmarkLength] = useState(0)
 
   useEffect(() => {
     let cancelled = false
@@ -75,6 +59,7 @@ const PostDetail = ({ postData, memoryId }) => {
         const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
         const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
         if (cancelled) return
+        setBookmarkLength(res?.data?.length)
         if (marked && sameUser) {
           SetIsMarked(true)
           SetBookmarkId(marked.bookmark_id)
@@ -89,7 +74,7 @@ const PostDetail = ({ postData, memoryId }) => {
     return () => {
       cancelled = true
     }
-  }, [userId, memory_id, baseURL, currentUserId, bookmarkId])
+  }, [userId, memory_id, baseURL, currentUserId, bookmarkId, isMarked])
 
   const handleBookmark = (isMarked) => {
     if (!isMarked) {
@@ -123,7 +108,6 @@ const PostDetail = ({ postData, memoryId }) => {
       })
       .then((res) => {
         isSending(false)
-        console.log(res)
         setComment('')
         toast('🟢 댓글 작성이 완료되었습니다')
       })
@@ -136,13 +120,21 @@ const PostDetail = ({ postData, memoryId }) => {
       })
   }
 
+  const IsUserBookmark = () => {
+    if (isUser) {
+      toast('🔴 자신의 게시물은 북마크할 수 없습니다')
+      return
+    }
+    handleBookmark(isMarked)
+  }
+
   return (
     <div className='flex flex-col gap-[0.8vh] relative px-[3.846vw] md:px-[40px] w-[76.67vw] md:w-[36.7rem] rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] bg-white'>
       <div className='flex justify-between items-center md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]  mt-[1.6vh]'>
         <div className='flex gap-[0.5rem] items-center'>
           <img
             src={profileImg}
-            className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
+            className='w-[5.13vw] aspect-square h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
           />
           <p className='font-[Medium] text-[0.75rem]'>{nickname}</p>
         </div>
@@ -163,17 +155,27 @@ const PostDetail = ({ postData, memoryId }) => {
           ))}
           <Tag label={locationTags} />
         </div>
-        {isUser || (
-          <BookMark
-            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] mr-[-8px] ${
-              isMarked
-                ? '[&_*]:fill-primary [&_*]:stroke-primary'
-                : '[&_*]:fill-gray-200 [&_*]:stroke-gray-200'
-            }`}
-            onClick={() => handleBookmark(isMarked)}
-          />
-        )}
+        <div className='flex gap-[10px]'>
+          <div>
+            <div className='flex flex-col justify-center items-center mr-[-8px]'>
+              <Message2 className={`cursor-pointer h-[1.42rem]`} />
+              <p className='text-grey-300 text-[10px]'>{commentLength}</p>
+            </div>
+          </div>
+          <div className='flex flex-col justify-center items-center mr-[-8px]'>
+            <BookMark
+              className={`cursor-pointer stroke-[0px] h-[1.42rem] ${
+                isMarked
+                  ? '[&_*]:fill-primary [&_*]:stroke-primary'
+                  : '[&_*]:fill-gray-200 [&_*]:stroke-gray-200'
+              }`}
+              onClick={() => IsUserBookmark()}
+            />
+            <p className='text-grey-300 text-[10px]'>{bookmarkLength}</p>
+          </div>
+        </div>
       </div>
+
       {/* 댓글 */}
       {[...comments].reverse().map((c) => (
         <div key={c.comment_id}>

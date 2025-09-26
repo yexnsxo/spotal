@@ -11,10 +11,10 @@ const PostList = ({ postData }) => {
       </div>
     )
   }
-  const profileImg = postData?.img_url || DefaultImg
   return (
     <div className='flex flex-col gap-[3.91vh] w-full'>
       {postData.map((post) => {
+        const profileImg = post?.profile_image_url || DefaultImg
         return (
           <div key={post.memory_id}>
             <Post
@@ -26,6 +26,7 @@ const PostList = ({ postData }) => {
               memory_id={post.memory_id}
               nickname={post.nickname}
               src={profileImg}
+              boardTag={post?.board?.name}
             />
           </div>
         )

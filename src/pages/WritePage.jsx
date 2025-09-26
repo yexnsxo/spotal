@@ -51,7 +51,7 @@ const WritePage = () => {
     }
 
     if (values.category != null) {
-      formData.append('category_id', String(values.category))
+      formData.append('board_id', String(values.category))
     }
 
     const flatFiles = (files ?? []).flat()

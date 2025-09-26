@@ -13,23 +13,22 @@ const CommunityPostList = () => {
 
   const [emotionId, setEmotionId] = useState(null)
   const [locationId, setLocationId] = useState(null)
-
-  const postUrl = (emotionId, locationId) => {
-    const url = new URL(`${baseURL}/community/memories`)
-    const params = url.searchParams
-
-    if (emotionId != null) params.set('emotion_ids', emotionId)
-    if (locationId != null) params.set('location_id', locationId)
-
-    return url.toString()
-  }
+  const [categoryId, setCategoryId] = useState(null)
 
   const getPost = () => {
     axios
-      .get(`${postUrl(emotionId, locationId)}`)
+      .get(`${baseURL}/community/memories`, {
+        params: {
+          emotion_ids: emotionId ?? undefined,
+          location_id: locationId ?? undefined,
+          board_id: categoryId ?? undefined,
+        },
+      })
       .then((res) => {
         const posts = Array.isArray(res.data?.data) ? res.data.data : []
+        console.log(emotionId, locationId, categoryId)
         setPostData(posts)
+        console.log(posts)
       })
       .catch(() => {
         setPostData([])
@@ -38,7 +37,7 @@ const CommunityPostList = () => {
 
   useEffect(() => {
     getPost()
-  }, [locationId, emotionId])
+  }, [locationId, emotionId, categoryId])
 
   return (
     <div className='flex flex-col items-center justify-center '>
@@ -49,6 +48,7 @@ const CommunityPostList = () => {
             <div className='flex gap-[1.54vw] '>
               <Dropdown onSelect={(id) => setEmotionId(id)} label={'감정'} />
               <Dropdown onSelect={(id) => setLocationId(id)} label={'동네'} />
+              <Dropdown onSelect={(id) => setCategoryId(id)} label={'분류'} />
             </div>
             <button
               className='w-[18.72vw] max-w-[6rem] h-[1.5rem] bg-primary-300 border-primary border-[0.5px] rounded-[5px] font-[SemiBold] text-[12px] text-primary cursor-pointer'
