@@ -107,7 +107,13 @@ const Mypage = () => {
               {userInfo?.bookmarks?.map((b, index) => {
                 return (
                   <div key={`memory-${index}`} className='shrink-0 snap-start overflow-hidden'>
-                    <ImageSlider w='96px' urllist={b?.images} />
+                    <ImageSlider
+                      w='96px'
+                      urllist={b?.images}
+                      onClick={() => {
+                        navigate(`/post/${b.memory_id}`)
+                      }}
+                    />
                   </div>
                 )
               })}
