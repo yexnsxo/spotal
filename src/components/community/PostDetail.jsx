@@ -25,7 +25,7 @@ const PostDetail = ({ memoryId }) => {
   const [sending, isSending] = useState(false)
   const [commentData, setCommentData] = useState([])
   const [comments, setComments] = useState([])
-  const commentLength = postData?.comment_count ?? 0
+  const [commentLength, setCommentLength] = useState(postData?.comment_count ?? 0)
   const [loading, setLoading] = useState(false)
 
   const getPostComment = () => {
@@ -34,6 +34,7 @@ const PostDetail = ({ memoryId }) => {
       .then((res) => {
         const comments = res?.data
         setCommentData(comments)
+        getPost()
       })
       .catch(() => {
         setCommentData([])
@@ -54,11 +55,16 @@ const PostDetail = ({ memoryId }) => {
         setPostData([])
       })
   }
+  const handleReplyAdded = () => setCommentLength((n) => n + 1)
 
   useEffect(() => {
     getPost()
     getPostComment()
   }, [memoryId])
+
+  useEffect(() => {
+    setCommentLength(postData?.comment_count ?? 0)
+  }, [postData?.comment_count])
 
   useEffect(() => {
     setComments(commentData ?? [])
@@ -202,6 +208,7 @@ const PostDetail = ({ memoryId }) => {
         <div key={c.comment_id}>
           <Comment
             c={c}
+            onReplyAdded={handleReplyAdded}
             onDeleted={(id) => setComments((prev) => prev.filter((c) => c.comment_id !== id))}
           />
         </div>

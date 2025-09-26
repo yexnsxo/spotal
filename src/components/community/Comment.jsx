@@ -9,7 +9,7 @@ import RecommentArrow from '@/assets/RecommentArrow.svg?react'
 import ReComment from './ReComment'
 import DefaultImg from '@/assets/DefaultProfileImg.svg'
 
-const Comment = ({ c, onDeleted }) => {
+const Comment = ({ c, onDeleted, onReplyAdded }) => {
   const currentUserId = localStorage.getItem('user.id')
   const currentUserNickname = localStorage.getItem('user.nickname')
   const [recomments, setRecomments] = useState([])
@@ -41,6 +41,7 @@ const Comment = ({ c, onDeleted }) => {
         readRecomment(commentId)
         setRecomment('')
         toast('🟢 답글 작성이 완료되었습니다')
+        onReplyAdded?.()
       })
       .catch((err) => {
         isSending(false)
@@ -98,7 +99,10 @@ const Comment = ({ c, onDeleted }) => {
                   if (e.key === 'Enter' && !sending) postReComment(c.comment_id)
                 }}
               />
-              <ArrowUp className='mr-[0.9rem] w-[15px] cursor-pointer' onClick={postReComment} />
+              <ArrowUp
+                className='mr-[0.9rem] w-[15px] cursor-pointer'
+                onClick={() => postReComment(c.comment_id)}
+              />
             </div>
           </div>
         </>
