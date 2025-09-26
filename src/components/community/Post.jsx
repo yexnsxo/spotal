@@ -107,7 +107,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         </div>
         {isUser || (
           <BookMark
-            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] mr-[-8px] ${
+            className={`cursor-pointer stroke-[0px] h-[1.42rem] mr-[-8px] ${
               isMarked
                 ? '[&_*]:fill-primary [&_*]:stroke-primary'
                 : '[&_*]:fill-gray-200 [&_*]:stroke-gray-200'

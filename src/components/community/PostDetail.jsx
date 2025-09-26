@@ -9,6 +9,8 @@ import ArrowUp from '@/assets/ArrowUp.svg?react'
 import { toast } from 'sonner'
 import Comment from './Comment.jsx'
 import DefaultImg from '@/assets/DefaultProfileImg.svg'
+import Message from '@/assets/Message.svg?react'
+import Message2 from '@/assets/Message2.svg?react'
 
 const PostDetail = ({ postData, memoryId }) => {
   const userId = postData?.user_id ?? null
@@ -23,11 +25,13 @@ const PostDetail = ({ postData, memoryId }) => {
   const [sending, isSending] = useState(false)
   const [commentData, setCommentData] = useState([])
   const [comments, setComments] = useState([])
+  const [commentLength, setCommentLength] = useState(0)
 
   const getPostComment = () => {
     axios
       .get(`${baseURL}/community/comments/?memory_id=${memoryId}`)
       .then((res) => {
+        setCommentLength(res?.data?.length)
         const comments = res?.data
         setCommentData(comments)
       })
@@ -151,18 +155,27 @@ const PostDetail = ({ postData, memoryId }) => {
           ))}
           <Tag label={locationTags} />
         </div>
-        <div className='flex flex-col justify-center items-center mr-[-8px]'>
-          <BookMark
-            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] ${
-              isMarked
-                ? '[&_*]:fill-primary [&_*]:stroke-primary'
-                : '[&_*]:fill-gray-200 [&_*]:stroke-gray-200'
-            }`}
-            onClick={() => IsUserBookmark()}
-          />
-          <p className='text-grey-300 text-[10px]'>{bookmarkLength}</p>
+        <div className='flex gap-[10px]'>
+          <div>
+            <div className='flex flex-col justify-center items-center mr-[-8px]'>
+              <Message2 className={`cursor-pointer h-[1.42rem]`} />
+              <p className='text-grey-300 text-[10px]'>{commentLength}</p>
+            </div>
+          </div>
+          <div className='flex flex-col justify-center items-center mr-[-8px]'>
+            <BookMark
+              className={`cursor-pointer stroke-[0px] h-[1.42rem] ${
+                isMarked
+                  ? '[&_*]:fill-primary [&_*]:stroke-primary'
+                  : '[&_*]:fill-gray-200 [&_*]:stroke-gray-200'
+              }`}
+              onClick={() => IsUserBookmark()}
+            />
+            <p className='text-grey-300 text-[10px]'>{bookmarkLength}</p>
+          </div>
         </div>
       </div>
+
       {/* 댓글 */}
       {[...comments].reverse().map((c) => (
         <div key={c.comment_id}>
