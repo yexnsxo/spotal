@@ -40,6 +40,8 @@ const Comment = ({ c, onDeleted, onReplyAdded }) => {
         console.log(res)
         readRecomment(commentId)
         setRecomment('')
+        setOpen(true)
+        readRecomment(commentId)
         toast('🟢 답글 작성이 완료되었습니다')
         onReplyAdded?.()
       })

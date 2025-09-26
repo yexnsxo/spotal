@@ -85,6 +85,7 @@ const PostDetail = ({ memoryId }) => {
         const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
         if (cancelled) return
         setBookmarkLength(res?.data?.length)
+        console.log(res.data)
         if (marked && sameUser) {
           SetIsMarked(true)
           SetBookmarkId(marked.bookmark_id)
