@@ -5,6 +5,7 @@ import PostList from '@/components/community/PostList.jsx'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { baseURL } from './Signup'
+import Loading from '@/components/shared/Loading'
 
 const CommunityMyPostList = () => {
   const [myPostData, setMyPostData] = useState([])
@@ -12,8 +13,10 @@ const CommunityMyPostList = () => {
   const [emotionId, setEmotionId] = useState(null)
   const [locationId, setLocationId] = useState(null)
   const [categoryId, setCategoryId] = useState(null)
+  const [loading, isLoading] = useState(false)
 
   const getMyPost = () => {
+    isLoading(true)
     axios
       .get(`${baseURL}/community/my/`, {
         params: {
@@ -24,10 +27,12 @@ const CommunityMyPostList = () => {
         },
       })
       .then((res) => {
+        isLoading(false)
         const posts = Array.isArray(res.data?.data) ? res.data.data : []
         setMyPostData(posts)
       })
       .catch(() => {
+        isLoading(false)
         setMyPostData([])
       })
   }
@@ -35,6 +40,8 @@ const CommunityMyPostList = () => {
   useEffect(() => {
     getMyPost()
   }, [locationId, emotionId, categoryId])
+
+  if (loading) return <Loading />
 
   return (
     <div className='flex flex-col items-center justify-center '>
