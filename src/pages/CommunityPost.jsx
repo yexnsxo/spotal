@@ -8,29 +8,8 @@ import { useParams } from 'react-router-dom'
 import Loading from '@/components/shared/Loading'
 
 const CommunityPost = () => {
-  const [postData, setPostData] = useState([])
   const [loading, setLoading] = useState(false)
   const { memory_id } = useParams()
-
-  const getPost = () => {
-    axios
-      .get(`${baseURL}/community/memories/${memory_id}/`)
-      .then((res) => {
-        setLoading(false)
-        const post = res?.data?.data
-        setPostData(post)
-        console.log(post)
-      })
-      .catch(() => {
-        setLoading(false)
-        setPostData([])
-      })
-  }
-
-  useEffect(() => {
-    setLoading(true)
-    getPost()
-  }, [memory_id])
 
   if (loading) return <Loading />
   return (
@@ -39,7 +18,7 @@ const CommunityPost = () => {
         <div className='max-w-[768px] w-full flex flex-col items-center justify-center bg-white'>
           <Header2 label1={'피드'} label2={'내 글 모음'} link={'/mypost'} />
           <div className='pb-[10vh] bg-white min-h-screen pt-[10vh]'>
-            <PostDetail postData={postData} memoryId={memory_id} />
+            <PostDetail memoryId={memory_id} />
           </div>
           <Footer selectedMenu={'community'} />
         </div>

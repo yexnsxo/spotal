@@ -9,7 +9,7 @@ import ArrowUp from '@/assets/ArrowUp.svg?react'
 import { toast } from 'sonner'
 import Comment from './Comment.jsx'
 import DefaultImg from '@/assets/DefaultProfileImg.svg'
-import Message from '@/assets/Message.svg?react'
+import Loading from '../shared/Loading.jsx'
 import Message2 from '@/assets/Message2.svg?react'
 
 const PostDetail = ({ memoryId }) => {
@@ -58,6 +58,9 @@ const PostDetail = ({ memoryId }) => {
   useEffect(() => {
     getPost()
     getPostComment()
+  }, [memoryId])
+
+  useEffect(() => {
     setComments(commentData ?? [])
   }, [commentData])
 
@@ -145,6 +148,7 @@ const PostDetail = ({ memoryId }) => {
     handleBookmark(isMarked)
   }
 
+  if (loading) return <Loading />
   return (
     <div className='flex flex-col gap-[0.8vh] relative px-[3.846vw] md:px-[40px] w-[76.67vw] md:w-[36.7rem] rounded-[10px] shadow-[0_2px_7px_3px_rgba(0,0,0,0.1)] bg-white'>
       <div className='flex justify-between items-center md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]  mt-[1.6vh]'>
