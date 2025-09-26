@@ -18,7 +18,7 @@ export function CardCarousel({ placeData }) {
             <div className='grid grid-rows-2 gap-2'>
               {placeData.slice(i * 2, i * 2 + 2).map((place, j) => (
                 <EmotionCard
-                  key={j}
+                  key={`${i}-${j}`}
                   placeName={place.name}
                   status={place.status}
                   address={place.address}
