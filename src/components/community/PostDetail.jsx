@@ -21,22 +21,17 @@ const PostDetail = ({ postData, memoryId }) => {
   const [comment, setComment] = useState('')
   const profileImg = postData?.profile_image_url || DefaultImg
   const [sending, isSending] = useState(false)
-  const [newCommentData, setNewCommentData] = useState([])
-  const [loading, setLoading] = useState(false)
   const [commentData, setCommentData] = useState([])
   const [comments, setComments] = useState([])
 
   const getPostComment = () => {
     axios
-      .get(`${baseURL}/community/comments/?memory_id=${memory_id}`)
+      .get(`${baseURL}/community/comments/?memory_id=${memoryId}`)
       .then((res) => {
-        setLoading(false)
         const comments = res?.data
         setCommentData(comments)
-        console.log(comments)
       })
       .catch(() => {
-        setLoading(false)
         setCommentData([])
       })
   }
@@ -50,6 +45,7 @@ const PostDetail = ({ postData, memoryId }) => {
   const isUser = currentUserId == userId
   const [isMarked, SetIsMarked] = useState(false)
   const [bookmarkId, SetBookmarkId] = useState(null)
+  const [bookmarkLength, setBookmarkLength] = useState(0)
 
   useEffect(() => {
     let cancelled = false
@@ -59,6 +55,7 @@ const PostDetail = ({ postData, memoryId }) => {
         const marked = res.data.find((id) => Number(id?.memory) === Number(memory_id))
         const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
         if (cancelled) return
+        setBookmarkLength(res?.data?.length)
         if (marked && sameUser) {
           SetIsMarked(true)
           SetBookmarkId(marked.bookmark_id)
@@ -73,7 +70,7 @@ const PostDetail = ({ postData, memoryId }) => {
     return () => {
       cancelled = true
     }
-  }, [userId, memory_id, baseURL, currentUserId, bookmarkId])
+  }, [userId, memory_id, baseURL, currentUserId, bookmarkId, isMarked])
 
   const handleBookmark = (isMarked) => {
     if (!isMarked) {
@@ -107,7 +104,6 @@ const PostDetail = ({ postData, memoryId }) => {
       })
       .then((res) => {
         isSending(false)
-        console.log(res)
         setComment('')
         toast('🟢 댓글 작성이 완료되었습니다')
       })
@@ -118,6 +114,14 @@ const PostDetail = ({ postData, memoryId }) => {
         console.error('DATA  :', err.response?.data)
         toast('🔴 댓글 작성에 실패하였습니다')
       })
+  }
+
+  const IsUserBookmark = () => {
+    if (isUser) {
+      toast('🔴 자신의 게시물은 북마크할 수 없습니다')
+      return
+    }
+    handleBookmark(isMarked)
   }
 
   return (
@@ -147,16 +151,17 @@ const PostDetail = ({ postData, memoryId }) => {
           ))}
           <Tag label={locationTags} />
         </div>
-        {isUser || (
+        <div className='flex flex-col justify-center items-center mr-[-8px]'>
           <BookMark
-            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] mr-[-8px] ${
+            className={`cursor-pointer stroke-[0.3px] h-[1.42rem] ${
               isMarked
                 ? '[&_*]:fill-primary [&_*]:stroke-primary'
                 : '[&_*]:fill-gray-200 [&_*]:stroke-gray-200'
             }`}
-            onClick={() => handleBookmark(isMarked)}
+            onClick={() => IsUserBookmark()}
           />
-        )}
+          <p className='text-grey-300 text-[10px]'>{bookmarkLength}</p>
+        </div>
       </div>
       {/* 댓글 */}
       {[...comments].reverse().map((c) => (
