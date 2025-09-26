@@ -57,6 +57,19 @@ const Mypage = () => {
     }
   }
 
+  const deleteImg = async () => {
+    const confirmflag = confirm('프로필 이미지를 삭제하시겠습니까?')
+    if (!confirmflag) return
+
+    try {
+      await axios.delete(`${baseURL}/api/users/user-profile/${userId}/`)
+      toast('🟢 프로필 이미지가 삭제되었습니다.')
+      location.reload()
+    } catch (err) {
+      console.error(err.response?.data)
+      toast('🔴 이미지 삭제에 실패했습니다.')
+    }
+  }
   return (
     <div className='relative overflow-auto max-h-[100vh] min-h-screen scrollbar-hide max-w-[768px] w-full mx-auto bg-white'>
       {/* 마이페이지 상위 배경 화면 */}
@@ -66,6 +79,7 @@ const Mypage = () => {
         <img
           className='md:right-[3.3rem] aspect-square transform -translate-y-1/2 w-[25.64vw] h-[25.64vw] md:w-[11rem] md:h-[11rem] rounded-full bg-primary-200 border-[2px] border-white object-cover'
           src={userInfo?.user?.profile_image_url || DefaultImg}
+          onClick={userInfo?.user?.profile_image_url ? deleteImg : undefined}
         />
         {userInfo?.user?.profile_image_url == null && (
           <>
