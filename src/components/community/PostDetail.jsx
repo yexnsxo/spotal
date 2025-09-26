@@ -209,7 +209,10 @@ const PostDetail = ({ memoryId }) => {
           <Comment
             c={c}
             onReplyAdded={handleReplyAdded}
-            onDeleted={(id) => setComments((prev) => prev.filter((c) => c.comment_id !== id))}
+            onDeleted={(id) => {
+              setComments((prev) => prev.filter((c) => c.comment_id !== id))
+              setCommentLength((n) => n - 1)
+            }}
           />
         </div>
       ))}
