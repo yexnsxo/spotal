@@ -18,9 +18,8 @@ const PostDetail = ({ postData, memoryId }) => {
   const text = postData?.content ?? ''
   const memory_id = postData?.memory_id ?? null
   const nickname = postData?.nickname ?? ''
-  const currentUserNickname = localStorage.getItem('user.nickname')
   const [comment, setComment] = useState('')
-  const profileImg = postData?.img_url || DefaultImg
+  const profileImg = postData?.profile_image_url || DefaultImg
   const [sending, isSending] = useState(false)
   const [newCommentData, setNewCommentData] = useState([])
   const [loading, setLoading] = useState(false)
@@ -46,21 +45,6 @@ const PostDetail = ({ postData, memoryId }) => {
     getPostComment()
     setComments(commentData ?? [])
   }, [commentData])
-
-  const getNewPostComment = () => {
-    axios
-      .get(`${baseURL}/community/comments/?memory_id=${memoryId}`)
-      .then((res) => {
-        setLoading(false)
-        const comments = res?.data
-        setNewCommentData(comments)
-        console.log(comments)
-      })
-      .catch(() => {
-        setLoading(false)
-        setNewCommentData([])
-      })
-  }
 
   const currentUserId = localStorage.getItem('user.id')
   const isUser = currentUserId == userId
@@ -142,7 +126,7 @@ const PostDetail = ({ postData, memoryId }) => {
         <div className='flex gap-[0.5rem] items-center'>
           <img
             src={profileImg}
-            className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
+            className='w-[5.13vw] aspect-square h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
           />
           <p className='font-[Medium] text-[0.75rem]'>{nickname}</p>
         </div>

@@ -64,10 +64,9 @@ const Mypage = () => {
       {/* 마이페이지 유저 사진 */}
       <div className='absolute top-[19.312vh] right-[7.5vw] max-h-2 flex flex-col items-center'>
         <img
-          className='md:right-[3.3rem] transform -translate-y-1/2 w-[25.64vw] h-[25.64vw] md:w-[11rem] md:h-[11rem] rounded-full bg-primary-200 border-[2px] border-white object-cover'
+          className='md:right-[3.3rem] aspect-square transform -translate-y-1/2 w-[25.64vw] h-[25.64vw] md:w-[11rem] md:h-[11rem] rounded-full bg-primary-200 border-[2px] border-white object-cover'
           src={userInfo?.user?.profile_image_url || DefaultImg}
         />
-
         {userInfo?.user?.profile_image_url == null && (
           <>
             <input
@@ -89,7 +88,7 @@ const Mypage = () => {
       {/* 마이페이지 유저 정보(유저 닉네임, 유저 AI 한줄소개) */}
       <div className='flex flex-col gap-[1.57vh] w-full h-[22vh] pl-[30px]'>
         <h3 className='mt-[4.74vh] font-[Bold] text-[24px]'>{userInfo?.user?.nickname ?? ''}</h3>
-        <p className='text-[1rem] whitespace-pre-line mt-[4.5vh] pb-[2rem]'>
+        <p className='text-[1rem] whitespace-pre-line mt-[2vh] pb-[2rem]'>
           {/* 유저 AI 한줄 소개가 없으면 당신의 기억을 따라가다 보면.. \n 어느새 당신의 취향과 마주하게 될 거예요! 로 대체 */}
           {userInfo?.user?.detail?.trim() === ''
             ? '당신의 기억을 따라가다 보면.. \n 어느새 당신의 취향과 마주하게 될 거예요!'

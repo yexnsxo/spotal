@@ -9,7 +9,6 @@ import Loading from '@/components/shared/Loading'
 
 const CommunityPost = () => {
   const [postData, setPostData] = useState([])
-  const [commentData, setCommentData] = useState([])
   const [loading, setLoading] = useState(false)
   const { memory_id } = useParams()
 

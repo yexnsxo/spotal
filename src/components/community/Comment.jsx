@@ -3,7 +3,6 @@ import Message from '@/assets/Message.svg?react'
 import axios from 'axios'
 import { baseURL } from '@/pages/Signup'
 import { useState } from 'react'
-import { Toaster } from 'sonner'
 import { toast } from 'sonner'
 import ArrowUp from '@/assets/ArrowUp.svg?react'
 import RecommentArrow from '@/assets/RecommentArrow.svg?react'
@@ -16,7 +15,7 @@ const Comment = ({ c, onDeleted }) => {
   const [recomments, setRecomments] = useState([])
   const [recomment, setRecomment] = useState('')
   const [open, setOpen] = useState(false)
-  const profileImg = c?.img_url || DefaultImg
+  const profileImg = c?.profile_image_url || DefaultImg
   const [sending, isSending] = useState(false)
 
   const readRecomment = (commentId) => {
@@ -28,7 +27,7 @@ const Comment = ({ c, onDeleted }) => {
       .catch((err) => console.log(err))
   }
 
-  const postReComment = () => {
+  const postReComment = (commentId) => {
     isSending(true)
     axios
       .post(`${baseURL}/community/comments/`, {
@@ -39,13 +38,7 @@ const Comment = ({ c, onDeleted }) => {
       .then((res) => {
         isSending(false)
         console.log(res)
-        const newComment = res.data?.data ?? {
-          comment_id: res.data?.id,
-          user_id: Number(currentUserId),
-          nickname: currentUserNickname,
-          content: recomment,
-        }
-        setRecomments((prev) => [newComment, ...prev])
+        readRecomment(commentId)
         setRecomment('')
         toast('🟢 답글 작성이 완료되었습니다')
       })
@@ -64,7 +57,7 @@ const Comment = ({ c, onDeleted }) => {
         <div className='flex gap-[0.7rem]'>
           <img
             src={profileImg}
-            className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
+            className='w-[5.13vw] h-[5.13vw] aspect-square md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
           />
           <div className='gap-[0.5rem] items-center'>
             <p className='font-[Medium] text-[10px]'>{c.nickname}</p>
@@ -102,7 +95,7 @@ const Comment = ({ c, onDeleted }) => {
                 value={recomment}
                 onChange={(e) => setRecomment(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !sending) postReComment()
+                  if (e.key === 'Enter' && !sending) postReComment(c.comment_id)
                 }}
               />
               <ArrowUp className='mr-[0.9rem] w-[15px] cursor-pointer' onClick={postReComment} />

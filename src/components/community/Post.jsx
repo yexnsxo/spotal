@@ -68,7 +68,7 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         <div className='flex gap-[0.5rem] items-center'>
           <img
             src={src}
-            className='w-[5.13vw] h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
+            className='w-[5.13vw] aspect-square h-[5.13vw] md:w-[2.5rem] md:h-[2.5rem] rounded-full bg-primary-200 border-none'
           />
           <p className='font-[Medium] text-[0.75rem]'>{nickname}</p>
         </div>

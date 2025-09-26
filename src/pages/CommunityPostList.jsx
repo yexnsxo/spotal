@@ -30,6 +30,7 @@ const CommunityPostList = () => {
       .then((res) => {
         const posts = Array.isArray(res.data?.data) ? res.data.data : []
         setPostData(posts)
+        console.log(posts)
       })
       .catch(() => {
         setPostData([])
