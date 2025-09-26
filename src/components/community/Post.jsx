@@ -55,6 +55,7 @@ const Post = ({
       axios
         .post(`${baseURL}/community/bookmarks/create/`, {
           user_id: currentUserId,
+          user: currentUserId,
           memory: memory_id,
         })
         .then((res) => {

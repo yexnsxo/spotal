@@ -105,14 +105,20 @@ const PostDetail = ({ memoryId }) => {
     if (!isMarked) {
       axios
         .post(`${baseURL}/community/bookmarks/create/`, {
+          user: currentUserId,
           user_id: currentUserId,
           memory: memoryId,
         })
         .then((res) => {
+          console.log(res)
           SetIsMarked(true)
           SetBookmarkId(res.data.bookmark_id)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+          console.log('STATUS:', err.response?.status)
+          console.log('DATA  :', err.response?.data)
+        })
     } else {
       axios
         .delete(`${baseURL}/community/bookmarks/${bookmarkId}/delete/?user_id=${currentUserId}`)
@@ -211,7 +217,7 @@ const PostDetail = ({ memoryId }) => {
             onReplyAdded={handleReplyAdded}
             onDeleted={(id) => {
               setComments((prev) => prev.filter((c) => c.comment_id !== id))
-              setCommentLength((n) => n - 1)
+              getPost()
             }}
           />
         </div>
