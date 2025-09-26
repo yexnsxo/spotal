@@ -26,6 +26,7 @@ const PostList = ({ postData }) => {
               memory_id={post.memory_id}
               nickname={post.nickname}
               src={profileImg}
+              boardTag={post?.board?.name}
             />
           </div>
         )

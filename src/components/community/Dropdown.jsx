@@ -24,7 +24,7 @@ export const locationList = [
 export const categoryList = [
   { category_id: 1, name: '제보' },
   { category_id: 2, name: '홍보' },
-  { category_id: 3, name: '추억 기록' },
+  { category_id: 3, name: '추억기록' },
 ]
 
 const Dropdown = ({ label, onSelect }) => {
@@ -43,10 +43,12 @@ const Dropdown = ({ label, onSelect }) => {
     options = emotionList
   } else if (label === '동네') {
     options = locationList
+  } else if (label === '분류') {
+    options = categoryList
   }
 
   const handleSelect = (opt) => {
-    const id = opt.emotion_id ?? opt.location_id ?? null
+    const id = opt.emotion_id ?? opt.location_id ?? opt.category_id ?? null
     setDisplayLabel(opt ? opt.name : label)
     setFiltered(!!opt)
     setSelected(opt || '전체')
@@ -62,14 +64,14 @@ const Dropdown = ({ label, onSelect }) => {
         onClick={() => {
           setOpen((o) => !o)
         }}
-        className={`flex items-center justify-center w-[18.72vw] max-w-[6rem] h-[1.5rem] bg-grey-100 cursor-pointer rounded-[5px] font-[SemiBold] text-[12px] text-grey-700 ${filtered ? 'bg-primary-300' : 'bg-grey-100'} hover:bg-primary-300`}
+        className={`flex items-center justify-center w-[17.8vw] max-w-[6rem] h-[1.5rem] bg-grey-100 cursor-pointer rounded-[5px] font-[SemiBold] text-[12px] text-grey-700 ${filtered ? 'bg-primary-300' : 'bg-grey-100'} hover:bg-primary-300`}
       >
         {displayLabel}
-        <img src={DropdownSign} />
+        <img className='w-[20px]' src={DropdownSign} />
       </button>
 
       {open && (
-        <div className='flex flex-col bg-grey-100 rounded-[10px] w-[18.72vw] max-w-[6rem] mt-[3px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full left-0 z-40'>
+        <div className='flex flex-col bg-grey-100 rounded-[10px] w-[17.8vw] max-w-[6rem] mt-[3px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full left-0 z-40'>
           <button
             className={`hover:bg-primary-300 p-[5px] active:bg-primary-300 ${
               selected === '전체' ? 'bg-primary-300' : 'bg-grey-100'
@@ -85,7 +87,7 @@ const Dropdown = ({ label, onSelect }) => {
             전체
           </button>
           {options.map((opt) => {
-            const id = opt.emotion_id ?? opt.location_id
+            const id = opt.emotion_id ?? opt.location_id ?? opt.category_id
             return (
               <button
                 className={`hover:bg-primary-300 p-[5px] active:bg-primary-300 ${

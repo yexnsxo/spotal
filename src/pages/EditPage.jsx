@@ -40,6 +40,7 @@ const EditPage = () => {
     axios
       .get(`${baseURL}/community/memories/${memory_id}/`)
       .then((res) => {
+        console.log(res.data.data)
         setData(res.data.data)
       })
       .catch((err) => {
@@ -72,7 +73,7 @@ const EditPage = () => {
       text: data?.content ?? '',
       emotion: toIdArrayByKey(data?.emotions, 'emotion_id'),
       location: data?.location?.location_id ?? null,
-      category: data?.category?.category_id ?? null,
+      category: data?.board?.board_id ?? null,
     }
     setValues(nextValues)
     setImages(Array.isArray(data?.images) ? data.images : [])
@@ -94,6 +95,9 @@ const EditPage = () => {
     }
     if (values.category != null) {
       formData.append('category_id', String(values.category))
+    }
+    if (values.category != null) {
+      formData.append('board_id', String(values.category))
     }
     const flatFiles = (files ?? []).flat()
     flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))

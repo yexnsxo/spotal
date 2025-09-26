@@ -7,7 +7,17 @@ import axios from 'axios'
 import { baseURL } from '@/pages/Signup.jsx'
 import { useNavigate } from 'react-router-dom'
 
-const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nickname, src }) => {
+const Post = ({
+  text,
+  urllist,
+  emotionTags,
+  locationTags,
+  memory_id,
+  userId,
+  nickname,
+  src,
+  boardTag,
+}) => {
   const [expanded, setExpanded] = useState(false)
   const displayedText = expanded ? text : text.length > 25 ? text.slice(0, 25) : text
   const currentUserId = localStorage.getItem('user.id')
@@ -97,7 +107,8 @@ const Post = ({ text, urllist, emotionTags, locationTags, memory_id, userId, nic
         </div>
       </div>
       <div className='flex justify-between items-center mb-[1.78vh] md:ml-[0rem] md:mr-[0rem] sm:ml-[0.3rem] sm:mr-[0.3rem] ml-[0.3rem] mr-[0.3rem]'>
-        <div className='flex gap-[6px]'>
+        <div className='flex flex-wrap gap-[6px]'>
+          <Tag label={boardTag ?? ''} />
           {emotionTags.map((tag, idx) => (
             <div key={idx}>
               <Tag label={tag} />
