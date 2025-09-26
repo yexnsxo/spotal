@@ -84,7 +84,7 @@ const Comment = ({ c, onDeleted, onReplyAdded }) => {
 
       {open && (
         <>
-          {recomments.reverse().map((r) => (
+          {[...recomments].map((r) => (
             <div key={`recomment-${c.comment_id}`}>
               <ReComment r={r} />
             </div>

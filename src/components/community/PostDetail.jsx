@@ -27,6 +27,11 @@ const PostDetail = ({ memoryId }) => {
   const [comments, setComments] = useState([])
   const [commentLength, setCommentLength] = useState(postData?.comment_count ?? 0)
   const [loading, setLoading] = useState(false)
+  const bookmarkLength = postData?.bookmark_count ?? 0
+  const currentUserId = localStorage.getItem('user.id')
+  const isUser = currentUserId == userId
+  const [isMarked, SetIsMarked] = useState(false)
+  const [bookmarkId, SetBookmarkId] = useState(null)
 
   const getPostComment = () => {
     axios
@@ -60,7 +65,7 @@ const PostDetail = ({ memoryId }) => {
   useEffect(() => {
     getPost()
     getPostComment()
-  }, [memoryId])
+  }, [memoryId, isMarked])
 
   useEffect(() => {
     setCommentLength(postData?.comment_count ?? 0)
@@ -70,12 +75,6 @@ const PostDetail = ({ memoryId }) => {
     setComments(commentData ?? [])
   }, [commentData])
 
-  const currentUserId = localStorage.getItem('user.id')
-  const isUser = currentUserId == userId
-  const [isMarked, SetIsMarked] = useState(false)
-  const [bookmarkId, SetBookmarkId] = useState(null)
-  const [bookmarkLength, setBookmarkLength] = useState(0)
-
   useEffect(() => {
     let cancelled = false
     axios
@@ -84,7 +83,6 @@ const PostDetail = ({ memoryId }) => {
         const marked = res.data.find((id) => Number(id?.memory) === Number(memoryId))
         const sameUser = res.data.find((user) => Number(user?.user) === Number(currentUserId))
         if (cancelled) return
-        setBookmarkLength(res?.data?.length)
         console.log(res.data)
         if (marked && sameUser) {
           SetIsMarked(true)
