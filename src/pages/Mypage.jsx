@@ -92,7 +92,7 @@ const Mypage = () => {
             />
             <label
               htmlFor='fileInput'
-              className='mt-[-5vh] min-h-[4.5vh] text-sm font-[Bold] w-[25.64vw] rounded-[10px] md:w-[9.5rem] md:h-[1rem] bg-[#FDDDA7] flex items-center justify-center cursor-pointer'
+              className='mt-[-5vh] md:mt-[-70px] min-h-[4.5vh] text-sm font-[Bold] w-[25.64vw] rounded-[10px] md:w-[9.5rem] md:h-[1rem] bg-[#FDDDA7] flex items-center justify-center cursor-pointer'
             >
               사진 업로드
             </label>
