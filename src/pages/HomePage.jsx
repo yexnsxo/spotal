@@ -58,6 +58,9 @@ const HomePage = () => {
           placeholder='가게 이름, 위치를 검색해보세요!'
           className='ml-3 text-base md:text-lg w-full outline-0'
           aria-label='검색창'
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') goToMap(keyword)
+          }}
         />
         <button
           onClick={() => goToMap(keyword)}
