@@ -118,19 +118,22 @@ const Mypage = () => {
           {/* 스크랩한 글이 있을 때만 북마크 이미지 보여줌 */}
           {userInfo?.bookmarks?.length > 0 && (
             <div className='flex gap-[3.33vw] mt-[5px] overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
-              {userInfo?.bookmarks?.map((b, index) => {
-                return (
-                  <div key={`memory-${index}`} className='shrink-0 snap-start overflow-hidden'>
-                    <ImageSlider
-                      w='96px'
-                      urllist={b?.images}
-                      onClick={() => {
-                        navigate(`/post/${b.memory_id}`)
-                      }}
-                    />
-                  </div>
-                )
-              })}
+              {userInfo?.bookmarks
+                ?.slice()
+                .reverse()
+                .map((b, index) => {
+                  return (
+                    <div key={`memory-${index}`} className='shrink-0 snap-start overflow-hidden'>
+                      <ImageSlider
+                        w='96px'
+                        urllist={b?.images}
+                        onClick={() => {
+                          navigate(`/post/${b.memory_id}`)
+                        }}
+                      />
+                    </div>
+                  )
+                })}
             </div>
           )}
         </div>
