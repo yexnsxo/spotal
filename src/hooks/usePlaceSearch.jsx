@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { baseURL } from '@/pages/Signup'
+import useGeolocation from './useGelocation'
 
 const usePlaceSearch = () => {
   const [marker, setMarker] = useState([])
   const [status, setStatus] = useState('idle')
-  const current = { lat: 37.547, lng: 126.964 }
+  const current = useGeolocation()
 
   const fetchMarker = async (keyword) => {
     if (!keyword.trim()) return { marker: [], status: 'idle' }
