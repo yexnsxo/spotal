@@ -63,9 +63,9 @@ const RecommendedInfo = ({
         />
 
         <div className='flex justify-between items-center mb-2 bg-primary-300 pt-3 pb-3 pl-5 pr-5 rounded-[10px]'>
-          <h2 className='m-0 font-[Bold] text-xl max-w-[44vw]'>{placeName}</h2>
+          <h2 className='m-0 font-[Bold] text-xl max-w-[40vw] flex-wrap'>{placeName}</h2>
           <span
-            className={`text-sm px-3 py-1 rounded-full border font-[SemiBold] select-none ${
+            className={`text-sm px-3 py-1 min-w-[55px] rounded-full border font-[SemiBold] select-none ${
               status === '폐업함'
                 ? 'bg-[#FDF2F8] text-[#BE195D] border-[#BE195D]'
                 : status === '이전함'
