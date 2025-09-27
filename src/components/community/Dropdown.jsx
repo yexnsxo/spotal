@@ -21,13 +21,13 @@ export const locationList = [
   { location_id: 7, name: '해방촌' },
 ]
 
-export const categoryList = [
-  { category_id: 1, name: '제보' },
-  { category_id: 2, name: '홍보' },
-  { category_id: 3, name: '추억기록' },
+export const boardList = [
+  { board_id: 1, name: '제보' },
+  { board_id: 2, name: '홍보' },
+  { board_id: 3, name: '추억기록' },
 ]
 
-const Dropdown = ({ label, onSelect }) => {
+const Dropdown = ({ label, onSelect, value }) => {
   const [open, setOpen] = useState(false)
 
   const [displayLabel, setDisplayLabel] = useState(label)
@@ -44,17 +44,45 @@ const Dropdown = ({ label, onSelect }) => {
   } else if (label === '동네') {
     options = locationList
   } else if (label === '분류') {
-    options = categoryList
+    options = boardList
   }
 
-  const handleSelect = (opt) => {
-    const id = opt.emotion_id ?? opt.location_id ?? opt.category_id ?? null
-    setDisplayLabel(opt ? opt.name : label)
-    setFiltered(!!opt)
-    setSelected(opt || '전체')
-    setFilteredId(id)
+  // ✅ ID 헬퍼
+  const getId = (opt) => opt?.emotion_id ?? opt?.location_id ?? opt?.board_id ?? null
+
+  // ✅ value(부모 상태) 기준으로 현재 선택된 항목/ID
+  const selectedId = value ?? null
+  const selectedOpt = options.find((o) => getId(o) === selectedId) || null
+
+  // ✅ value 변화 시 라벨/색상 동기화
+  useEffect(() => {
+    if (selectedOpt) {
+      setDisplayLabel(selectedOpt.name)
+      setFiltered(true)
+      setSelected(selectedOpt)
+    } else {
+      setDisplayLabel(label)
+      setFiltered(false)
+      setSelected('전체')
+    }
+  }, [selectedId, selectedOpt, label])
+
+  const handleSelect = (optOrNull) => {
+    const id = getId(optOrNull)
+    // 부모에 통지 (핵심)
+    onSelect?.(id)
+
+    // 내부 표시 상태도 맞춰줌 (리액션 빨리 보이게)
+    if (optOrNull) {
+      setDisplayLabel(optOrNull.name)
+      setFiltered(true)
+      setSelected(optOrNull)
+    } else {
+      setDisplayLabel(label)
+      setFiltered(false)
+      setSelected('전체')
+    }
     setOpen(false)
-    if (onSelect) onSelect(id)
   }
 
   return (
@@ -73,6 +101,7 @@ const Dropdown = ({ label, onSelect }) => {
       {open && (
         <div className='flex flex-col bg-grey-100 rounded-[10px] w-[17.8vw] max-w-[6rem] mt-[3px] font-[SemiBold] text-[0.625rem] text-grey-700 overflow-hidden absolute top-full left-0 z-40'>
           <button
+            type='button'
             className={`hover:bg-primary-300 p-[5px] active:bg-primary-300 ${
               selected === '전체' ? 'bg-primary-300' : 'bg-grey-100'
             }`}
@@ -87,9 +116,10 @@ const Dropdown = ({ label, onSelect }) => {
             전체
           </button>
           {options.map((opt) => {
-            const id = opt.emotion_id ?? opt.location_id ?? opt.category_id
+            const id = opt.emotion_id ?? opt.location_id ?? opt.board_id
             return (
               <button
+                type='button'
                 className={`hover:bg-primary-300 p-[5px] active:bg-primary-300 ${
                   selected === opt ? 'bg-primary-300' : 'bg-grey-100'
                 }`}

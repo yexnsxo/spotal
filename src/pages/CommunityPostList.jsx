@@ -14,7 +14,7 @@ const CommunityPostList = () => {
 
   const [emotionId, setEmotionId] = useState(null)
   const [locationId, setLocationId] = useState(null)
-  const [categoryId, setCategoryId] = useState(null)
+  const [boardId, setBoardId] = useState(null)
   const [loading, isLoading] = useState(false)
 
   const getPost = () => {
@@ -22,15 +22,15 @@ const CommunityPostList = () => {
     axios
       .get(`${baseURL}/community/memories`, {
         params: {
-          emotion_ids: emotionId ?? undefined,
-          location_id: locationId ?? undefined,
-          board_id: categoryId ?? undefined,
+          emotion_ids: emotionId ?? null,
+          location_id: locationId ?? null,
+          board_id: boardId ?? null,
         },
       })
       .then((res) => {
         isLoading(false)
         const posts = Array.isArray(res.data?.data) ? res.data.data : []
-        console.log(emotionId, locationId, categoryId)
+        console.log(emotionId, locationId, boardId)
         setPostData(posts)
         console.log(posts)
       })
@@ -42,7 +42,7 @@ const CommunityPostList = () => {
 
   useEffect(() => {
     getPost()
-  }, [locationId, emotionId, categoryId])
+  }, [locationId, emotionId, boardId])
 
   if (loading) return <Loading />
   return (
@@ -52,9 +52,9 @@ const CommunityPostList = () => {
         <div className='pt-[7.11vh] pb-[10vh] bg-white min-h-screen'>
           <div className='flex justify-between my-[2.49vh]'>
             <div className='flex gap-[1.54vw] '>
-              <Dropdown onSelect={(id) => setEmotionId(id)} label={'감정'} />
-              <Dropdown onSelect={(id) => setLocationId(id)} label={'동네'} />
-              <Dropdown onSelect={(id) => setCategoryId(id)} label={'분류'} />
+              <Dropdown value={emotionId} onSelect={(id) => setEmotionId(id)} label={'감정'} />
+              <Dropdown value={locationId} onSelect={(id) => setLocationId(id)} label={'동네'} />
+              <Dropdown value={boardId} onSelect={(id) => setBoardId(id)} label={'분류'} />
             </div>
             <button
               className='w-[18.72vw] max-w-[6rem] h-[1.5rem] bg-primary-300 border-primary border-[0.5px] rounded-[5px] font-[SemiBold] text-[12px] text-primary cursor-pointer'

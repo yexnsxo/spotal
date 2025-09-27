@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Header from '@/components/shared/Header.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import Dropdown2 from '@/components/community/Dropdown2.jsx'
-import { emotionList, locationList, categoryList } from '@/components/community/Dropdown.jsx'
+import { emotionList, locationList, boardList } from '@/components/community/Dropdown.jsx'
 import Button from '@/components/shared/Button.jsx'
 import ImageUploader from '@/components/community/ImageUploader.jsx'
 import { useFormFilled } from '@/hooks/useFormFilled'
@@ -33,7 +33,7 @@ const EditPage = () => {
     text: '',
     location: null,
     emotion: [],
-    category: null,
+    board: null,
   })
 
   const getDetail = (memory_id) => {
@@ -73,7 +73,7 @@ const EditPage = () => {
       text: data?.content ?? '',
       emotion: toIdArrayByKey(data?.emotions, 'emotion_id'),
       location: data?.location?.location_id ?? null,
-      category: data?.board?.board_id ?? null,
+      board: data?.board?.board_id ?? null,
     }
     setValues(nextValues)
     setImages(Array.isArray(data?.images) ? data.images : [])
@@ -93,11 +93,8 @@ const EditPage = () => {
     if (values.location != null) {
       formData.append('location_id', String(values.location))
     }
-    if (values.category != null) {
-      formData.append('category_id', String(values.category))
-    }
-    if (values.category != null) {
-      formData.append('board_id', String(values.category))
+    if (values.board != null) {
+      formData.append('board_id', String(values.board))
     }
     const flatFiles = (files ?? []).flat()
     flatFiles.filter((f) => f instanceof File).forEach((f) => formData.append('images', f))
@@ -150,10 +147,10 @@ const EditPage = () => {
                   <div ref={dropdownRef} onClick={scrollTo}>
                     <Dropdown2
                       placeholder='게시판을 선택하세요'
-                      options={categoryList}
-                      name='category'
+                      options={boardList}
+                      name='board'
                       onChange={handleChange}
-                      value={values.category}
+                      value={values.board}
                     />
                   </div>
                 </div>

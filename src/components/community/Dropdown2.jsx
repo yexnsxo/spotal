@@ -28,7 +28,7 @@ const Dropdown2 = ({ placeholder, options = [], onChange, name, value }) => {
 
   const isEmotion = name === 'emotion'
   const isLocation = name === 'location'
-  const id = isEmotion ? 'emotion_id' : isLocation ? 'location_id' : 'category_id'
+  const id = isEmotion ? 'emotion_id' : isLocation ? 'location_id' : 'board_id'
 
   useEffect(() => {
     if (!options.length) {

@@ -12,7 +12,7 @@ const CommunityMyPostList = () => {
   const userId = localStorage.getItem('user.id')
   const [emotionId, setEmotionId] = useState(null)
   const [locationId, setLocationId] = useState(null)
-  const [categoryId, setCategoryId] = useState(null)
+  const [boardId, setBoardId] = useState(null)
   const [loading, isLoading] = useState(false)
 
   const getMyPost = () => {
@@ -21,9 +21,9 @@ const CommunityMyPostList = () => {
       .get(`${baseURL}/community/my/`, {
         params: {
           user_id: userId,
-          emotion_ids: emotionId ?? undefined,
-          location_id: locationId ?? undefined,
-          board_id: categoryId ?? undefined,
+          emotion_ids: emotionId ?? null,
+          location_id: locationId ?? null,
+          board_id: boardId ?? null,
         },
       })
       .then((res) => {
@@ -39,7 +39,7 @@ const CommunityMyPostList = () => {
 
   useEffect(() => {
     getMyPost()
-  }, [locationId, emotionId, categoryId])
+  }, [locationId, emotionId, boardId])
 
   if (loading) return <Loading />
 
@@ -50,9 +50,9 @@ const CommunityMyPostList = () => {
         <div className='pt-[7.11vh] pb-[10vh] bg-white min-h-screen'>
           <div className='flex justify-between my-[2.49vh]'>
             <div className='flex gap-[1.54vw] '>
-              <Dropdown onSelect={(id) => setEmotionId(id)} label={'감정'} />
-              <Dropdown onSelect={(id) => setLocationId(id)} label={'동네'} />
-              <Dropdown onSelect={(id) => setCategoryId(id)} label={'분류'} />
+              <Dropdown value={emotionId} onSelect={(id) => setEmotionId(id)} label={'감정'} />
+              <Dropdown value={locationId} onSelect={(id) => setLocationId(id)} label={'동네'} />
+              <Dropdown value={boardId} onSelect={(id) => setBoardId(id)} label={'분류'} />
             </div>
           </div>
           <PostList postData={myPostData} />

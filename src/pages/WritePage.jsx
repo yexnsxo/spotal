@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Header from '@/components/shared/Header.jsx'
 import Footer from '@/components/shared/Footer.jsx'
 import Dropdown2 from '@/components/community/Dropdown2.jsx'
-import { emotionList, locationList, categoryList } from '@/components/community/Dropdown.jsx'
+import { emotionList, locationList, boardList } from '@/components/community/Dropdown.jsx'
 import Button from '@/components/shared/Button.jsx'
 import ImageUploader from '@/components/community/ImageUploader.jsx'
 import { useFormFilled } from '@/hooks/useFormFilled'
@@ -31,7 +31,7 @@ const WritePage = () => {
     text: '',
     location: null,
     emotion: [],
-    category: null,
+    board: null,
   })
 
   const postWriteRequest = () => {
@@ -50,8 +50,8 @@ const WritePage = () => {
       formData.append('location_id', String(values.location))
     }
 
-    if (values.category != null) {
-      formData.append('board_id', String(values.category))
+    if (values.board != null) {
+      formData.append('board_id', String(values.board))
     }
 
     const flatFiles = (files ?? []).flat()
@@ -97,10 +97,10 @@ const WritePage = () => {
                   <div ref={dropdownRef} onClick={scrollTo}>
                     <Dropdown2
                       placeholder='게시판을 선택하세요'
-                      options={categoryList}
-                      name='category'
+                      options={boardList}
+                      name='board'
                       onChange={handleChange}
-                      value={values.category}
+                      value={values.board}
                     />
                   </div>
                 </div>
